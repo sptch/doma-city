@@ -7,7 +7,7 @@ import * as Atoms from './../Atoms'
 
 
 export default ()=>{
-  const [layers] = useRecoilState(Atoms.selectedLayers)
+  const [layers] = useRecoilState(Atoms.tileLayers)
   return (
     <Box
       style={{

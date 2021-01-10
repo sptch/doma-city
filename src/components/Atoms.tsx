@@ -6,7 +6,17 @@ export const tilejson = atom({
   default: {}, 
 });
 
-export const selectedLayers = atom({
-  key: 'selectedLayer', 
+export const dataLayers = atom({
+  key: 'dataLayers', 
   default: {}, 
+});
+
+export const tileLayers = atom({
+  key: 'tileLayers', 
+  default: {}, 
+});
+
+export const taxesYear = atom({
+  key: 'taxesYear', 
+  default: '2006', 
 });

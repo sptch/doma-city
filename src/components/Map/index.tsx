@@ -12,7 +12,7 @@ const DataLayer = ({dataType, dataLayerKey, visible, source, sourceLayer, setPai
   const year = useRecoilValue<any>(Atoms.taxesYear)
   let mode = 'quantile'
   const ntiles = 12
-  const [getData, { data, called, refetch }] = useLazyQuery(Queries.getYearValues(source+'_data', dataLayerKey), {variables:{year}, fetchPolicy: "no-cache"})
+  const [getData, { data, called, loading, refetch }] = useLazyQuery(Queries.getYearValues(source+'_data', dataLayerKey), {variables:{year}, fetchPolicy: "no-cache"})
   const [getRange, { data:range }] = useLazyQuery(Queries.getRange(source+'_data', dataLayerKey), {variables:{
     numeric: 
       dataType==='float8' ||
@@ -26,7 +26,7 @@ const DataLayer = ({dataType, dataLayerKey, visible, source, sourceLayer, setPai
   }, fetchPolicy: "no-cache"})
 
   useEffect(()=>{
-    if(visible && called && refetch) {
+    if(visible && called && !loading && refetch) {
       refetch({year})
       console.log('refetch data', new Date())
     }
@@ -49,7 +49,7 @@ const DataLayer = ({dataType, dataLayerKey, visible, source, sourceLayer, setPai
       dataType==='float8' ||
       dataType==='bigint'
 
-    if(data && range && (tiles || !numeric)){  
+    if(data && visible && range && (tiles || !numeric)){  
       console.log('data was loaded', new Date()) 
       const matchExpression = ['match', ['get', 'id']];
 
@@ -117,7 +117,7 @@ const DataLayer = ({dataType, dataLayerKey, visible, source, sourceLayer, setPai
         "fill-color": matchExpression
       })
     }else{console.log('no data', new Date())}
-  },[data, range, tiles])
+  },[data, range, tiles, visible])
 
   useEffect(()=>{
     console.log(visible, called, year)

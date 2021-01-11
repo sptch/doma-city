@@ -18,16 +18,20 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 )
 
-
-const DataParameters = ({ param, setParam, fields, setLayers, layerKey }:any)=>{
+const DataParameters = ({ param, years, setParam, fields, setLayers, layerKey }:any)=>{
 
   useEffect(()=>{
     console.log(fields)
   },[fields])
+  const [year, setYear] = useRecoilState<any>(Atoms.taxesYear)
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setParam(event.target.value as string);
     setLayers((prev:any)=>({ ...prev, [layerKey]: event.target.value as string }))
+  };
+
+  const handleYearChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    setYear((prev:any)=>(event.target.value as string))
   };
 
   return <>
@@ -51,10 +55,30 @@ const DataParameters = ({ param, setParam, fields, setLayers, layerKey }:any)=>{
         }
       </Select>
     </FormControl>
+    <FormControl variant="standard" style={{paddingLeft: '2rem'}} >
+      <Select
+        id='tax_year'
+        value={year}
+        onChange={handleYearChange}
+        style={{width:'220px', textTransform:"capitalize"}}
+      >
+        {
+            years.map((itemKey:any, i:number)=>
+              <MenuItem 
+                key={i} 
+                style={{textTransform:"capitalize"}} 
+                value={itemKey}
+              >
+                  {itemKey}
+              </MenuItem>
+            )
+        }
+      </Select>
+    </FormControl>
   </>
 }
 
-const DataLayer = ({ fields, layerKey }:any)=>{
+const DataLayer = ({ fields, layerKey, years }:any)=>{
 
   const [param, setParam] = useState('current_land_value')
   const [layers, setLayers] = useRecoilState<any>(Atoms.tileLayers)
@@ -76,7 +100,7 @@ const DataLayer = ({ fields, layerKey }:any)=>{
       label='Tax reports' 
       style={{textTransform:"capitalize"}}
     />
-    { Boolean(layers[layerKey]) && <DataParameters {...{param, setParam, year, setYear, layerKey, fields, setLayers}} /> }
+    { Boolean(layers[layerKey]) && <DataParameters {...{param, setParam, year, setYear, years, layerKey, fields, setLayers}} /> }
   </>
 }
 
@@ -151,6 +175,7 @@ export default ()=>{
   const [dataLayers, setDataLayers] = useRecoilState<any>(Atoms.dataLayers)
 
   const { data:keys } = useQuery(Queries.getKeys("taxes_data"))
+  const { data:years } = useQuery(Queries.getRange('taxes_data', 'report_year'), {variables:{numeric: false}})
 
   useEffect(()=>{
     if(keys){
@@ -167,7 +192,13 @@ export default ()=>{
             Object.keys(dataLayers).length>0 && 
             (Object.entries(dataLayers) as any)
             .map(
-              (entries:any, i:any)=><DataLayer {...{layerKey:entries[0], fields:entries[1], key:i}}/>
+              (entries:any, i:any)=><DataLayer 
+                {...{
+                  layerKey:entries[0],
+                  fields:entries[1], 
+                  years: years?.taxes_data?.map((v:any)=>v.report_year), 
+                  key:i
+                }}/>
             )
           }
           {

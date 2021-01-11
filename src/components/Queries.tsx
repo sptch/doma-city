@@ -36,3 +36,17 @@ export const getRange = (source:string, property:string)=>gql`
       }
     }
   }`
+
+export const getNTiles = gql`
+  query GetNTiles($table_id:String!, $column_id: String!, $ntiles: Int!, $mode: String ) {
+    get_tiles(
+      args: {
+        table_id: $table_id, 
+        column_id:$column_id,
+        ntiles: $ntiles,
+        mode: $mode
+      }
+    ){
+      tile
+    }
+  }`

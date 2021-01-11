@@ -10,36 +10,93 @@ import 'mapbox-gl/dist/mapbox-gl.css';
 
 const DataLayer = ({dataType, dataLayerKey, visible, source, sourceLayer, setPaintProperty}:any)=>{
   const year = useRecoilValue<any>(Atoms.taxesYear)
+  let mode = 'quantile'
+  const ntiles = 12
   const [getData, { data, called, refetch }] = useLazyQuery(Queries.getYearValues(source+'_data', dataLayerKey), {variables:{year}, fetchPolicy: "no-cache"})
   const [getRange, { data:range }] = useLazyQuery(Queries.getRange(source+'_data', dataLayerKey), {variables:{
     numeric: 
       dataType==='float8' ||
       dataType==='bigint'
   }, fetchPolicy: "no-cache"})
+  const [getNTiles, { data:tiles }] = useLazyQuery(Queries.getNTiles, {variables:{
+    table_id: source+'_data', 
+    column_id: dataLayerKey,
+    ntiles,
+    mode: 'min'
+  }, fetchPolicy: "no-cache"})
 
   useEffect(()=>{
-    if(visible && !called) {getRange(); getData(); console.log('load data', new Date())}
-  },[visible, called, getData, getRange])
+    if(visible && called && refetch) {
+      refetch({year})
+      console.log('refetch data', new Date())
+    }
+  },[visible, called, year, refetch, getData])
 
   useEffect(()=>{
-    if(data && range){  
-      console.log('data was loaded', new Date()) 
+    if(visible && !called) {
       const numeric = 
         dataType==='float8' ||
         dataType==='bigint'
+      getRange(); 
+      if(numeric) getNTiles(); 
+      getData(); 
+      console.log('load data', new Date())
+    }
+  },[visible, called, getData, getRange, getNTiles])
+
+  useEffect(()=>{
+    const numeric = 
+      dataType==='float8' ||
+      dataType==='bigint'
+
+    if(data && range && (tiles || !numeric)){  
+      console.log('data was loaded', new Date()) 
       const matchExpression = ['match', ['get', 'id']];
 
       if(numeric){
         const {
           min:{[dataLayerKey]:minValue}, 
-          max:{[dataLayerKey]:maxValue}} = range[source+'_data_aggregate'].aggregate
+          max:{[dataLayerKey]:maxValue}
+        } = range[source+'_data_aggregate'].aggregate
         console.log('it was numeric', minValue, maxValue)
 
-        data[source+'_data'].forEach((row:any)=>{
-          var value = (row[dataLayerKey] - minValue)/(maxValue-minValue);
+        const lookup:any = {}
+        tiles.get_tiles.forEach((tile:any, i:number)=>{
+          var value = i/(ntiles-1);
           var color = d3.interpolateRainbow(value);
-          matchExpression.push(row.id, color);
-        });
+          lookup[i] = {}
+          lookup[i].color = color
+          lookup[i].min = tile.tile
+          lookup[i].max = i<(ntiles-1)?
+            tiles.get_tiles[i+1].tile:
+            Infinity
+        })
+        console.log(lookup)
+
+        const getColor = (x:any)=>{
+          let color
+          for(let i = 0; i< ntiles-1; i++){
+            if(x>=lookup[i].min && x<lookup[i].max){
+              color = lookup[i].color;
+            }
+          }
+          if(!color) color = lookup[ntiles-1].color
+          return color
+        }
+        console.log(getColor(500000))
+
+        if(mode==='linear'){
+          data[source+'_data'].forEach((row:any)=>{
+            var value = (row[dataLayerKey] - minValue)/(maxValue-minValue);
+            var color = d3.interpolateRainbow(value);
+            matchExpression.push(row.id, color);
+          });
+        }else{
+          data[source+'_data'].forEach((row:any)=>{
+            var color = getColor( row[dataLayerKey] )
+            matchExpression.push(row.id, color);
+          });
+        }
       }else{
         //Here goes categorical
         console.log(range)
@@ -60,7 +117,7 @@ const DataLayer = ({dataType, dataLayerKey, visible, source, sourceLayer, setPai
         "fill-color": matchExpression
       })
     }else{console.log('no data', new Date())}
-  },[data, range])
+  },[data, range, tiles])
 
   useEffect(()=>{
     console.log(visible, called, year)
@@ -83,6 +140,7 @@ const MapDataLayer = ({layerKey, property, visible, i}:any)=>{
   const [paintProperty, setPaintProperty] = useState({"fill-color": "rgba(247,178,17,0.3)"})
 
   useEffect(()=>{console.log(dataLayers, property)}, [dataLayers, property])
+
   return <>
     <Source 
       id={layerKey}
@@ -91,6 +149,7 @@ const MapDataLayer = ({layerKey, property, visible, i}:any)=>{
       volatile={true}
       promoteId='id'
     />
+
     <Layer 
       id={layerKey+'_polygon'}
       type="fill"
@@ -100,6 +159,22 @@ const MapDataLayer = ({layerKey, property, visible, i}:any)=>{
       layout={{
         "visibility": visible?'visible':'none'
       }}
+      before='building-outline'
+    />
+    <Layer 
+      id={layerKey+'_line'}
+      type="line"
+      source={l.table}
+      source-layer={l.id}
+      paint={{
+        'line-color': 'rgb(200,200,200)',
+        'line-width': 0.2
+      }}
+      layout={{
+        "visibility": visible?'visible':'none'
+      }}
+      minzoom={13}
+      before='building-outline'
     />
     {
       dataLayers[layerKey].map((l:any,i:any)=>
@@ -145,6 +220,7 @@ const MapLayer = ({layerKey, property, visible, i}:any)=>{
             layout={{
               "visibility": visible?'visible':'none'
             }}
+            before='building-outline'
           />
         }
         {
@@ -167,6 +243,7 @@ const MapLayer = ({layerKey, property, visible, i}:any)=>{
             layout={{
               "visibility": visible?'visible':'none'
             }}
+            before='building-outline'
           />
         }
         {
@@ -185,6 +262,7 @@ const MapLayer = ({layerKey, property, visible, i}:any)=>{
             layout={{
               "visibility": visible?'visible':'none'
             }}
+            before='building-outline'
           />
         }
 
@@ -197,7 +275,7 @@ export default ()=>{
   const [layers, setLayers] = useRecoilState<object>(Atoms.tileLayers);
   const [tilejson, setTilejson] = useRecoilState<object>(Atoms.tilejson);
 
-  const mapRef = useRef()
+  const mapRef:any = useRef()
 
   useEffect(()=>{
     fetch("https://spatialtech.herokuapp.com/http://dev.spatialtech.info:3003/index.json")
@@ -223,7 +301,7 @@ export default ()=>{
       mapStyle="mapbox://styles/switch9/ckahu5spr0amr1ik3n1fg0fvt"
       accessToken={'pk.eyJ1Ijoic3dpdGNoOSIsImEiOiJjamozeGV2bnkxajV2M3FvNnpod3h4ODlpIn0.CTt2IXV8II6finbTlxEddg'}
       onViewportChange={setViewport}
-      onLoad={()=>{setLoaded(true)}}
+      onLoad={()=>{setLoaded(true); console.log(mapRef.current.getMap().getStyle())}}
       ref={mapRef}
       hash={true}
       {...viewport}

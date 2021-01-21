@@ -17,15 +17,17 @@ const theme = createMuiTheme({
       main: grey[700],
     },
   },
-  overrides: {
+  components: {
     MuiButton: {
-      root: {
-        backgroundColor: grey[300],
-        color: '#111',
-        borderRadius: '1rem',
-        '&:hover': {
-            backgroundColor: grey[900],
-            color: '#FFF'
+      styleOverrides: {
+        root:{
+          backgroundColor: grey[300],
+          color: '#111',
+          borderRadius: '1rem',
+          '&:hover': {
+              backgroundColor: grey[900],
+              color: '#FFF'
+          }
         }
       },
     }

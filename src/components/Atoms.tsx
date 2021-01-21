@@ -20,3 +20,8 @@ export const taxesYear = atom({
   key: 'taxesYear', 
   default: '2006', 
 });
+
+export const legendData = atom({
+  key: 'legendData', 
+  default: [], 
+});

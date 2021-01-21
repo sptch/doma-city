@@ -12,7 +12,7 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
   type ColorMode = 'quantile' | 'linear'
   let mode:ColorMode = 'quantile'
   
-  const ntiles = 12
+  const ntiles = 6
   const [getData, { data, called, loading, refetch }] = useLazyQuery(Queries.getYearValues(source+'_data', dataLayerKey), {variables:{year}, fetchPolicy: "no-cache"})
   const [getRange, { data:range }] = useLazyQuery(Queries.getRange(source+'_data', dataLayerKey), {variables:{
     numeric: 

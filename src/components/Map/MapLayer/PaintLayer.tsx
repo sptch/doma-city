@@ -12,7 +12,7 @@ export default function PaintLayer ({dataType, dataLayerKey, visible, source, so
   let mode:ColorMode = 'quantile'
   const [legendData, setLegendData] = useRecoilState<any>(Atoms.legendData)
 
-  const ntiles:number = 12
+  const ntiles:number = 6
   const [getRange, { data:range, called, loading }] = useLazyQuery(Queries.getRange(source, dataLayerKey), {variables:{
     numeric: 
       dataType!=='varchar'

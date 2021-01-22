@@ -29,7 +29,7 @@ export default function PaintLayer ({ dataType, dataLayerKey, visible, source, s
 
   useEffect(()=>{
     if(!visible){
-      setLegendData(({[sourceLayer.replace('public.','')]:remove, ...rest}:any)=>rest)
+      setLegendData(({[source]:remove, ...rest}:any)=>rest)
     }
   }, [visible, sourceLayer])
 
@@ -65,7 +65,7 @@ export default function PaintLayer ({ dataType, dataLayerKey, visible, source, s
             )
           ])
 
-          setLegendData((prev:any)=>({...prev, [sourceLayer.replace('public.','')]:legendPairs}))
+          setLegendData((prev:any)=>({...prev, [source]:legendPairs}))
           setPaintProperty([
             'step',
             ['to-number',['get', dataLayerKey], tiles.get_tiles[0].tile], 
@@ -74,8 +74,8 @@ export default function PaintLayer ({ dataType, dataLayerKey, visible, source, s
           ])
           
           if( 
-            tilejson[sourceLayer.replace('public.','')].geometry_type.toUpperCase()==="POINT" ||
-            tilejson[sourceLayer.replace('public.','')].geometry_type.toUpperCase()==="MULTIPOINT"
+            tilejson[source].geometry_type.toUpperCase()==="POINT" ||
+            tilejson[source].geometry_type.toUpperCase()==="MULTIPOINT"
           ){ 
             setCircleSizeProperty((prev:any)=>({...prev, [sourceLayer.replace('public.','')]:['case', ['boolean', ['feature-state', 'hover'], false], [
               'interpolate', ['linear'],
@@ -113,21 +113,33 @@ export default function PaintLayer ({ dataType, dataLayerKey, visible, source, s
       }else{
         //Here goes categorical
         if(range[source]){
-          setLegendData((prev:any)=>({
-            ...prev,
-            [sourceLayer.replace('public.','')]:range[source]?.map((v:string, i:number)=>[
-              v[dataLayerKey], 
-              interpolateColor(i/(range[source].length-1), false)
-            ])
-          }))
-          setPaintProperty([
-            'case', 
-            ...range[source]?.map((v:string, i:number)=>[
-              ["==", ['get', dataLayerKey], v[dataLayerKey]], 
-              interpolateColor(i/(range[source].length-1), false)
-            ]).flat(),
-            '#cccccc'
-          ]) 
+          if(tilejson?.[source]?.properties?.color){
+            console.log(range)
+            setLegendData((prev:any)=>({
+              ...prev,
+              [source]:range[source]?.map((v:any, i:number)=>[
+                v._name,
+                v[dataLayerKey]
+              ])
+            }))
+            setPaintProperty(['get','color']) 
+          }else{
+            setLegendData((prev:any)=>({
+              ...prev,
+              [source]:range[source]?.map((v:string, i:number)=>[
+                v[dataLayerKey], 
+                interpolateColor(i/(range[source].length-1), false)
+              ])
+            }))
+            setPaintProperty([
+              'case', 
+              ...range[source]?.map((v:string, i:number)=>[
+                ["==", ['get', dataLayerKey], v[dataLayerKey]], 
+                interpolateColor(i/(range[source].length-1), false)
+              ]).flat(),
+              '#cccccc'
+            ]) 
+          }
         }
       }
     }

@@ -24,6 +24,7 @@ export const getRange = (source:string, property:string)=>gql`
   query GetRange_${source} ($numeric: Boolean!) {
     ${source}(distinct_on: ${property}) @skip(if: $numeric) {
       ${property}
+      ${property==='color'?'_name':''}
     }
     ${source}_aggregate @include(if: $numeric) {
       aggregate {

@@ -16,7 +16,8 @@ export default ()=>{
       style={{
         minWidth: '100px', 
         minHeight: '50px',
-        overflow: 'hidden',
+        maxHeight: 'calc( 100vh - 4rem )',
+        overflowY: 'scroll',
         zIndex: 2,
         position:'absolute',
         left: '1rem',

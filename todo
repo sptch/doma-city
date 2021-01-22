@@ -1,4 +1,4 @@
-Add timeline to blocks - Make animations
+Add timeline data interpolation to blocks - Make animations
 City Owned Property - assign tax data
 
 Setup clustering (summary for blocks) for better user experience:
@@ -7,4 +7,4 @@ Setup clustering (summary for blocks) for better user experience:
 - Property_use_inspection
 - ?Zoning_district
 
-Add spinner for loading times
+Add spinner for loading

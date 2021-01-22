@@ -103,7 +103,7 @@ export default function MapLayer ({setCursor, layerKey, property, visible, i}:an
             paint={{
               "line-width": ['case', ['boolean', ['feature-state', 'hover'], false], 4, 2],
               "line-color": fillColorProperty,
-              'line-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.8]
+              'line-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], tilejson?.[layerKey]?.properties?.color?0.3:1, tilejson?.[layerKey]?.properties?.color?0.15:0.8]
             }}
             layout={{
               "visibility": visible?'visible':'none'
@@ -126,7 +126,7 @@ export default function MapLayer ({setCursor, layerKey, property, visible, i}:an
             onClick={onClick}
             paint={{
               "fill-color": fillColorProperty,
-              'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.8]
+              'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], tilejson?.[layerKey]?.properties?.color?0.2:1, tilejson?.[layerKey]?.properties?.color?0.05:0.8]
             }}
             layout={{
               "visibility": visible?'visible':'none'

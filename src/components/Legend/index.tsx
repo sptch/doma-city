@@ -36,10 +36,18 @@ export default ()=>{
             variant="body1"
             style={{
               textTransform:"capitalize",
-              paddingTop:'1rem'
+              paddingTop:'0.3rem'
             }}>
               {layer.replaceAll('_',' ')+':'}
           </Typography>
+          {layers[layer] && typeof(layers[layer])==="string" && <Typography
+            variant="caption"
+            style={{
+              textTransform:"capitalize",
+              paddingTop:'1rem'
+            }}>
+              {layers[layer].replaceAll('_',' ')}
+          </Typography>}
           {[...data].reverse().map(([value, color]:any, n:number)=><React.Fragment key={n}>
             <div style={{ display:'block', paddingTop:'0.2rem' }}>
               {
@@ -69,7 +77,12 @@ export default ()=>{
       
               }
               <Typography variant="body2" style={{display:'inline-block', paddingLeft:'1rem', textTransform:"capitalize"}}>
-                {(isNaN(value)?''+value?.toLowerCase():value===0?'No data':'  over '+value)}
+                { isNaN(value)?
+                    ''+value?.toLowerCase():
+                    // value===0?
+                    // <>No data</>:
+                    <>  over {value} {layers && typeof(layers[layer])==="string" && layers[layer].includes('value')?<><div style={{display:'inline-block', textTransform:"none"}}>CAD/m<sup>2</sup></div></>:<></>}</>
+                }
               </Typography>
             </div>
           </React.Fragment>)}

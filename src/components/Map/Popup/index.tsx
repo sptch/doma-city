@@ -29,7 +29,7 @@ export default ()=>{
     </svg>
   </div>
   <div style={{padding:'0.5rem', textTransform:"capitalize"}}>
-    {Object.entries(popup.properties)
+    {Object.entries({...popup.properties})
     .map(([key,value]:any)=>[
       key.replaceAll('_',' ').toLowerCase(), 
       typeof(value)==='string' && value.includes('http')?

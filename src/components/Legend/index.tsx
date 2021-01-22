@@ -76,7 +76,7 @@ export default ()=>{
                   }}/>
       
               }
-              <Typography variant="body2" style={{display:'inline-block', paddingLeft:'1rem', textTransform:"capitalize"}}>
+              <Typography variant="body2" component="div" style={{display:'inline-block', paddingLeft:'1rem', textTransform:"capitalize"}}>
                 { isNaN(value)?
                     ''+value?.toLowerCase():
                     // value===0?

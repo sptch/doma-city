@@ -16,10 +16,6 @@ export default function DataParameters ({ param, years, setParam, fields, setLay
     setYear((prev:any)=>(event.target.value as string))
   };
 
-  useEffect(()=>{
-    console.log(fields)
-  },[fields])
-
   return <>
     <FormControl variant="standard" style={{paddingLeft: '2rem'}} >
       <Select

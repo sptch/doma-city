@@ -7,18 +7,20 @@ import * as Queries from 'components/Queries'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
 
-export default function PaintLayer ({dataType, dataLayerKey, visible, source, sourceLayer, setPaintProperty}:any) {
+export default function PaintLayer ({ dataType, dataLayerKey, visible, source, sourceLayer, setPaintProperty, setCircleSizeProperty }:any) {
   type ColorMode = 'quantile' | 'linear'
   let mode:ColorMode = 'quantile'
   const [legendData, setLegendData] = useRecoilState<any>(Atoms.legendData)
+  const [tilejson] = useRecoilState<any>(Atoms.tilejson);
 
   const ntiles:number = 6
+
   const [getRange, { data:range, called, loading }] = useLazyQuery(Queries.getRange(source, dataLayerKey), {variables:{
     numeric: 
       dataType!=='varchar'
   }, fetchPolicy: "no-cache"})
 
-  const [getNTiles, { data:tiles }] = useLazyQuery(Queries.getNTiles, {variables:{
+  const [getNTiles, { data:tiles }] = useLazyQuery(Queries.getNTiles, { variables: {
     table_id: source, 
     column_id: dataLayerKey,
     ntiles,
@@ -47,7 +49,6 @@ export default function PaintLayer ({dataType, dataLayerKey, visible, source, so
     if( visible && range && (tiles || !numeric)){  
 
       if(numeric){
-        console.log('numeric', range, tiles, source)
         if(range[source+'_aggregate']){
           const legendPairs = tiles.get_tiles
           ?.reduce((arr:any,v:any)=>{
@@ -71,10 +72,46 @@ export default function PaintLayer ({dataType, dataLayerKey, visible, source, so
             "#cccccc",
             ...legendPairs.flat()
           ])
+          
+          if( 
+            tilejson[sourceLayer.replace('public.','')].geometry_type.toUpperCase()==="POINT" ||
+            tilejson[sourceLayer.replace('public.','')].geometry_type.toUpperCase()==="MULTIPOINT"
+          ){ 
+            setCircleSizeProperty((prev:any)=>({...prev, [sourceLayer.replace('public.','')]:['case', ['boolean', ['feature-state', 'hover'], false], [
+              'interpolate', ['linear'],
+              ['to-number', ['get', dataLayerKey], tiles.get_tiles[0].tile], 
+              ...tiles.get_tiles
+              ?.reduce((arr:any,v:any)=>{
+                if(!arr.find((a:any)=>a===v.tile)){
+                  arr.push(v.tile)
+                }
+                return arr
+              },[])
+              ?.map((v:number, i:number, arr:any)=>[
+                v, 
+                ((v-arr[0])/
+                (arr[arr.length-1]-arr[0]) * 5) + 8
+              ]).flat()
+            ],[
+              'interpolate', ['linear'],
+              ['to-number', ['get', dataLayerKey], tiles.get_tiles[0].tile], 
+              ...tiles.get_tiles
+              ?.reduce((arr:any,v:any)=>{
+                if(!arr.find((a:any)=>a===v.tile)){
+                  arr.push(v.tile)
+                }
+                return arr
+              },[])
+              ?.map((v:number, i:number, arr:any)=>[
+                v, 
+                ((v-arr[0])/
+                (arr[arr.length-1]-arr[0]) * 5) + 3
+              ]).flat()
+            ] ]})) 
+          }
         }
       }else{
         //Here goes categorical
-        console.log('categorical', range, dataLayerKey, source)
         if(range[source]){
           setLegendData((prev:any)=>({
             ...prev,

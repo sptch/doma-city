@@ -50,3 +50,12 @@ export const getNTiles = gql`
       tile
     }
   }`
+
+export const getDatum = (source:string, properties:any)=>gql`
+  query GetDatum_${source}($id: bigint, $year: bigint ) {
+    ${source}(where: {id: {_eq: $id}, report_year: {_eq: $year}}) {
+      ${properties.join('\n')}
+    }
+  }`
+
+

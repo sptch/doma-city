@@ -1,5 +1,5 @@
-Add on-click pop-ups with complete data
-Add timeline to blocks
+Add timeline to blocks - Make animations
+City Owned Property - assign tax data
 
 Setup clustering (summary for blocks) for better user experience:
 - For block_outline
@@ -8,5 +8,3 @@ Setup clustering (summary for blocks) for better user experience:
 - ?Zoning_district
 
 Add spinner for loading times
-
-Make animations timeline

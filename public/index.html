@@ -27,6 +27,25 @@
     <title>Vancouver</title>
   </head>
   <body style="overflow: hidden;">
+    <style>
+      .custom-popup{
+        opacity:0.95;
+        font: 10px Helvetica;
+        max-width: fit-content;
+        max-height: none;
+      }
+      .mapboxgl-popup-content {
+        overflow: hidden;
+        z-index: 2;
+        display: 'block';
+        background-color:#eeeeee;
+        opacity: 0.85;
+        box-shadow: -15px 15px 15px rgba(0,0,0,0.2);
+        text-align: left;
+        padding: 1rem;
+        border-radius: 0.5rem;
+      }
+    </style>
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div id="root"></div>
     <!--

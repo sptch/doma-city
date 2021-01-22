@@ -25,3 +25,8 @@ export const legendData = atom({
   key: 'legendData', 
   default: [], 
 });
+
+export const popup = atom({
+  key: 'popup', 
+  default: null, 
+});

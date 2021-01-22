@@ -1,15 +1,70 @@
-import React, { useState } from 'react'
-import { Source, Layer } from '@urbica/react-map-gl'
+import React, { useEffect, useState } from 'react'
+import { Source, Layer, FeatureState } from '@urbica/react-map-gl'
 import { useRecoilState, useRecoilValue } from 'recoil'
+import { useLazyQuery } from '@apollo/client'
 import * as Atoms from 'components/Atoms'
+import * as Queries from 'components/Queries'
 import PaintDataLayer from './PaintDataLayer'
+import getCentroid from '@turf/centroid'
 
-export default function MapDataLayer ({layerKey, property, visible, i}:any) {
-  const tilejson:{[k: string]: any} = useRecoilValue(Atoms.tilejson);
+export default function MapDataLayer ({setCursor, layerKey, property, visible, i}:any) {
+  const tilejson:{[k: string]: any} = useRecoilValue(Atoms.tilejson)
+  const [year] = useRecoilState<any>(Atoms.taxesYear)
   const l = tilejson[layerKey]
   const [layers, setLayers] = useRecoilState<any>(Atoms.tileLayers)
   const dataLayers = useRecoilValue<any>(Atoms.dataLayers)
-  const [paintProperty, setPaintProperty] = useState({"fill-color": "rgba(247,178,17,0.3)"})
+  const [paintProperty, setPaintProperty] = useState("rgba(247,178,17,0.3)")
+  const [hoveredStateId, setHoveredStateId] = useState(null);
+  const [popup, setPopup] = useRecoilState<any>(Atoms.popup);
+  const [popupBase, setPopupBase] = useState<any>({id:0, properties:{id:0}})
+
+  const [getDatum, { data:popupData, loading, refetch: refetchDatum }] = useLazyQuery(
+    Queries.getDatum(layerKey+"_data", dataLayers[layerKey].map((v:any)=>v.name)), {variables: {
+      id: popupBase.id||popupBase.properties.id||0,
+      year: Number(year) || 2006
+    }})
+
+  const onClick = (e:any)=>{
+    setPopupBase(e.features[0])
+    if(!popupData){
+      getDatum()
+    }else{
+      refetchDatum && refetchDatum({
+        id: popupBase.id,
+        year 
+      })
+    }
+  }
+
+  useEffect(()=>{
+    if(popupData){
+      console.log(popupData)
+      setPopup({ 
+        location:{
+          longitude: getCentroid(popupBase.geometry).geometry.coordinates[0],
+          latitude: getCentroid(popupBase.geometry).geometry.coordinates[1]
+        },
+        properties: popupData[layerKey+'_data'][0]
+      })
+    }
+  },[popupData])
+  
+  const onHover = (event:any) => {
+    setCursor("pointer")
+    if (event.features.length > 0) {
+      const nextHoveredStateId = event.features[0].id;
+      if (hoveredStateId !== nextHoveredStateId) {
+        setHoveredStateId(nextHoveredStateId);
+      }
+    }
+  };
+  
+  const onLeave = () => {
+    setCursor("")
+    if (hoveredStateId) {
+      setHoveredStateId(null);
+    }
+  };
 
   return <>
     <Source 
@@ -25,9 +80,15 @@ export default function MapDataLayer ({layerKey, property, visible, i}:any) {
       type="fill"
       source={l.table}
       source-layer={l.id}
-      paint={paintProperty}
+      paint={{
+        "fill-color": paintProperty,
+        'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 0.9, 0.8]
+      }}
+      onHover={onHover}
+      onLeave={onLeave}
+      onClick={onClick}
       layout={{
-        "visibility": visible?'visible':'none'
+        "visibility": visible?'visible':'none',
       }}
       before='road-label'
     />
@@ -36,14 +97,16 @@ export default function MapDataLayer ({layerKey, property, visible, i}:any) {
       type="line"
       source={l.table}
       source-layer={l.id}
+      onHover={onHover}
+      onLeave={onLeave}
       paint={{
-        'line-color': 'rgb(200,200,200)',
-        'line-width': 0.2
+        'line-color': paintProperty,
+        'line-width':  ['case', ['boolean', ['feature-state', 'hover'], false], 4, 0.2],
+        'line-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 1, 0.8]
       }}
       layout={{
         "visibility": visible?'visible':'none'
       }}
-      minzoom={13}
       before='road-label'
     />
     {
@@ -58,5 +121,7 @@ export default function MapDataLayer ({layerKey, property, visible, i}:any) {
           key={i} />
       )
     }
+    {hoveredStateId && <FeatureState id={hoveredStateId} source={layerKey} sourceLayer={'public.'+layerKey} state={{ hover: true }} />}
+
   </>
 }

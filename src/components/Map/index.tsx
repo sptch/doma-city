@@ -2,24 +2,20 @@ import React, { useState, useRef, useEffect } from 'react'
 import MapGL from '@urbica/react-map-gl'
 import { useRecoilState } from 'recoil'
 import * as Atoms from 'components/Atoms'
-import 'mapbox-gl/dist/mapbox-gl.css'
+// import 'mapbox-gl/dist/mapbox-gl.css'
 import MapLayer from './MapLayer'
 import MapDataLayer from './MapDataLayer'
+import Popup from './Popup'
 
 export default ()=>{
   const [viewport, setViewport] = useState({ latitude: 49.2827, longitude:  -123.1207, zoom:11 });
   const [loaded, setLoaded] = useState(false)
+  const [cursor, setCursor] = useState("")
   const [layers, setLayers] = useRecoilState<object>(Atoms.tileLayers);
   const [tilejson, setTilejson] = useRecoilState<object>(Atoms.tilejson);
+  const [popup, setPopup] = useRecoilState<any>(Atoms.popup);
 
   const mapRef:any = useRef()
-
-  // useEffect(()=>{
-  //   if(mapRef){
-  //     const m = mapRef.current.getMap()
-  //     m.on('click', (e:any)=>console.log(m.getStyle()))
-  //   }
-  // },[mapRef])
 
   useEffect(()=>{
     fetch("https://spatialtech.herokuapp.com/http://dev.spatialtech.info:3003/index.json")
@@ -57,21 +53,24 @@ export default ()=>{
 
   return (
     <MapGL
-      style={{  position:'absolute', top:0,bottom:0,left:0,right:0, border:"none", outline: "none" }}
+      style={{ position:'absolute', top:0,bottom:0,left:0,right:0, border:"none", outline: "none" }}
       mapStyle="mapbox://styles/switch9/ckahu5spr0amr1ik3n1fg0fvt"
       accessToken={'pk.eyJ1Ijoic3dpdGNoOSIsImEiOiJjamozeGV2bnkxajV2M3FvNnpod3h4ODlpIn0.CTt2IXV8II6finbTlxEddg'}
       onViewportChange={setViewport}
       onLoad={()=>{setLoaded(true)}}
+      cursorStyle={cursor}
       ref={mapRef}
       hash={true}
+      onClick={()=>setPopup(null)}
       {...viewport}
     >
+      { popup && <Popup {...popup} /> }
       {
         (Object.entries(layers) as Array<keyof typeof layers>)
         ?.map((layer, i)=><React.Fragment key={i}>
-          {layer[0]!=="taxes"?
-            <MapLayer {...{layerKey: layer[0], property: layer[1], visible:Boolean(layer[1]), i}}/>:
-            <MapDataLayer {...{layerKey: layer[0], property: layer[1], visible:Boolean(layer[1]), i}}/>}
+          { layer[0]!=="taxes" ?
+            <MapLayer {...{setCursor, layerKey: layer[0], property: layer[1], visible:Boolean(layer[1]), i}}/>:
+            <MapDataLayer {...{setCursor, layerKey: layer[0], property: layer[1], visible:Boolean(layer[1]), i}}/> }
         </React.Fragment>
         )
       }

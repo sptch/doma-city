@@ -128,9 +128,7 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
         });
       }
       matchExpression.push('rgba(0, 0, 0, 0)');
-      setPaintProperty({
-        "fill-color": matchExpression
-      })
+      setPaintProperty( matchExpression)
     }
   },[data, range, tiles, visible])
 

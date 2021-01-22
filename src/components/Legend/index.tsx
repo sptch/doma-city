@@ -11,10 +11,6 @@ export default ()=>{
   const [layers, setLayers] = useRecoilState<any>(Atoms.tileLayers)
   const [tilejson, setTilejson] = useRecoilState<any>(Atoms.tilejson);
 
-  useEffect(()=>{
-    console.log(tilejson);
-  },[tilejson])
-
   return Object.entries(legendData).length>0 ? (
     <Box 
       style={{

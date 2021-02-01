@@ -1,40 +1,29 @@
-/* Create block stats */
-CREATE MATERIALIZED VIEW public.blocks_wp
+/* Create blocks aprroximation */
+CREATE MATERIALIZED VIEW public.blocks_data
 AS
 SELECT 
-	blocks.geom as spatialobj_built, blocks.id, blocks.neighborhood_id,
-	coalesce(avg(parcels.transaction_price), 0) AS transaction_price,
-	coalesce(avg(parcels.price_of_meter), 0) AS price_of_meter,
-	coalesce(avg(parcels.shape_area), 0) AS shape_area,
-  mode() within group (order by zoning_group) as zoning_group,
-  mode() within group (order by zoning_id) as zoning_id,
-  mode() within group (order by zoningid) as zoningid,
-  mode() within group (order by ruleid) as ruleid,
-  mode() within group (order by zoning_color) as zoning_color
-FROM (
-  SELECT geom, row_number() OVER () AS "id", neighborhood_id
-  FROM (
-    SELECT st_simplifypreservetopology(
-      ST_MakePolygon(
-        ST_ExteriorRing(
-          (ST_Dump(
-            ST_Buffer(
-              ST_Collect(
-                ST_MakeValid(spatialobj_built)
-              ), 0)
-          )).geom
-        )
-      ), 0.00005) as geom, neighborhood_id
-    FROM parcels_wp
-    GROUP BY neighborhood_id
-  ) block_polygons
-) blocks
-  LEFT JOIN parcels_wp AS parcels
-  ON ST_Intersects(blocks.geom, parcels.spatialobj_built)
-GROUP BY blocks.geom, blocks.id, blocks.neighborhood_id
+	b.id,  t.report_year,
+  COALESCE(avg(t.current_land_value), 0) AS current_land_value,
+  COALESCE(avg(t.current_improvement_value), 0) AS current_improvement_value,
+  COALESCE(avg(t.previous_improvement_value), 0) AS previous_improvement_value,
+  COALESCE(avg(t.previous_land_value), 0) AS previous_land_value,
+  COALESCE(avg(t.tax_levy), 0) AS tax_levy,
+  mode() WITHIN GROUP (ORDER BY t.year_built) AS year_built,
+  mode() WITHIN GROUP (ORDER BY t.big_improvement_year) AS big_improvement_year,
+  mode() WITHIN GROUP (ORDER BY t.zone_category) AS zone_category,
+  mode() WITHIN GROUP (ORDER BY t.legal_type) AS legal_type
+FROM (    
+  SELECT * 
+  FROM blocks 
+  CROSS JOIN (
+    SELECT report_year from taxes_data group by report_year
+  ) as bl ) as b
+  LEFT JOIN (
+    SELECT * 
+    FROM taxes 
+    RIGHT JOIN taxes_data
+      ON taxes_data.id = taxes.id
+  ) as t
+  ON b.report_year=t.report_year and ST_Intersects(b.geom, t.geom)
+GROUP BY b.geom, b.id, t.report_year
 WITH DATA;
-
-ALTER TABLE public.blocks_wp
-    OWNER TO tileserver;
-
-CREATE INDEX blocks_wp_spgist ON public.blocks_wp USING spgist(spatialobj_built);

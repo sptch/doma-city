@@ -5,6 +5,7 @@ import * as Atoms from 'components/Atoms'
 
 export default function DataParameters ({ param, years, setParam, fields, setLayers, layerKey }:any) {
 
+  useEffect(()=>{console.log(fields)},[fields])
   const [year, setYear] = useRecoilState<any>(Atoms.taxesYear)
 
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -26,7 +27,7 @@ export default function DataParameters ({ param, years, setParam, fields, setLay
       >
         {
             fields && fields
-            .map((itemKey:any, i:number)=>
+            ?.map((itemKey:any, i:number)=>
               <MenuItem 
                 key={i} 
                 style={{textTransform:"capitalize"}} 

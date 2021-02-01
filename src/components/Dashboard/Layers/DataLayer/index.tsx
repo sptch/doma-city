@@ -24,7 +24,7 @@ export default function DataLayer ({ fields, layerKey, years }:any) {
           name={layerKey} 
         />
       }
-      label='Tax reports' 
+      label={layerKey}
       style={{textTransform:"capitalize"}}
     />
     { Boolean(layers[layerKey]) && <DataParameters {...{param, setParam, year, setYear, years, layerKey, fields, setLayers}} /> }

@@ -14,6 +14,7 @@ export default ()=>{
   const [layers, setLayers] = useRecoilState<object>(Atoms.tileLayers);
   const [tilejson, setTilejson] = useRecoilState<object>(Atoms.tilejson);
   const [popup, setPopup] = useRecoilState<any>(Atoms.popup);
+  const [dataLayersNames] = useRecoilState<any>(Atoms.dataLayersNames)
 
   const mapRef:any = useRef()
 
@@ -68,7 +69,7 @@ export default ()=>{
       {
         (Object.entries(layers) as Array<keyof typeof layers>)
         ?.map((layer, i)=><React.Fragment key={i}>
-          { layer[0]!=="taxes" ?
+          { layer[0]!=="taxes" && layer[0]!=="blocks" ?
             <MapLayer {...{setCursor, layerKey: layer[0], property: layer[1], visible:Boolean(layer[1]), i}}/>:
             <MapDataLayer {...{setCursor, layerKey: layer[0], property: layer[1], visible:Boolean(layer[1]), i}}/> }
         </React.Fragment>

@@ -23,14 +23,16 @@ const useStyles = makeStyles((theme: Theme) =>
 export default ()=>{
   const classes = useStyles()
   const [layers] = useRecoilState<any>(Atoms.tileLayers)
+  const [dataLayersNames] = useRecoilState<any>(Atoms.dataLayersNames)
   const [dataLayers, setDataLayers] = useRecoilState<any>(Atoms.dataLayers)
 
-  const { data:keys } = useQuery(Queries.getKeys("taxes_data"))
+  const { data:keys } = useQuery(Queries.getKeys(dataLayersNames))
   const { data:years } = useQuery(Queries.getRange('taxes_data', 'report_year'), {variables:{numeric: false}})
 
   useEffect(()=>{
     if(keys){
-      setDataLayers({taxes: keys.__type.fields})
+      console.log(keys)
+      setDataLayers(keys)
     }
   },[keys])
 
@@ -45,7 +47,7 @@ export default ()=>{
               (entries:any, i:any)=><DataLayer 
                 {...{
                   layerKey:entries[0],
-                  fields:entries[1], 
+                  fields:entries[1].fields, 
                   years: years?.taxes_data?.map((v:any)=>v.report_year), 
                   key:i
                 }}/>
@@ -53,7 +55,7 @@ export default ()=>{
           }
           {
             Object.keys(layers).length>0 && 
-            (Object.keys(layers) as Array<keyof typeof layers>)
+            (Object.keys(layers) as any)
             .sort((a:any,b:any)=>{
               var nameA = a.replaceAll('_',' ').toUpperCase(); // ignore upper and lowercase
               var nameB = b.replaceAll('_',' ').toUpperCase(); // ignore upper and lowercase
@@ -66,7 +68,7 @@ export default ()=>{
               return 0;
             })
             .map(
-              (layerKey, i)=>layerKey!=='taxes' &&
+              (layerKey:any, i:number)=>(layerKey!=='taxes'&&layerKey!=='blocks') &&
               <Layer {...{layers, layerKey, key:i}}/>
             )
           }

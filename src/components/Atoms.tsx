@@ -6,6 +6,11 @@ export const tilejson = atom({
   default: {}, 
 });
 
+export const dataLayersNames = atom({
+  key: 'dataLayersNames', 
+  default: ['taxes', 'blocks'] 
+});
+
 export const dataLayers = atom({
   key: 'dataLayers', 
   default: {}, 

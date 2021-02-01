@@ -1,16 +1,19 @@
 import { useQuery, gql } from '@apollo/client'
 
-export const getKeys = (table:string)=>gql`
-  query GetKeys_${table} {
-    __type(name:"${table}") {
-      fields {
+export const getKeys = (tables:Array<string>)=>gql`
+  query GetKeys_${tables.join('_')} {
+  ${tables.map((table)=>`
+    ${table}: __type(name:"${table}_data") {
+        fields {
           name
           type {
             name
           }
-      }  
-    }
-  }`
+        }  
+      }
+  `)}
+  }
+`
 
 export const getYearValues = (source:string, property:string)=>gql`
   query GetYearValues_${source}($year:bigint) {
@@ -53,7 +56,7 @@ export const getNTiles = gql`
   }`
 
 export const getDatum = (source:string, properties:any)=>gql`
-  query GetDatum_${source}($id: bigint, $year: bigint ) {
+  query GetDatum_${source}($id: ${source==='blocks_data'?'Int':'bigint'}, $year: bigint ) {
     ${source}(where: {id: {_eq: $id}, report_year: {_eq: $year}}) {
       ${properties.join('\n')}
     }

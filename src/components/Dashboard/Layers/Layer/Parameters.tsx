@@ -21,6 +21,7 @@ export default function Parameters ({ layerKey, param, setParam, setLayers }:any
       >
         {
           (Object.keys(tilejson[layerKey].properties) as Array<keyof typeof tilejson>)
+            .sort()
             .map((itemKey, i)=>
               <MenuItem 
                 key={i} 

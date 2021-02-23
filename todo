@@ -2,7 +2,6 @@ Add timeline data interpolation to blocks - Make animations
 City Owned Property - assign tax data
 
 Setup clustering (summary for blocks) for better user experience:
-- For block_outline
 - For local_area_boundary
 - Property_use_inspection
 - ?Zoning_district

@@ -12,12 +12,13 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
   type ColorMode = 'quantile' | 'linear'
   let mode:ColorMode = 'quantile'
   
-  const ntiles = 6
+  const ntiles = 8
   const [getData, { data, called, loading, refetch }] = useLazyQuery(Queries.getYearValues(source+'_data', dataLayerKey), {variables:{year}, fetchPolicy: "no-cache"})
   const [getRange, { data:range }] = useLazyQuery(Queries.getRange(source+'_data', dataLayerKey), {variables:{
     numeric: 
       dataType==='float8' ||
-      dataType==='bigint'
+      dataType==='bigint' ||
+      dataType==='Int'
   }, fetchPolicy: "no-cache"})
 
   const [getNTiles, { data:tiles }] = useLazyQuery(Queries.getNTiles, {variables:{
@@ -43,7 +44,8 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
     if(visible && !called) {
       const numeric = 
         dataType==='float8' ||
-        dataType==='bigint'
+        dataType==='bigint' ||
+        dataType==='Int'
       getRange(); 
       if(numeric) getNTiles(); 
       getData(); 
@@ -53,7 +55,8 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
   useEffect(()=>{
     const numeric = 
       dataType==='float8' ||
-      dataType==='bigint'
+      dataType==='bigint' ||
+      dataType==='Int'
 
     if(data && visible && range && (tiles || !numeric)){  
       const matchExpression = ['match', ['get', 'id']];

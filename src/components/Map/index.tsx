@@ -38,7 +38,7 @@ export default ()=>{
       }).forEach((key, i)=>{
         if(key.includes('public')){
           const filteredProp = Object.keys(d[key].properties)
-            .filter(key => key.charAt(0)!=="_" && key.substr(0,2)!=="id")
+            .filter(key => key.charAt(0)!=="_" && key.substr(0,2).toLocaleLowerCase()!=="id" && key.substr(0,2).toLocaleLowerCase()!=="id" && key!=="report_year")
             .reduce((obj:any, k:any) => {
               obj[k] = d[key].properties[k];
               return obj;
@@ -69,7 +69,7 @@ export default ()=>{
       {
         (Object.entries(layers) as Array<keyof typeof layers>)
         ?.map((layer, i)=><React.Fragment key={i}>
-          { layer[0]!=="taxes" && layer[0]!=="blocks" ?
+          { layer[0]!=="property_tax_report__parcels" && layer[0]!=="property_tax_report__blocks" ?
             <MapLayer {...{setCursor, layerKey: layer[0], property: layer[1], visible:Boolean(layer[1]), i}}/>:
             <MapDataLayer {...{setCursor, layerKey: layer[0], property: layer[1], visible:Boolean(layer[1]), i}}/> }
         </React.Fragment>

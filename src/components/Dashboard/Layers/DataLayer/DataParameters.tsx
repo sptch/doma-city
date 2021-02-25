@@ -27,6 +27,7 @@ export default function DataParameters ({ param, years, setParam, fields, setLay
       >
         {
             fields && fields
+            .filter(({name:key}:any)=> key.charAt(0)!=="_" && key.substr(0,2).toLocaleLowerCase()!=="id" && key.substr(0,2).toLocaleLowerCase()!=="id" && key!=="report_year")
             ?.map((itemKey:any, i:number)=>
               <MenuItem 
                 key={i} 

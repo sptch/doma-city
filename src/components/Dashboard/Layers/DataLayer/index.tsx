@@ -6,7 +6,7 @@ import DataParameters from './DataParameters'
 
 export default function DataLayer ({ fields, layerKey, years }:any) {
 
-  const [param, setParam] = useState('current_land_value')
+  const [param, setParam] = useState('land_value')
   const [layers, setLayers] = useRecoilState<any>(Atoms.tileLayers)
   const [year, setYear] = useRecoilState<any>(Atoms.taxesYear)
   const [legendData, setLegendData] = useRecoilState<any>(Atoms.legendData)
@@ -24,7 +24,7 @@ export default function DataLayer ({ fields, layerKey, years }:any) {
           name={layerKey} 
         />
       }
-      label={layerKey}
+      label={layerKey.replaceAll("_", " ")}
       style={{textTransform:"capitalize"}}
     />
     { Boolean(layers[layerKey]) && <DataParameters {...{param, setParam, year, setYear, years, layerKey, fields, setLayers}} /> }

@@ -8,6 +8,7 @@ import * as Queries from 'components/Queries'
 import { useQuery } from '@apollo/client'
 import DataLayer from './DataLayer'
 import Layer from './Layer'
+import otherLayers from 'sources.json'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,6 +36,12 @@ export default ()=>{
       setDataLayers(keys)
     }
   },[keys])
+
+  useEffect(()=>{
+    if(layers){
+      console.log(layers)
+    }
+  },[layers])
 
   return (
     <Box style={{width: '100%', overflowX: 'hidden'}}>

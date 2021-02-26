@@ -8,8 +8,8 @@ export default function Layer ({ layerKey }:any) {
 
   const tilejson:{[k: string]: any} = useRecoilValue(Atoms.tilejson);
   const [param, setParam] = useState(
-    (Object.keys(tilejson[layerKey].properties) as Array<keyof typeof tilejson>)[0] ||
-    Object.keys(tilejson[layerKey].properties).length === 0
+    (Object.keys(tilejson[layerKey]?.properties||{}) as Array<keyof typeof tilejson>)[0] ||
+    Object.keys(tilejson[layerKey]?.properties||{}).length === 0
   )
   const [layers, setLayers] = useRecoilState<any>(Atoms.tileLayers)
 

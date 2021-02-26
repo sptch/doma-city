@@ -1,11 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react'
-import MapGL from '@urbica/react-map-gl'
+import MapGL, { Layer } from '@urbica/react-map-gl'
 import { useRecoilState } from 'recoil'
 import * as Atoms from 'components/Atoms'
 // import 'mapbox-gl/dist/mapbox-gl.css'
 import MapLayer from './MapLayer'
 import MapDataLayer from './MapDataLayer'
 import Popup from './Popup'
+import otherLayers from 'sources.json'
 
 export default ()=>{
   const [viewport, setViewport] = useState({ latitude: 49.2827, longitude:  -123.1207, zoom:11 });
@@ -47,6 +48,9 @@ export default ()=>{
           fetchedLayers[key.replace('public.','')] = i===0
         }
       })
+      fetchedLayers = otherLayers.reduce((p,v,i)=>({ ...p, [v.id]:false }), fetchedLayers)
+      fetchedTilejson = otherLayers.reduce((p,v,i)=>({ ...p, [v.id]:v}), fetchedTilejson)
+      console.log(fetchedTilejson, fetchedLayers)
       setTilejson(fetchedTilejson)
       setLayers(fetchedLayers)
     })

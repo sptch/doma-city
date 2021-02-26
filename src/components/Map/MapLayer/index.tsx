@@ -38,7 +38,23 @@ export default function MapLayer ({setCursor, layerKey, property, visible, i}:an
     properties: e.features[0].properties
   })
 
-  return <>
+  return tilejson[layerKey]?.type==="raster"?
+    ( <>
+      <Source
+        id={l.id}
+        type="raster"
+        tiles={l.tiles}
+        scheme={l.scheme}
+      />
+      { visible &&
+        <Layer
+          type="raster"
+          source={l.id}
+          id={l.id}
+        />
+      }
+    </> )
+  : (<>
         <Source 
           id={layerKey}
           type="vector"
@@ -135,5 +151,5 @@ export default function MapLayer ({setCursor, layerKey, property, visible, i}:an
           />
         }
         {hoveredStateId && <FeatureState id={hoveredStateId} source={layerKey} sourceLayer={'public.'+layerKey} state={{ hover: true }} />}
-  </>
+  </>)
 }

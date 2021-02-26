@@ -117,7 +117,7 @@ export default function MapLayer ({setCursor, layerKey, property, visible, i}:an
             onHover={onHover}
             onLeave={onLeave}
             paint={{
-              "line-width": ['case', ['boolean', ['feature-state', 'hover'], false], 4, 2],
+              "line-width": ['case', ['boolean', ['feature-state', 'hover'], false], ["interpolate", ['linear'], ['zoom'],14,4,12,0], ["interpolate", ['linear'], ['zoom'],14,2,12,0]],
               "line-color": fillColorProperty,
               'line-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], tilejson?.[layerKey]?.properties?.color?0.3:1, tilejson?.[layerKey]?.properties?.color?0.15:0.8]
             }}

@@ -56,7 +56,7 @@ export const getNTiles = gql`
   }`
 
 export const getDatum = (source:string, properties:any)=>gql`
-  query GetDatum_${source}($id: ${source==='property_tax_report__blocks_data'?'Int':'bigint'}, $year: bigint ) {
+  query GetDatum_${source}($id: ${source==='vancouver_property_tax__blocks_data'?'Int':'bigint'}, $year: bigint ) {
     ${source}(where: {id: {_eq: $id}, report_year: {_eq: $year}}) {
       ${properties.join('\n')}
     }

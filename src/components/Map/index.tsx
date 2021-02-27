@@ -73,7 +73,7 @@ export default ()=>{
       {
         (Object.entries(layers) as Array<keyof typeof layers>)
         ?.map((layer, i)=><React.Fragment key={i}>
-          { layer[0]!=="property_tax_report__parcels" && layer[0]!=="property_tax_report__blocks" ?
+          { layer[0]!=="vancouver_property_tax__parcels" && layer[0]!=="vancouver_property_tax__blocks" ?
             <MapLayer {...{setCursor, layerKey: layer[0], property: layer[1], visible:Boolean(layer[1]), i}}/>:
             <MapDataLayer {...{setCursor, layerKey: layer[0], property: layer[1], visible:Boolean(layer[1]), i}}/> }
         </React.Fragment>

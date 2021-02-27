@@ -1,6 +1,6 @@
 [
   {
-    "id": "Aerial Photogrammetry",
+    "id": "Canada Aerial Photogrammetry",
     "type": "raster",
     "tiles": ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"],
     "scheme": "xyz"

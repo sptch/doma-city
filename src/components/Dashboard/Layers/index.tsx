@@ -75,7 +75,7 @@ export default ()=>{
               return 0;
             })
             .map(
-              (layerKey:any, i:number)=>(layerKey!=='property_tax_report__parcels'&&layerKey!=='property_tax_report__blocks') &&
+              (layerKey:any, i:number)=>(layerKey!=='vancouver_property_tax__parcels'&&layerKey!=='vancouver_property_tax__blocks') &&
               <Layer {...{layers, layerKey, key:i}}/>
             )
           }

@@ -1,9 +1,3 @@
-Add timeline data interpolation to blocks - Make animations
-City Owned Property - assign tax data
-
-Setup clustering (summary for blocks) for better user experience:
-- For local_area_boundary
-- Property_use_inspection
-- ?Zoning_district
-
-Add spinner for loading
+Make 3d map
+Add plot on the map
+Make side panel hide-able

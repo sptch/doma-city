@@ -53,7 +53,24 @@ export default function MapLayer ({setCursor, layerKey, property, visible, i}:an
           id={l.id}
         />
       }
-    </> )
+    </> ):
+  tilejson[layerKey]?.type==="vector"?
+  ( <>
+    <Source
+      id={l.id}
+      type="vector"
+      tiles={l.tiles}
+      scheme={l.scheme}
+    />
+    { visible &&
+      <Layer
+        type="line"
+        source={l.id}
+        id={l.id}
+        source-layer="Indigenous"
+      />
+    }
+  </> )
   : (<>
         <Source 
           id={layerKey}

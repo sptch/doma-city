@@ -28,7 +28,7 @@ export default ()=>{
   const [dataLayers, setDataLayers] = useRecoilState<any>(Atoms.dataLayers)
 
   const { data:keys } = useQuery(Queries.getKeys(dataLayersNames))
-  const { data:years } = useQuery(Queries.getRange('vancouver_property_tax__parcels_data', 'report_year'), {variables:{numeric: false}})
+  const { data:years } = useQuery(Queries.getRange('vancouver_x_property_tax_parcels_data', 'report_year'), {variables:{numeric: false}})
 
   useEffect(()=>{
     if(keys){
@@ -55,7 +55,7 @@ export default ()=>{
                 {...{
                   layerKey:entries[0],
                   fields:entries[1]?.fields, 
-                  years: years?.vancouver_property_tax__parcels_data?.map((v:any)=>v.report_year), 
+                  years: years?.vancouver_x_property_tax_parcels_data?.map((v:any)=>v.report_year), 
                   key:i
                 }}/>
             )
@@ -75,7 +75,7 @@ export default ()=>{
               return 0;
             })
             .map(
-              (layerKey:any, i:number)=>(layerKey!=='vancouver_property_tax__parcels'&&layerKey!=='vancouver_property_tax__blocks') &&
+              (layerKey:any, i:number)=>(layerKey!=='vancouver_x_property_tax_parcels'&&layerKey!=='vancouver_x_property_tax_blocks') &&
               <Layer {...{layers, layerKey, key:i}}/>
             )
           }

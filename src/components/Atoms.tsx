@@ -8,7 +8,7 @@ export const tilejson = atom({
 
 export const dataLayersNames = atom({
   key: 'dataLayersNames', 
-  default: ['vancouver_property_tax__parcels', 'vancouver_property_tax__blocks'] 
+  default: ['vancouver_x_property_tax_parcels', 'vancouver_x_property_tax_blocks'] 
 });
 
 export const dataLayers = atom({

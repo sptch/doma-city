@@ -7,9 +7,9 @@ import * as Queries from 'components/Queries'
 import 'mapbox-gl/dist/mapbox-gl.css'
 
 
-export default function PaintLayer ({ dataType, dataLayerKey, visible, source, sourceLayer, setPaintProperty, setCircleSizeProperty }:any) {
+export default function PaintLayer ({ dataType, dataLayerKey, visible, source, sourceLayer, setPaintProperty, setCircleSizeProperty, setExtrude }:any) {
   type ColorMode = 'quantile' | 'linear'
-  let mode:ColorMode = 'quantile'
+  let mode: ColorMode = 'quantile'
   const [legendData, setLegendData] = useRecoilState<any>(Atoms.legendData)
   const [tilejson] = useRecoilState<any>(Atoms.tilejson);
 
@@ -72,12 +72,43 @@ export default function PaintLayer ({ dataType, dataLayerKey, visible, source, s
             "#cccccc",
             ...legendPairs.flat()
           ])
+          setExtrude((prev:any)=>({...prev, [source]:['case', ['boolean', ['feature-state', 'hover'], false], [
+            'interpolate', ['linear'],
+            ['to-number', ['get', dataLayerKey], tiles.get_tiles[0].tile], 
+            ...tiles.get_tiles
+            ?.reduce((arr:any,v:any)=>{
+              if(!arr.find((a:any)=>a===v.tile)){
+                arr.push(v.tile)
+              }
+              return arr
+            },[])
+            ?.map((v:number, i:number, arr:any)=>[
+              v, 
+              ((v-arr[0])/
+              (arr[arr.length-1]-arr[0]) * 1000) + 300
+            ]).flat()
+          ],[
+            'interpolate', ['linear'],
+            ['to-number', ['get', dataLayerKey], tiles.get_tiles[0].tile], 
+            ...tiles.get_tiles
+            ?.reduce((arr:any,v:any)=>{
+              if(!arr.find((a:any)=>a===v.tile)){
+                arr.push(v.tile)
+              }
+              return arr
+            },[])
+            ?.map((v:number, i:number, arr:any)=>[
+              v, 
+              ((v-arr[0])/
+              (arr[arr.length-1]-arr[0]) * 1000) + 150
+            ]).flat()
+          ] ]})) 
           
           if( 
             tilejson[source].geometry_type.toUpperCase()==="POINT" ||
             tilejson[source].geometry_type.toUpperCase()==="MULTIPOINT"
           ){ 
-            setCircleSizeProperty((prev:any)=>({...prev, [sourceLayer.replace('public.','')]:['case', ['boolean', ['feature-state', 'hover'], false], [
+            setCircleSizeProperty((prev:any)=>({...prev, [source]:['case', ['boolean', ['feature-state', 'hover'], false], [
               'interpolate', ['linear'],
               ['to-number', ['get', dataLayerKey], tiles.get_tiles[0].tile], 
               ...tiles.get_tiles
@@ -112,6 +143,7 @@ export default function PaintLayer ({ dataType, dataLayerKey, visible, source, s
         }
       }else{
         //Here goes categorical
+        setExtrude(false)
         if(range[source]){
           if(tilejson?.[source]?.properties?.color){
             console.log(range)

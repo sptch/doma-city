@@ -24,7 +24,7 @@ export default function DataLayer ({ fields, layerKey, years }:any) {
           name={layerKey} 
         />
       }
-      label={layerKey.replaceAll("_", " ")}
+      label={layerKey.split('_x_')[1].replaceAll("_", " ")}
       style={{textTransform:"capitalize"}}
     />
     { Boolean(layers[layerKey]) && <DataParameters {...{param, setParam, year, setYear, years, layerKey, fields, setLayers}} /> }

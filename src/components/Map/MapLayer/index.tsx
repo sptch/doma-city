@@ -5,13 +5,19 @@ import * as Atoms from 'components/Atoms'
 import PaintLayer from './PaintLayer'
 import getCentroid from '@turf/centroid'
 
-export default function MapLayer ({setCursor, layerKey, property, visible, i}:any) {
+export default function MapLayer ({setCursor, layerKey, property, visible, setAxonometric, i}:any) {
   const tilejson:{[k: string]: any} = useRecoilValue(Atoms.tilejson);
   const l = tilejson[layerKey]
   const [fillColorProperty, setPaintProperty] = useState("rgba(247,178,17,0.3)")
   const [circleSizeProperty, setCircleSizeProperty] = useState<any>({})
   const [hoveredStateId, setHoveredStateId] = useState(null);
   const [popup, setPopup] = useRecoilState<any>(Atoms.popup);
+  const [extrude, setExtrude] = useState<any>({})
+
+  useEffect(()=>{
+    if(visible&&Object.keys(extrude).length>0){setAxonometric(true)}
+    if(visible&&Object.keys(extrude).length===0){setAxonometric(false)}
+  },[visible, setAxonometric, extrude])
 
   const onHover = (event:any) => {
     setCursor("pointer")
@@ -45,6 +51,8 @@ export default function MapLayer ({setCursor, layerKey, property, visible, i}:an
         type="raster"
         tiles={l.tiles}
         scheme={l.scheme}
+        tileSize={l.tileSize||undefined}
+        maxzoom={l.maxzoom||undefined}
       />
       { visible &&
         <Layer
@@ -54,24 +62,7 @@ export default function MapLayer ({setCursor, layerKey, property, visible, i}:an
         />
       }
     </> ):
-  tilejson[layerKey]?.type==="vector"?
-  ( <>
-    <Source
-      id={l.id}
-      type="vector"
-      tiles={l.tiles}
-      scheme={l.scheme}
-    />
-    { visible &&
-      <Layer
-        type="line"
-        source={l.id}
-        id={l.id}
-        source-layer="Indigenous"
-      />
-    }
-  </> )
-  : (<>
+   (<>
         <Source 
           id={layerKey}
           type="vector"
@@ -89,7 +80,12 @@ export default function MapLayer ({setCursor, layerKey, property, visible, i}:an
               visible={property && l[0]===property}
               source={layerKey}
               sourceLayer={'public.'+layerKey}
-              {...{setPaintProperty, setCircleSizeProperty}}
+              {...{
+                setPaintProperty, 
+                setCircleSizeProperty,
+                extrude,
+                setExtrude
+              }}
               key={i} />
           )
         }
@@ -148,7 +144,7 @@ export default function MapLayer ({setCursor, layerKey, property, visible, i}:an
           (
             l.geometry_type.toUpperCase()==="POLYGON"||
             l.geometry_type.toUpperCase()==="MULTIPOLYGON"
-          ) &&
+          ) && (Object.keys(extrude).length===0 ?
           <Layer 
             id={layerKey+'_polygon'}
             type="fill"
@@ -165,7 +161,29 @@ export default function MapLayer ({setCursor, layerKey, property, visible, i}:an
               "visibility": visible?'visible':'none'
             }}
             before='road-label'
-          />
+          /> :
+          <Layer 
+            id={layerKey+'_extrusion'}
+            type="fill-extrusion"
+            source={l.table}
+            source-layer={l.id}
+            onHover={onHover}
+            onLeave={onLeave}
+            onClick={onClick}
+            paint={{
+              "fill-extrusion-height": extrude[layerKey],
+              "fill-extrusion-height-transition": {
+                "duration": 300,
+                "delay": 0
+              },
+              "fill-extrusion-color": fillColorProperty,
+              "fill-extrusion-opacity": 1
+            }}
+            layout={{
+              "visibility": visible?'visible':'none'
+            }}
+            before='road-label'
+          />)
         }
         {hoveredStateId && <FeatureState id={hoveredStateId} source={layerKey} sourceLayer={'public.'+layerKey} state={{ hover: true }} />}
   </>)

@@ -11,26 +11,26 @@ export default ()=>{
   const [layers, setLayers] = useRecoilState<any>(Atoms.tileLayers)
   const [tilejson, setTilejson] = useRecoilState<any>(Atoms.tilejson);
 
-  return Object.entries(legendData).length>0 ? (
-    <Box 
+  return <Box 
       style={{
         minWidth: '100px', 
         minHeight: '50px',
-        // maxHeight: 'calc( 100vh - 4rem )',
+        maxHeight: 'calc( 100vh - 4rem )',
         overflowY: 'scroll',
         zIndex: 2,
         position:'absolute',
         left: '1rem',
-        bottom: '1rem',
+        bottom: '0rem',
         display: 'block',
         backgroundColor:'#eeeeee' ,
         opacity: 0.85,
         boxShadow: "-15px 15px 15px rgba(0,0,0,0.2)",
         textAlign: 'left',
         padding: '1rem',
-        borderRadius: '0.5rem'
-      }}>
-        {Object.entries(legendData)
+        borderRadius: '0.5rem',
+        transform:'translate(calc(-100% - 1rem), 0)'
+      }}>{
+        Object.entries(legendData)
         .sort(([layer, data]:any)=>layer)
         .map(([layer, data]:any, i:number)=><React.Fragment key={i}>
           <Typography
@@ -75,7 +75,6 @@ export default ()=>{
                     height:'0.8rem',
                     display:'inline-block'
                   }}/>
-      
               }
               <Typography variant="body2" component="div" style={{display:'inline-block', paddingLeft:'1rem', textTransform:"capitalize"}}>
                 { isNaN(value)?
@@ -89,5 +88,4 @@ export default ()=>{
           </React.Fragment>)}
         </React.Fragment>)}
     </Box>
-  ):null
 }

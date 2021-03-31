@@ -16,7 +16,7 @@ export default function Layer ({ layerKey }:any) {
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setLayers((prev:any)=>({ ...prev, [event.target.name]: event.target.checked && param }))
   }
-  const name = layerKey.replaceAll('_',' ')
+  const name = layerKey?.split('_x_')?.[1]?.replaceAll('_',' ')
 
   return <> 
     <FormControlLabel
@@ -27,7 +27,7 @@ export default function Layer ({ layerKey }:any) {
           name={layerKey} 
         />
       }
-      label={name.length>24?name.substring(0,24).concat('...'):name}
+      label={name?.length>50?name.substring(0,50).concat('...'):name}
       style={{textTransform:"capitalize"}}
     />
     { typeof(layers[layerKey])==="string" && <Parameters {...{layerKey, param, setParam, setLayers}} /> }

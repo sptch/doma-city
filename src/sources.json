@@ -1,8 +1,10 @@
 [
   {
-    "id": "Canada Aerial Photogrammetry",
+    "id": "regional_x_aerial_photogrammetry",
     "type": "raster",
     "tiles": ["https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"],
-    "scheme": "xyz"
+    "scheme": "xyz",
+    "tileSize": 256,
+    "maxzoom": 21
   }
 ]

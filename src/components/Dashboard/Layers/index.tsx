@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: Theme) =>
       display: 'flex',
     },
     formControl: {
-      margin: theme.spacing(3),
+      marginTop: theme.spacing(1),
     },
   }),
 )
@@ -44,7 +44,7 @@ export default ()=>{
   },[layers])
 
   return (
-    <Box style={{width: '100%', overflowX: 'hidden'}}>
+    <Box style={{width: '100%'}}>
       <FormControl component="fieldset" className={classes.formControl}>
         <FormGroup>
           {

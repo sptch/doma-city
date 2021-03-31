@@ -16,6 +16,7 @@ export default ()=>{
   const [tilejson, setTilejson] = useRecoilState<object>(Atoms.tilejson);
   const [popup, setPopup] = useRecoilState<any>(Atoms.popup);
   const [dataLayersNames] = useRecoilState<any>(Atoms.dataLayersNames)
+  const [axonometric, setAxonometric] = useState(false)
 
   const mapRef:any = useRef()
 
@@ -56,6 +57,12 @@ export default ()=>{
     })
   },[])
 
+  useEffect(()=>{
+      if(!(Object.values(layers) as any).reduce((a:any,v:any)=>v||a,false)){
+        console.log('false')
+        setAxonometric(false)
+      }},[layers, setAxonometric])
+
   return (
     <MapGL
       style={{ position:'absolute', top:0,bottom:0,left:0,right:0, border:"none", outline: "none" }}
@@ -65,8 +72,11 @@ export default ()=>{
       onLoad={()=>{setLoaded(true)}}
       cursorStyle={cursor}
       ref={mapRef}
-      hash={true}
+      // hash={true}
+      pitch={axonometric?60:0}
+      bearing={axonometric?32:0}
       onClick={()=>setPopup(null)}
+      viewportChangeMethod="flyTo"
       {...viewport}
     >
       { popup && <Popup {...popup} /> }
@@ -74,7 +84,7 @@ export default ()=>{
         (Object.entries(layers) as Array<keyof typeof layers>)
         ?.map((layer, i)=><React.Fragment key={i}>
           { layer[0]!=="vancouver_x_property_tax_parcels" && layer[0]!=="vancouver_x_property_tax_blocks" ?
-            <MapLayer {...{setCursor, layerKey: layer[0], property: layer[1], visible:Boolean(layer[1]), i}}/>:
+            <MapLayer {...{setCursor, layerKey: layer[0], property: layer[1], visible:Boolean(layer[1]), setAxonometric, i}}/>:
             <MapDataLayer {...{setCursor, layerKey: layer[0], property: layer[1], visible:Boolean(layer[1]), i}}/> }
         </React.Fragment>
         )

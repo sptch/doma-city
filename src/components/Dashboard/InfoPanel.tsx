@@ -23,6 +23,7 @@ function LayersButton () {
       boxShadow: "-15px 15px 15px rgba(0,0,0,0.2)",
       // transform: spring.translate.interpolate((v:any)=>`translate(0, ${v})`),
       zIndex:3,
+      transform:'translate(-100%,0)'
     }}>
       <Zoom in={!open} >
         <Button 
@@ -34,9 +35,9 @@ function LayersButton () {
           <Info />
         </Button>
       </Zoom>
-      <div>
+      <div style={{transform:'translate(2.5rem,0)'}}>
         <Fade in={open}>
-            <div><Legend/></div>
+            <div><Legend {...{setOpen}}/></div>
         </Fade>
       </div>
   </animated.div>
@@ -59,7 +60,7 @@ export default function LayersMenu ({open, setOpen}:any) {
       left: '-1rem',
       // transform: pos.translateX.interpolate((v:number)=>`translate(-100%, calc(-100% + ${-1+((100-v)/100)*3.3}rem))`)
     }}>
-        <Button 
+        {/* <Button 
           onClick={()=>{
             console.log('click')
             setOpen(false)
@@ -67,7 +68,7 @@ export default function LayersMenu ({open, setOpen}:any) {
           style={{
             minWidth:'0.8rem'}}>
           <Info />
-        </Button>
+        </Button> */}
       <LayersButton />
     </animated.div>
   </Zoom>

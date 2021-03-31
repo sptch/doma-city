@@ -11,7 +11,7 @@ export default ()=>{
       <Map/>
       <Dashboard />
       {/* <Legend /> */}
-      <Chart />
+      {/* <Chart /> */}
       {/* <Timeline /> */}
     </div>
   );

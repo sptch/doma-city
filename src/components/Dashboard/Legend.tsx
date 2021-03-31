@@ -1,12 +1,13 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
-import { Box, Typography } from '@material-ui/core'
+import { Box, Typography, Button } from '@material-ui/core'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import * as Atoms from 'components/Atoms'
 import * as Queries from 'components/Queries'
 import { useQuery } from '@apollo/client'
+import { Close } from '@material-ui/icons'
 
-export default ()=>{
+export default ({setOpen}:any)=>{
   const [legendData, setLegendData] = useRecoilState<any>(Atoms.legendData)
   const [layers, setLayers] = useRecoilState<any>(Atoms.tileLayers)
   const [tilejson, setTilejson] = useRecoilState<any>(Atoms.tilejson);
@@ -29,8 +30,21 @@ export default ()=>{
         padding: '1rem',
         borderRadius: '0.5rem',
         transform:'translate(calc(-100% - 1rem), 0)'
-      }}>{
-        Object.entries(legendData)
+      }}>
+        <Button 
+          onClick={()=>{
+            console.log('click')
+            setOpen(false)
+          }} 
+          style={{
+            minWidth:'0.8rem',
+            position:'absolute', 
+            right:'2rem',
+            marginLeft:'0.5rem', 
+            marginRight:'-1rem'}}>
+          <Close />
+        </Button>
+        {Object.entries(legendData)
         .sort(([layer, data]:any)=>layer)
         .map(([layer, data]:any, i:number)=><React.Fragment key={i}>
           <Typography
@@ -39,7 +53,7 @@ export default ()=>{
               textTransform:"capitalize",
               paddingTop:'0.3rem'
             }}>
-              {layer.replaceAll('_',' ')+':'}
+              {layer.split('_x_')[1].replaceAll('_',' ')+':'}
           </Typography>
           {layers[layer] && typeof(layers[layer])==="string" && <Typography
             variant="caption"
@@ -50,7 +64,7 @@ export default ()=>{
               {layers[layer].replaceAll('_',' ')}
           </Typography>}
           {[...data].reverse().map(([value, color]:any, n:number)=><React.Fragment key={n}>
-            <div style={{ display:'block', paddingTop:'0.2rem' }}>
+            <div style={{ display:'block', paddingTop:'0.2rem', whiteSpace: 'nowrap' }}>
               {
                 tilejson[layer].geometry_type.toUpperCase()==="POLYGON"  ||
                 tilejson[layer].geometry_type.toUpperCase()==="MULTIPOLYGON"?

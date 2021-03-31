@@ -85,7 +85,7 @@ export default ()=>{
         transform: pos.translateX.interpolate((v:number)=>`translate(-100%, ${((100-v)/100)*3.3}rem)`)}}>
         <Button 
           onClick={()=>{
-            console.log('click')
+            console.log('click bla')
             setOpen(true)
           }} 
           style={{

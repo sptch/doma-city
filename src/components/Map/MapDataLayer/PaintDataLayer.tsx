@@ -2,8 +2,8 @@ import React, { useEffect } from 'react'
 import { useLazyQuery } from '@apollo/client';
 import { useRecoilState } from 'recoil'
 import interpolateColor from 'misc/interpolateColor'
-import * as Atoms from 'components/Atoms'
-import * as Queries from 'components/Queries'
+import * as Atoms from 'misc/Atoms'
+import * as Queries from 'misc/Queries'
 
 export default function PaintDataLayer ({dataType, dataLayerKey, visible, source, sourceLayer, setPaintProperty}:any) {
   const [year] = useRecoilState<any>(Atoms.taxesYear)

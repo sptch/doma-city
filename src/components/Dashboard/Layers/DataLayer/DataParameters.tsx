@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
-import { FormControl, Select, MenuItem } from '@material-ui/core'
+import { FormControl, Select, MenuItem, Typography } from '@material-ui/core'
 import { useRecoilState } from 'recoil'
-import * as Atoms from 'components/Atoms'
+import * as Atoms from 'misc/Atoms'
 
 export default function DataParameters ({ param, years, setParam, fields, setLayers, layerKey }:any) {
 
@@ -23,6 +23,7 @@ export default function DataParameters ({ param, years, setParam, fields, setLay
         id='tax_param'
         value={param}
         onChange={handleChange}
+        SelectDisplayProps={{style:{backgroundColor:'rgba(255,255,255,0.05)', border:'solid 1px rgba(255,255,255,0.2)', marginBottom:'0.5rem'}}}
         style={{width:'220px', textTransform:"capitalize"}}
       >
         {
@@ -34,7 +35,9 @@ export default function DataParameters ({ param, years, setParam, fields, setLay
                 style={{textTransform:"capitalize"}} 
                 value={itemKey.name}
               >
+                <Typography variant="body2" component="div" style={{display:'inline-block', paddingLeft:'1rem', textTransform:"capitalize"}}>
                   {itemKey.name.replaceAll('_',' ')}
+                </Typography>
               </MenuItem>
             )
         }
@@ -54,7 +57,9 @@ export default function DataParameters ({ param, years, setParam, fields, setLay
                 style={{textTransform:"capitalize"}} 
                 value={itemKey}
               >
+                <Typography variant="body2" component="div" style={{display:'inline-block', paddingLeft:'1rem', textTransform:"capitalize"}}>
                   {itemKey}
+                </Typography>
               </MenuItem>
             )
         }

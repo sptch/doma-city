@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { FormControlLabel, Checkbox } from '@material-ui/core'
+import { FormControlLabel, Checkbox, Typography } from '@material-ui/core'
 import { useRecoilState } from 'recoil'
-import * as Atoms from 'components/Atoms'
+import * as Atoms from 'misc/Atoms'
 import DataParameters from './DataParameters'
 
 export default function DataLayer ({ fields, layerKey, years }:any) {
@@ -19,12 +19,18 @@ export default function DataLayer ({ fields, layerKey, years }:any) {
     <FormControlLabel
       control={
         <Checkbox 
+          disableRipple
+          size='small'
           checked={Boolean(layers[layerKey])} 
           onChange={handleChange} 
           name={layerKey} 
+          style={{paddingTop:0, paddingBottom:0}}
         />
       }
-      label={layerKey.split('_x_')[1].replaceAll("_", " ")}
+      label={
+      <Typography variant="body2" component="div" style={{display:'inline-block', textTransform:"capitalize"}}>
+        {layerKey.split('_x_')[1].replaceAll("_", " ")}
+      </Typography>}
       style={{textTransform:"capitalize"}}
     />
     { Boolean(layers[layerKey]) && <DataParameters {...{param, setParam, year, setYear, years, layerKey, fields, setLayers}} /> }

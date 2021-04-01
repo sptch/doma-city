@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import { Source, Layer, FeatureState } from '@urbica/react-map-gl'
 import { useRecoilValue, useRecoilState } from 'recoil'
-import * as Atoms from 'components/Atoms'
+import * as Atoms from 'misc/Atoms'
 import PaintLayer from './PaintLayer'
 import getCentroid from '@turf/centroid'
 

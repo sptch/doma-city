@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { Popup } from '@urbica/react-map-gl'
 import { useRecoilState } from 'recoil'
 import { Typography, Link, Box } from '@material-ui/core'
-import * as Atoms from 'components/Atoms'
+import * as Atoms from 'misc/Atoms'
 import * as d3 from 'd3-format'
 
 const format:any = d3.format(".4")

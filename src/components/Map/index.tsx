@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react'
 import MapGL, { Layer } from '@urbica/react-map-gl'
 import { useRecoilState } from 'recoil'
-import * as Atoms from 'components/Atoms'
+import * as Atoms from 'misc/Atoms'
 // import 'mapbox-gl/dist/mapbox-gl.css'
 import MapLayer from './MapLayer'
 import MapDataLayer from './MapDataLayer'
@@ -66,7 +66,8 @@ export default ()=>{
   return (
     <MapGL
       style={{ position:'absolute', top:0,bottom:0,left:0,right:0, border:"none", outline: "none" }}
-      mapStyle="mapbox://styles/switch9/ckahu5spr0amr1ik3n1fg0fvt"
+      // mapStyle="mapbox://styles/switch9/ckahu5spr0amr1ik3n1fg0fvt"
+      mapStyle="mapbox://styles/switch9/ckkieifou0spf17mq1ts2lpve"
       accessToken={'pk.eyJ1Ijoic3dpdGNoOSIsImEiOiJjamozeGV2bnkxajV2M3FvNnpod3h4ODlpIn0.CTt2IXV8II6finbTlxEddg'}
       onViewportChange={setViewport}
       onLoad={()=>{setLoaded(true)}}

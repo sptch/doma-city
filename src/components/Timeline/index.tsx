@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { useRecoilState } from 'recoil'
-import * as Atoms from 'components/Atoms'
+import * as Atoms from 'misc/Atoms'
 import Slider from '@material-ui/core/Slider'
 import Tooltip from '@material-ui/core/Tooltip'
 import PropTypes from 'prop-types'

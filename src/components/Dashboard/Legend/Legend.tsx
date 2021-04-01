@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Box, Typography, Button } from '@material-ui/core'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import * as Atoms from 'components/Atoms'
-import * as Queries from 'components/Queries'
+import * as Atoms from 'misc/Atoms'
+import * as Queries from 'misc/Queries'
 import { useQuery } from '@apollo/client'
 import { Close } from '@material-ui/icons'
 
@@ -23,8 +23,7 @@ export default ({setOpen}:any)=>{
         left: '1rem',
         bottom: '0rem',
         display: 'block',
-        backgroundColor:'#eeeeee' ,
-        opacity: 0.85,
+        backgroundColor:'#081217' ,
         boxShadow: "-15px 15px 15px rgba(0,0,0,0.2)",
         textAlign: 'left',
         padding: '1rem',
@@ -32,6 +31,7 @@ export default ({setOpen}:any)=>{
         transform:'translate(calc(-100% - 1rem), 0)'
       }}>
         <Button 
+          size='small'
           onClick={()=>{
             console.log('click')
             setOpen(false)
@@ -42,7 +42,7 @@ export default ({setOpen}:any)=>{
             right:'2rem',
             marginLeft:'0.5rem', 
             marginRight:'-1rem'}}>
-          <Close />
+          <Close fontSize='small' />
         </Button>
         {Object.entries(legendData)
         .sort(([layer, data]:any)=>layer)
@@ -51,7 +51,8 @@ export default ({setOpen}:any)=>{
             variant="body1"
             style={{
               textTransform:"capitalize",
-              paddingTop:'0.3rem'
+              paddingTop:'0.3rem',
+              marginRight:'3rem'
             }}>
               {layer.split('_x_')[1].replaceAll('_',' ')+':'}
           </Typography>
@@ -93,9 +94,14 @@ export default ({setOpen}:any)=>{
               <Typography variant="body2" component="div" style={{display:'inline-block', paddingLeft:'1rem', textTransform:"capitalize"}}>
                 { isNaN(value)?
                     ''+value?.toLowerCase():
-                    // value===0?
-                    // <>No data</>:
-                    <>  over {value} {layers && typeof(layers[layer])==="string" && layers[layer].includes('value')?<><div style={{display:'inline-block', textTransform:"none"}}>CAD/m<sup>2</sup></div></>:<></>}</>
+                    <>  over {value} {
+                      layers && typeof(layers[layer])==="string" &&
+                      layers[layer].includes('value')?
+                        <>
+                          <div style={{display:'inline-block', textTransform:"none"}}>
+                            CAD/m<sup>2</sup>
+                          </div></>:<></>
+                    }</>
                 }
               </Typography>
             </div>

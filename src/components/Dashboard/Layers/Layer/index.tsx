@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
-import { FormControlLabel, Checkbox } from '@material-ui/core'
+import { FormControlLabel, Checkbox, Typography } from '@material-ui/core'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import * as Atoms from 'components/Atoms'
+import * as Atoms from 'misc/Atoms'
 import Parameters from './Parameters'
 
 export default function Layer ({ layerKey }:any) {
@@ -22,12 +22,19 @@ export default function Layer ({ layerKey }:any) {
     <FormControlLabel
       control={
         <Checkbox 
+          disableRipple
+          size='small'
+          color='secondary'
           checked={Boolean(layers[layerKey])} 
           onChange={handleChange} 
           name={layerKey} 
+          style={{paddingTop:0, paddingBottom:0}}
         />
       }
-      label={name?.length>50?name.substring(0,50).concat('...'):name}
+      label={
+        <Typography variant="body2" component="div" style={{display:'inline-block', textTransform:"capitalize"}}>
+          {name?.length>50?name.substring(0,50).concat('...'):name}
+        </Typography>}
       style={{textTransform:"capitalize"}}
     />
     { typeof(layers[layerKey])==="string" && <Parameters {...{layerKey, param, setParam, setLayers}} /> }

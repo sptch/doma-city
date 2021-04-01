@@ -2,8 +2,8 @@ import React, { useEffect, useMemo, useState } from 'react'
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
 import { Box, Typography } from '@material-ui/core'
 import { useRecoilState, useRecoilValue } from 'recoil'
-import * as Atoms from 'components/Atoms'
-import * as Queries from 'components/Queries'
+import * as Atoms from 'misc/Atoms'
+import * as Queries from 'misc/Queries'
 import { useQuery } from '@apollo/client'
 
 export default ()=>{
@@ -23,8 +23,7 @@ export default ()=>{
         left: '1rem',
         bottom: '1rem',
         display: 'block',
-        backgroundColor:'#eeeeee' ,
-        opacity: 0.85,
+        backgroundColor:'#081217' ,
         boxShadow: "-15px 15px 15px rgba(0,0,0,0.2)",
         textAlign: 'left',
         padding: '1rem',

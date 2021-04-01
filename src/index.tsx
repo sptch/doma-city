@@ -11,13 +11,55 @@ import { grey } from '@material-ui/core/colors';
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: grey[900],
+      main: grey[200],
     },
     secondary: {
-      main: grey[700],
+      main: grey[400],
     },
   },
   components: {
+    MuiTypography: {
+      styleOverrides: {
+        root: {
+          color:'#bbb'
+        }
+      }
+    },
+    MuiSelect:{
+      styleOverrides: {
+        root:{
+          backgroundColor:'#081217',
+        }
+      }
+    },
+    MuiPaper:{
+      styleOverrides: {
+        root:{
+          backgroundColor:'#081217',
+          boxShadow: "-15px 15px 15px rgba(0,0,0,0.2)",
+        }
+      }
+    },
+    MuiMenuItem:{
+      styleOverrides: {
+        root:{
+          // backgroundColor:'#000',
+          '&:hover': {
+            backgroundColor:'rgba(255,255,255,0.01)',
+          }
+        },
+      }
+    },
+    MuiCheckbox:{
+      styleOverrides: {
+        root:{
+          color:'#bbb',
+          '&$checked': {
+            color: '#bbb'
+          }
+        }
+      }
+    },
     MuiButton: {
       styleOverrides: {
         root:{

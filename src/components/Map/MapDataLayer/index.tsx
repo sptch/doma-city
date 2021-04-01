@@ -19,7 +19,7 @@ export default function MapDataLayer ({setCursor, layerKey, property, visible, i
   const [popupBase, setPopupBase] = useState<any>({id:0, properties:{id:0}})
   
   const [getDatum, { data:popupData, loading, refetch: refetchDatum }] = useLazyQuery(
-    Queries.getDatum(layerKey+"_data", dataLayers[layerKey].fields.map((v:any)=>v.name)), {variables: {
+    Queries.getDatum(layerKey+"_data", dataLayers[layerKey]?.fields.map((v:any)=>v.name)), {variables: {
       id: popupBase.id||popupBase.properties.id||0,
       year: Number(year) || 2006
     }})
@@ -109,7 +109,7 @@ export default function MapDataLayer ({setCursor, layerKey, property, visible, i
       before='road-label'
     />
     {
-      dataLayers[layerKey].fields?.map((l:any,i:any)=>
+      dataLayers[layerKey]?.fields?.map((l:any,i:any)=>
         <PaintDataLayer 
           dataType={l.type.name}
           dataLayerKey={l.name} 

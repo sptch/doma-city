@@ -135,16 +135,9 @@ export default ({open, setOpen}:any)=>{
 
   useEffect(()=>{
     if(keys){
-      console.log(keys)
       setDataLayers(keys)
     }
   },[keys])
-
-  useEffect(()=>{
-    if(layers){
-      console.log(layers)
-    }
-  },[layers])
 
   return (<>
     <Header {...{open, setOpen}} />
@@ -166,7 +159,6 @@ export default ({open, setOpen}:any)=>{
                           entry: dataLayer || e})
                       })
                   ]?.reduce((a:any,v:any,i:number)=>{
-                    console.log(v)
                     const groupName = v.entry?.[0].split('_x_')[0]
                     return a[groupName]?
                       {...a, [groupName]:[...a[groupName], v] }:

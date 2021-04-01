@@ -59,7 +59,6 @@ export default ()=>{
 
   useEffect(()=>{
       if(!(Object.values(layers) as any).reduce((a:any,v:any)=>v||a,false)){
-        console.log('false')
         setAxonometric(false)
       }},[layers, setAxonometric])
 

@@ -48,6 +48,7 @@ export default function DataParameters ({ param, years, setParam, fields, setLay
         id='tax_year'
         value={year}
         onChange={handleYearChange}
+        SelectDisplayProps={{style:{backgroundColor:'rgba(255,255,255,0.05)', border:'solid 1px rgba(255,255,255,0.2)', marginBottom:'0.5rem'}}}
         style={{width:'220px', textTransform:"capitalize"}}
       >
         {

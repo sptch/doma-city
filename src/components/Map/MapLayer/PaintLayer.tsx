@@ -50,7 +50,9 @@ export default function PaintLayer ({ dataType, dataLayerKey, visible, source, s
 
       if(numeric){
         if(range[source+'_aggregate']){
+          console.log(tiles.get_tiles)
           const legendPairs = tiles.get_tiles
+          .filter((v:any)=>v.tile!==null)
           ?.reduce((arr:any,v:any)=>{
             if(!arr.find((a:any)=>a===v.tile)){
               arr.push(v.tile)

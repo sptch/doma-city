@@ -44,6 +44,8 @@ export default function MapLayer ({setCursor, layerKey, property, visible, setAx
     properties: e.features[0].properties
   })
 
+  useEffect(()=>{console.log(fillColorProperty)},[fillColorProperty])
+
   return tilejson[layerKey]?.type==="raster"?
     ( <>
       <Source

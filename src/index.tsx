@@ -50,16 +50,6 @@ const theme = createMuiTheme({
         },
       }
     },
-    MuiCheckbox:{
-      styleOverrides: {
-        // root:{
-        //   color:'#bbb',
-        //   '&$checked': {
-        //     color: '#bbb'
-        //   }
-        // }
-      }
-    },
     MuiButton: {
       styleOverrides: {
         root:{

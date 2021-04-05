@@ -10,7 +10,7 @@ export default ()=>{
     <div className="App">
       <Map/>
       <Dashboard />
-      <Chart />
+      {/* <Chart /> */}
       {/* <Timeline /> */}
     </div>
   );

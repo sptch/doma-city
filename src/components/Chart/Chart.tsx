@@ -57,9 +57,21 @@ export default function Plot ({year, yAxis,  xAxis, coeffX, coeffY, chartWidth}:
     Math.max(...plotData.map((v:any)=>v.key))
   ]
 
-  return <div style={{paddingLeft:'1.5rem', paddingBottom:'0.5rem', paddingTop:'4.5rem', boxSizing:'border-box', width:chartWidth, height:chartWidth, marginTop:'auto', position:'absolute', display:'block', bottom:'1rem', minWidth: '66vh', minHeight:'66vh'}}>
-      <Typography variant="caption" style={{ textTransform: "capitalize", transform:'rotate(180deg)', color:'#aaa', position:'absolute', left:'0.4rem', top:"7.5rem", textAnchor:'start', writingMode:"vertical-lr"}}>{yAxis.replaceAll('_',' ')}</Typography>
-      <Typography variant="caption" style={{ textTransform: "capitalize", color:'#aaa', position:'absolute', right:'1.2rem', bottom:"0.4rem", textAnchor:'end'}}>{xAxis.replaceAll('_',' ')}</Typography>
+  return <div style={{
+    // paddingLeft:'1.5rem', 
+    // paddingBottom:'0.5rem', 
+    // paddingTop:'4.5rem', 
+    boxSizing:'border-box', 
+    width:chartWidth, 
+    height:chartWidth, 
+    marginTop:'auto', 
+    position:'absolute', 
+    display:'block', 
+    bottom:'1rem', 
+    minWidth: '66vh', 
+    minHeight:'66vh'}}>
+      {/* <Typography variant="caption" style={{ textTransform: "capitalize", transform:'rotate(180deg)', color:'#aaa', position:'absolute', left:'0.4rem', top:"7.5rem", textAnchor:'start', writingMode:"vertical-lr"}}>{yAxis.replaceAll('_',' ')}</Typography>
+      <Typography variant="caption" style={{ textTransform: "capitalize", color:'#aaa', position:'absolute', right:'1.2rem', bottom:"0.4rem", textAnchor:'end'}}>{xAxis.replaceAll('_',' ')}</Typography> */}
 
       <ScatterPlot
         data={plotData}

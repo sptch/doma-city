@@ -2,12 +2,13 @@ import React, { useMemo, useState } from 'react';
 import data from './data.json'
 import {TextField, Select, MenuItem, InputLabel, Typography } from '@material-ui/core'
 import Chart from './Chart'
+import Form from './Form'
 
 const scale = (n:number, coeff:number)=>{
   return Math.pow(n, coeff)
 }
 
-export default function App ( props:any ) {
+export default function ChartPanel ( props:any ) {
 
   const [year, setYear] = useState(2020)
   const [yAxis, setYAxis] = useState('price_to_rent_city_center')
@@ -52,82 +53,7 @@ export default function App ( props:any ) {
       minHeight: '66vh',
       maxHeight: 'calc( 100vh - 4rem )',
     }}>
-      <form noValidate autoComplete="off" style={{position:'absolute', top:'1rem',left:'3.5rem', display:'flex', textTransform: "capitalize", overflow:'hidden' }}>
-        <div style={{display:'block'}}>
-          <InputLabel id="Dataset" style={{fontSize:'0.8rem'}} >Dataset</InputLabel>
-          <Select
-            labelId="Dataset"
-            id="Dataset"
-            value={year}
-            onChange={(event:any)=>{if(event.target.value && !isNaN(event.target.value)) setYear(event.target.value) }} 
-            label="Dataset"
-            variant="outlined"
-          >
-            {[...Array(12)].map((v,i) => <MenuItem key={i} value={i+2009}>{i+2009}</MenuItem>)}
-          </Select>
-        </div>
-        <div style={{display:'block'}}>
-          <InputLabel id="Year" style={{fontSize:'0.8rem'}} >Year</InputLabel>
-          <Select
-            labelId="Year"
-            id="Year"
-            value={year}
-            onChange={(event:any)=>{if(event.target.value && !isNaN(event.target.value)) setYear(event.target.value) }} 
-            label="Year"
-            variant="outlined"
-          >
-            {[...Array(12)].map((v,i) => <MenuItem key={i} value={i+2009}>{i+2009}</MenuItem>)}
-          </Select>
-        </div>
-        <div style={{display:'block'}}>
-          <InputLabel id="Y-axis" style={{fontSize:'0.8rem'}} >Y-axis</InputLabel>
-          <Select
-            style={{marginLeft:'0.5rem'}}
-            labelId="Y-axis"
-            id="Y-axis"
-            value={yAxis}
-            onChange={(event:any)=>{setYAxis(event.target.value) }} 
-            label="Y-axis"
-            variant="outlined"
-          >
-            {fields.filter((d)=>d!==xAxis).map((v,i) => <MenuItem style={{textTransform: "capitalize"}} key={i} value={v}>{v.replaceAll('_', ' ')}</MenuItem>)}
-          </Select>
-        </div>
-        
-        <div style={{display:'block'}}>
-          <InputLabel id="X-axis" style={{fontSize:'0.8rem'}} >X-axis</InputLabel>
-          <Select
-            style={{marginLeft:'0.5rem'}}
-            labelId="X-axis"
-            id="X-axis"
-            value={xAxis}
-            onChange={(event:any)=>{setXAxis(event.target.value) }} 
-            label="X-axis"
-            variant="outlined"
-          >
-            {fields.filter((d)=>d!==yAxis).map((v,i) => <MenuItem style={{textTransform: "capitalize"}} key={i} value={v}>{v.replaceAll('_', ' ')}</MenuItem>)}
-          </Select>
-        </div>
-        <div style={{display:'block'}}>
-          <TextField 
-            style={{marginLeft:'0.5rem', maxWidth:'5.5rem', marginTop:'0.75rem'}}
-            id="exponentY" 
-            value={coeffY}
-            onChange={(event:any)=>{if(event.target.value && !isNaN(event.target.value)) setCoeffY(event.target.value) }} 
-            label="Exponent Y" 
-            variant="outlined" />
-        </div>
-        <div style={{display:'block'}}>
-          <TextField 
-            style={{marginLeft:'0.5rem', maxWidth:'5.5rem', marginTop:'0.75rem'}}
-            id="exponentX" 
-            value={coeffX}
-            onChange={(event:any)=>{if(event.target.value && !isNaN(event.target.value)) setCoeffX(event.target.value) }} 
-            label="Exponent X" 
-            variant="outlined" />
-        </div>
-      
-      </form>
+      <Form {...{year, setYear, yAxis, setYAxis, xAxis, setXAxis, coeffX, setCoeffX, coeffY, setCoeffY, fields}}/>
       <Chart {...{year, yAxis,  xAxis, coeffX, coeffY, chartWidth}} />
     </div>
   </div>

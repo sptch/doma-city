@@ -24,7 +24,7 @@ export default function DataLayer ({ fields, layerKey, years }:any) {
           checked={Boolean(layers[layerKey])} 
           onChange={handleChange} 
           name={layerKey} 
-          style={{paddingTop:0, paddingBottom:0}}
+          style={{color:'#bbb', paddingTop:0, paddingBottom:0}}
         />
       }
       label={

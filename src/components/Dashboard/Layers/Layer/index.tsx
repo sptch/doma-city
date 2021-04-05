@@ -24,11 +24,10 @@ export default function Layer ({ layerKey }:any) {
         <Checkbox 
           disableRipple
           size='small'
-          color='secondary'
           checked={Boolean(layers[layerKey])} 
           onChange={handleChange} 
           name={layerKey} 
-          style={{paddingTop:0, paddingBottom:0}}
+          style={{color:'#bbb', paddingTop:0, paddingBottom:0}}
         />
       }
       label={

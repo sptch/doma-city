@@ -27,7 +27,7 @@ export default function Layer ({ layerKey }:any) {
           checked={Boolean(layers[layerKey])} 
           onChange={handleChange} 
           name={layerKey} 
-          style={{color:'#bbb', paddingTop:0, paddingBottom:0}}
+          style={{color:'#bbb', paddingTop:0, paddingBottom:0, marginRight:'0.5rem'}}
         />
       }
       label={

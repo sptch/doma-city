@@ -40,6 +40,16 @@ const theme = createMuiTheme({
         }
       }
     },
+    MuiMenuItem:{
+      styleOverrides: {
+        root:{
+          minHeight:'1.5rem',
+          '&:hover': {
+            backgroundColor:'rgba(255,255,255,0.03)',
+          }
+        },
+      }
+    },
     MuiButton: {
       styleOverrides: {
         root:{

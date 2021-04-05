@@ -2,22 +2,9 @@ import React from 'react'
 import { FormControl, Select, MenuItem, Typography } from '@material-ui/core'
 import { useRecoilValue } from 'recoil'
 import * as Atoms from 'misc/Atoms'
-import { makeStyles } from '@material-ui/styles'
-
-
-const useStyles = makeStyles(()=>({
-  menu:{
-    textTransform:"capitalize", 
-    display:'block',
-    '&:hover': {
-      backgroundColor:'rgba(255,255,255,0.01)',
-    }
-  }
-}))
 
 export default function Parameters ({ layerKey, param, setParam, setLayers }:any) {
   const tilejson:{[k: string]: any} = useRecoilValue(Atoms.tilejson);
-  const classes = useStyles()
   const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
     setParam(event.target.value as string);
     setLayers((prev:any)=>({ ...prev, [layerKey]: event.target.value as string }))
@@ -38,7 +25,7 @@ export default function Parameters ({ layerKey, param, setParam, setLayers }:any
             .map((itemKey, i)=>
               <MenuItem 
                 key={i} 
-                className={classes.menu} 
+                style={{textTransform:"capitalize", display:'block'}} 
                 value={itemKey}>
                   <Typography variant="body2" component="div" style={{display:'block', paddingLeft:'1rem', textTransform:"capitalize"}}>
                     {

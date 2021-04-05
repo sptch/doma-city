@@ -1,13 +1,7 @@
 import React, { useState } from 'react';
-import { useQuery, gql } from '@apollo/client';
 import Layers, { LayersButton } from './Layers'
-import { Zoom, Typography, Box, Button } from '@material-ui/core'
-import { Close, Info, Layers as L } from '@material-ui/icons'
-import { useRecoilState } from 'recoil'
-import * as Atoms from '../../misc/Atoms'
 import { useSpring, animated } from 'react-spring' 
 import Legend from './Legend'
-
 
 export default ()=>{
 
@@ -31,7 +25,7 @@ export default ()=>{
         paddingLeft:0,
         zIndex:2,
         overflowX: 'visible',
-      }} 
+      }}
       className="Dashboard">
       <Layers {...{open, setOpen}} />
       <Legend />

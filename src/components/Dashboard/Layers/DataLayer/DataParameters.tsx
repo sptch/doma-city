@@ -2,21 +2,8 @@ import React, { useEffect } from 'react'
 import { FormControl, Select, MenuItem, Typography } from '@material-ui/core'
 import { useRecoilState } from 'recoil'
 import * as Atoms from 'misc/Atoms'
-import { makeStyles } from '@material-ui/styles'
-
-
-const useStyles = makeStyles(()=>({
-  menu:{
-    textTransform:"capitalize", 
-    display:'block',
-    '&:hover': {
-      backgroundColor:'rgba(255,255,255,0.01)',
-    }
-  }
-}))
 
 export default function DataParameters ({ param, years, setParam, fields, setLayers, layerKey }:any) {
-  const classes = useStyles()
 
   useEffect(()=>{console.log(fields)},[fields])
   const [year, setYear] = useRecoilState<any>(Atoms.taxesYear)
@@ -45,7 +32,7 @@ export default function DataParameters ({ param, years, setParam, fields, setLay
             ?.map((itemKey:any, i:number)=>
               <MenuItem 
                 key={i} 
-                className={classes.menu}
+                style={{textTransform:"capitalize", display:'block'}} 
                 value={itemKey.name}
               >
                 <Typography variant="body2" component="div" style={{display:'block', paddingLeft:'1rem', textTransform:"capitalize"}}>
@@ -68,7 +55,7 @@ export default function DataParameters ({ param, years, setParam, fields, setLay
             years && years.map((itemKey:any, i:number)=>
               <MenuItem 
                 key={i} 
-                className={classes.menu}
+                style={{textTransform:"capitalize", display:'block'}} 
                 value={itemKey}
               >
                 <Typography variant="body2" component="div" style={{display:'block', paddingLeft:'1rem', textTransform:"capitalize"}}>

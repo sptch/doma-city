@@ -6,16 +6,11 @@ import { makeStyles } from '@material-ui/styles'
 
 
 const useStyles = makeStyles(()=>({
-  select: {
-    backgroundColor:'green',
+  menu:{
+    textTransform:"capitalize", 
+    display:'block',
     '&:hover': {
-      backgroundColor:'red',
-    },
-    '&hover': {
-      backgroundColor:'red',
-    },
-    '&:hover $child': {
-      backgroundColor: 'red'
+      backgroundColor:'rgba(255,255,255,0.01)',
     }
   }
 }))
@@ -43,7 +38,7 @@ export default function Parameters ({ layerKey, param, setParam, setLayers }:any
             .map((itemKey, i)=>
               <MenuItem 
                 key={i} 
-                style={{textTransform:"capitalize", display:'block'}} 
+                className={classes.menu} 
                 value={itemKey}>
                   <Typography variant="body2" component="div" style={{display:'block', paddingLeft:'1rem', textTransform:"capitalize"}}>
                     {

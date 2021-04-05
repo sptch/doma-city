@@ -40,16 +40,6 @@ const theme = createMuiTheme({
         }
       }
     },
-    MuiMenuItem:{
-      styleOverrides: {
-        root:{
-          // backgroundColor:'#000',
-          '&:hover': {
-            backgroundColor:'rgba(255,255,255,0.01)',
-          }
-        },
-      }
-    },
     MuiButton: {
       styleOverrides: {
         root:{

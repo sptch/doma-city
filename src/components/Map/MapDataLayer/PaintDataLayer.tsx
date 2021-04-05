@@ -5,7 +5,7 @@ import interpolateColor from 'misc/interpolateColor'
 import * as Atoms from 'misc/Atoms'
 import * as Queries from 'misc/Queries'
 
-export default function PaintDataLayer ({dataType, dataLayerKey, visible, source, sourceLayer, setPaintProperty}:any) {
+export default function PaintDataLayer ({dataType, dataLayerKey, visible, source, sourceLayer, setPaintProperty, extrude, setExtrude}:any) {
   const [year] = useRecoilState<any>(Atoms.taxesYear)
   const [legendData, setLegendData] = useRecoilState<any>(Atoms.legendData)
 
@@ -60,6 +60,7 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
 
     if(data && visible && range && (tiles || !numeric)){  
       const matchExpression = ['match', ['get', 'id']];
+      const extrudeExpression:any = ['match', ['get', 'id']];
 
       if(numeric){
         const {
@@ -98,6 +99,23 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
           return color
         }
 
+        const getHeight = (x:any)=>{
+          const start = 10
+          const height = 1000
+          const heightUnit = height/(ntiles-1)
+
+          let heightValue = 0
+          for(let i = 0; i< ntiles; i++){
+            if(x>=lookup[i].min && x<lookup[i].max){
+              heightValue = (i*heightUnit)+((x - lookup[i].min)/lookup[i].max)*heightUnit;
+            }
+          }
+          // const heightValue = (
+          //   x - tiles.get_tiles[0].tile
+          // ) / tiles.get_tiles[tiles.get_tiles.length-1].tile;
+          return start + (heightValue)
+        }
+
         if(mode==='linear'){
           data[source+'_data'].forEach((row:any)=>{
             var value = (row[dataLayerKey] - minValue)/(maxValue-minValue);
@@ -107,11 +125,18 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
         }else{
           data[source+'_data'].forEach((row:any)=>{
             var color = getColor( row[dataLayerKey] )
+            var height = getHeight( row[dataLayerKey] )
             matchExpression.push(row.id, color);
+            extrudeExpression.push(row.id, height);
           });
+          extrudeExpression.push(300)
+          console.log(extrudeExpression)
+          setExtrude(extrudeExpression)
         }
       }else{
         //Here goes categorical
+        console.log('plain')
+        setExtrude(0)
         const options = range[source+'_data']?.map((v:any)=>v[dataLayerKey])
         const lookup:any = {}
         for(let i = 0; i<options.length; i++){

@@ -67,9 +67,10 @@ const Plot = (props:any) => {
     Math.min(...plotData.map((v:any)=>v.key)),
     Math.max(...plotData.map((v:any)=>v.key))
   ]
+  const chartWidth = '35vw'
 
   return <div style={{
-    width:'500px', 
+    width: chartWidth, 
     height: 'calc( 100vh - 2rem )', 
     zIndex: 2,
     position:'absolute',
@@ -81,8 +82,8 @@ const Plot = (props:any) => {
     textAlign: 'left',
     padding: '1rem',
     borderRadius: '0.5rem',
-    minWidth: '350px', 
-    minHeight: '500px',
+    minWidth: '66vh', 
+    minHeight: '66vh',
     maxHeight: 'calc( 100vh - 4rem )',
   }}>
     <form noValidate autoComplete="off" style={{position:'absolute', top:'1rem',left:'3.5rem', display:'flex', textTransform: "capitalize", overflow:'hidden' }}>
@@ -161,7 +162,7 @@ const Plot = (props:any) => {
       </div>
      */}
     </form>
-    <div style={{paddingLeft:'1.5rem', paddingBottom:'0.5rem', paddingTop:'4.5rem', boxSizing:'border-box', width:'100%', height:'100%'}}>
+    <div style={{paddingLeft:'1.5rem', paddingBottom:'0.5rem', paddingTop:'4.5rem', boxSizing:'border-box', width:chartWidth, height:chartWidth, marginTop:'auto', position:'absolute', display:'block', bottom:'1rem', minWidth: '66vh', minHeight:'66vh'}}>
       <Typography variant="caption" style={{ textTransform: "capitalize", transform:'rotate(180deg)', color:'#aaa', position:'absolute', left:'0.4rem', top:"7.5rem", textAnchor:'start', writingMode:"vertical-lr"}}>{yAxis.replaceAll('_',' ')}</Typography>
       <Typography variant="caption" style={{ textTransform: "capitalize", color:'#aaa', position:'absolute', right:'1.2rem', bottom:"0.4rem", textAnchor:'end'}}>{xAxis.replaceAll('_',' ')}</Typography>
 

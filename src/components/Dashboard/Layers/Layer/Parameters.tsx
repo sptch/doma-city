@@ -45,7 +45,7 @@ export default function Parameters ({ layerKey, param, setParam, setLayers }:any
                 key={i} 
                 style={{textTransform:"capitalize"}} 
                 value={itemKey}>
-                  <Typography variant="body2" component="div" style={{display:'inline-block', paddingLeft:'1rem', textTransform:"capitalize"}}>
+                  <Typography variant="body2" component="div" style={{display:'block', paddingLeft:'1rem', textTransform:"capitalize"}}>
                     {
                       typeof(itemKey)==="string"?
                       itemKey.replaceAll('_',' '):

@@ -54,7 +54,7 @@ export default function PaintLayer ({ dataType, dataLayerKey, visible, source, s
           const legendPairs = tiles.get_tiles
           .filter((v:any)=>v.tile!==null)
           ?.reduce((arr:any,v:any)=>{
-            if(!arr.find((a:any)=>a===v.tile)){
+            if( !(arr.includes(v.tile)) ){
               arr.push(v.tile)
             }
             return arr
@@ -66,6 +66,7 @@ export default function PaintLayer ({ dataType, dataLayerKey, visible, source, s
               (arr[arr.length-1]-arr[0])
             )
           ])
+          console.log(legendPairs)
 
           setLegendData((prev:any)=>({...prev, [source]:legendPairs}))
           setPaintProperty([
@@ -110,37 +111,44 @@ export default function PaintLayer ({ dataType, dataLayerKey, visible, source, s
             tilejson[source].geometry_type.toUpperCase()==="POINT" ||
             tilejson[source].geometry_type.toUpperCase()==="MULTIPOINT"
           ){ 
-            setCircleSizeProperty((prev:any)=>({...prev, [source]:['case', ['boolean', ['feature-state', 'hover'], false], [
-              'interpolate', ['linear'],
-              ['to-number', ['get', dataLayerKey], tiles.get_tiles[0].tile], 
-              ...tiles.get_tiles
-              ?.reduce((arr:any,v:any)=>{
-                if(!arr.find((a:any)=>a===v.tile)){
-                  arr.push(v.tile)
-                }
-                return arr
-              },[])
-              ?.map((v:number, i:number, arr:any)=>[
-                v, 
-                ((v-arr[0])/
-                (arr[arr.length-1]-arr[0]) * 5) + 8
-              ]).flat()
-            ],[
-              'interpolate', ['linear'],
-              ['to-number', ['get', dataLayerKey], tiles.get_tiles[0].tile], 
-              ...tiles.get_tiles
-              ?.reduce((arr:any,v:any)=>{
-                if(!arr.find((a:any)=>a===v.tile)){
-                  arr.push(v.tile)
-                }
-                return arr
-              },[])
-              ?.map((v:number, i:number, arr:any)=>[
-                v, 
-                ((v-arr[0])/
-                (arr[arr.length-1]-arr[0]) * 5) + 3
-              ]).flat()
-            ] ]})) 
+            setCircleSizeProperty((prev:any)=>({...prev, [source]:
+              ['case', 
+                ['boolean', ['feature-state', 'hover'], false], 
+                [
+                  'interpolate', ['linear'],
+                  ['to-number', ['get', dataLayerKey], tiles.get_tiles[0].tile], 
+                  ...tiles.get_tiles
+                  .filter((v:any)=>v.tile!==null)
+                  ?.reduce((arr:any,v:any)=>{
+                    if( !(arr.includes(v.tile)) ){
+                      arr.push(v.tile)
+                    }
+                    return arr
+                  },[])
+                  ?.map((v:number, i:number, arr:any)=>[
+                    v, 
+                    ((v-arr[0])/
+                    (arr[arr.length-1]-arr[0]) * 5) + 8
+                  ]).flat()
+                ],[
+                  'interpolate', ['linear'],
+                  ['to-number', ['get', dataLayerKey], tiles.get_tiles[0].tile], 
+                  ...tiles.get_tiles
+                  .filter((v:any)=>v.tile!==null)
+                  ?.reduce((arr:any,v:any)=>{
+                    if( !(arr.includes(v.tile)) ){
+                      arr.push(v.tile)
+                    }
+                    return arr
+                  },[])
+                  ?.map((v:number, i:number, arr:any)=>[
+                    v, 
+                    ((v-arr[0])/
+                    (arr[arr.length-1]-arr[0]) * 5) + 3
+                  ]).flat()
+                ] 
+              ]
+            })) 
           }
         }
       }else{

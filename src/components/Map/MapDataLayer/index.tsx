@@ -7,7 +7,7 @@ import * as Queries from 'misc/Queries'
 import PaintDataLayer from './PaintDataLayer'
 import getCentroid from '@turf/centroid'
 
-export default function MapDataLayer ({setCursor, layerKey, property, visible, i}:any) {
+export default function MapDataLayer ({setCursor, layerKey, property, visible, setAxonometric, i}:any) {
   const tilejson:{[k: string]: any} = useRecoilValue(Atoms.tilejson)
   const [year] = useRecoilState<any>(Atoms.taxesYear)
   const l = tilejson[layerKey]
@@ -17,7 +17,13 @@ export default function MapDataLayer ({setCursor, layerKey, property, visible, i
   const [hoveredStateId, setHoveredStateId] = useState(null);
   const [popup, setPopup] = useRecoilState<any>(Atoms.popup);
   const [popupBase, setPopupBase] = useState<any>({id:0, properties:{id:0}})
-  
+  const [extrude, setExtrude] = useState<any>(300)
+
+  useEffect(()=>{
+    if(visible&&Object.keys(extrude).length>0){setAxonometric(true)}
+    if(visible&&Object.keys(extrude).length===0){setAxonometric(false)}
+  },[visible, setAxonometric, extrude])
+
   const [getDatum, { data:popupData, loading, refetch: refetchDatum }] = useLazyQuery(
     Queries.getDatum(layerKey+"_data", dataLayers[layerKey]?.fields.map((v:any)=>v.name)), {variables: {
       id: popupBase.id||popupBase.properties.id||0,
@@ -64,6 +70,7 @@ export default function MapDataLayer ({setCursor, layerKey, property, visible, i
       setHoveredStateId(null);
     }
   };
+  useEffect(()=>{console.log(extrude)},[extrude])
 
   return <>
     <Source 
@@ -73,24 +80,46 @@ export default function MapDataLayer ({setCursor, layerKey, property, visible, i
       volatile={true}
       promoteId='id'
     />
-
-    <Layer 
-      id={layerKey+'_polygon'}
-      type="fill"
-      source={l.table}
-      source-layer={l.id}
-      paint={{
-        "fill-color": paintProperty,
-        'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 0.9, 0.8]
-      }}
-      onHover={onHover}
-      onLeave={onLeave}
-      onClick={onClick}
-      layout={{
-        "visibility": visible?'visible':'none',
-      }}
-      before='road-label'
-    />
+    { Object.keys(extrude).length===0||layerKey==='vancouver_x_property_tax_parcels' ?
+      <Layer 
+        id={layerKey+'_polygon'}
+        type="fill"
+        source={l.table}
+        source-layer={l.id}
+        paint={{
+          "fill-color": paintProperty,
+          'fill-opacity': ['case', ['boolean', ['feature-state', 'hover'], false], 0.9, 0.8]
+        }}
+        onHover={onHover}
+        onLeave={onLeave}
+        onClick={onClick}
+        layout={{
+          "visibility": visible?'visible':'none',
+        }}
+        before='road-label'
+      /> :
+      <Layer 
+        id={layerKey+'_extrusion'}
+        type="fill-extrusion"
+        source={l.table}
+        source-layer={l.id}
+        paint={{
+          "fill-extrusion-height": extrude,
+          "fill-extrusion-height-transition": {
+            "duration": 300,
+            "delay": 0
+          },
+          "fill-extrusion-color": paintProperty,
+          'fill-extrusion-opacity': 1
+        }}
+        onHover={onHover}
+        onLeave={onLeave}
+        onClick={onClick}
+        layout={{
+          "visibility": visible?'visible':'none',
+        }}
+        before='road-label'
+      /> }
     <Layer 
       id={layerKey+'_line'}
       type="line"
@@ -116,7 +145,9 @@ export default function MapDataLayer ({setCursor, layerKey, property, visible, i
           visible={property && l.name===property}
           source={layerKey}
           sourceLayer={'public.'+layerKey}
-          {...{setPaintProperty}}
+          {...{setPaintProperty,                 
+            extrude,
+            setExtrude}}
           key={i} />
       )
     }

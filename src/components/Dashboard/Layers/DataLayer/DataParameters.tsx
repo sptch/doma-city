@@ -32,10 +32,10 @@ export default function DataParameters ({ param, years, setParam, fields, setLay
             ?.map((itemKey:any, i:number)=>
               <MenuItem 
                 key={i} 
-                style={{textTransform:"capitalize"}} 
+                style={{textTransform:"capitalize", display:'block'}} 
                 value={itemKey.name}
               >
-                <Typography variant="body2" component="div" style={{display:'inline-block', paddingLeft:'1rem', textTransform:"capitalize"}}>
+                <Typography variant="body2" component="div" style={{display:'block', paddingLeft:'1rem', textTransform:"capitalize"}}>
                   {itemKey.name.replaceAll('_',' ')}
                 </Typography>
               </MenuItem>
@@ -55,10 +55,10 @@ export default function DataParameters ({ param, years, setParam, fields, setLay
             years && years.map((itemKey:any, i:number)=>
               <MenuItem 
                 key={i} 
-                style={{textTransform:"capitalize"}} 
+                style={{textTransform:"capitalize", display:'block'}} 
                 value={itemKey}
               >
-                <Typography variant="body2" component="div" style={{display:'inline-block', paddingLeft:'1rem', textTransform:"capitalize"}}>
+                <Typography variant="body2" component="div" style={{display:'block', paddingLeft:'1rem', textTransform:"capitalize"}}>
                   {itemKey}
                 </Typography>
               </MenuItem>

@@ -43,7 +43,7 @@ export default function Parameters ({ layerKey, param, setParam, setLayers }:any
             .map((itemKey, i)=>
               <MenuItem 
                 key={i} 
-                style={{textTransform:"capitalize"}} 
+                style={{textTransform:"capitalize", display:'block'}} 
                 value={itemKey}>
                   <Typography variant="body2" component="div" style={{display:'block', paddingLeft:'1rem', textTransform:"capitalize"}}>
                     {

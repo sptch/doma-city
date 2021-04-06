@@ -6,7 +6,11 @@ import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { createMuiTheme, ThemeProvider, ThemeOptions } from '@material-ui/core';
 import { RecoilRoot } from 'recoil'
 import { grey } from '@material-ui/core/colors';
+import mapboxgl from 'mapbox-gl'
 
+// @ts-ignore
+// eslint-disable-next-line import/no-webpack-loader-syntax
+mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
 const theme:ThemeOptions = createMuiTheme({
   palette: {

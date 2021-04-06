@@ -29,7 +29,9 @@ const useStyles = makeStyles((theme: Theme) =>
       borderRadius:'0 0 0.5rem 0.5rem', 
       boxShadow: "-15px 15px 15px rgba(0,0,0,0.2)",
       backgroundColor:'#081217',  
-      height:'calc(100% - 6.0rem)'
+      height:'calc(100% - 6.0rem)',
+      border: 'solid 2px rgba(255,255,255,0.6)',
+      borderTop: 'none'
     }
   }),
 )
@@ -46,7 +48,9 @@ function Header ({open, setOpen}:any) {
         paddingLeft:'1.5rem',
         paddingRight: '2rem',
         paddingBottom: '0.5rem',
-        borderRadius:'0.5rem 0.5rem 0 0'
+        borderRadius:'0.5rem 0.5rem 0 0',
+        border: 'solid 2px rgba(255,255,255,0.6)',
+        borderBottom:'none'
       }}>
         <div className="Header" style={{
             display:'flex', 

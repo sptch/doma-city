@@ -28,7 +28,8 @@ export default ({setOpen}:any)=>{
         textAlign: 'left',
         padding: '1rem',
         borderRadius: '0.5rem',
-        transform:'translate(calc(-100% - 1rem), 0)'
+        transform:'translate(calc(-100% - 1rem), 0)',
+        border: 'solid 2px rgba(255,255,255,0.6)'
       }}>
         <Button 
           size='small'

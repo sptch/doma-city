@@ -1,30 +1,30 @@
 import React from 'react';
 import { Button } from '@material-ui/core'
-import { Layers } from '@material-ui/icons'
+import { BubbleChart } from '@material-ui/icons'
 import { animated } from 'react-spring' 
 
 
-export default function LayersButton ({pos, open, setOpen}:any) {
+export default function ChartButton ({pos, open, setOpen}:any) {
 
   return  <animated.div 
-  className="LayersButton"
+  className="ChartButton"
   style={{
     borderRadius:'0.5rem', 
-    border: 'solid 2px rgba(255,255,255,0.6)',
     backgroundColor:'#081217',
+    border: 'solid 2px rgba(255,255,255,0.6)',
     position:'absolute', 
-    bottom: '1rem',
+    bottom: '0rem',
     zIndex:3,
-    left: '-1rem',
+    right: '-3.5rem',
     boxShadow: "-15px 15px 15px rgba(0,0,0,0.2)",
-    transform: pos.translateX.interpolate((v:number)=>`translate(-100%, ${((100-v)/100)*3.5}rem)`)}}>
+    transform: pos.translateX.interpolate((v:number)=>`translate(0, ${((100-v)/100)*3.5}rem)`)}}>
   <Button 
     onClick={()=>{
       setOpen(true)
     }} 
     style={{
       minWidth:'0.8rem'}}>
-    <Layers />
+    <BubbleChart />
   </Button>
 </animated.div>
 }

@@ -33,7 +33,8 @@ export default function LegendMenu () {
           backgroundColor:'#081217',
           boxShadow: "-15px 15px 15px rgba(0,0,0,0.2)",
           zIndex:3,
-          transform:'translate(-100%,0)'
+          transform:'translate(-100%,0)',
+          border: 'solid 2px rgba(255,255,255,0.6)'
         }}>
           <Zoom in={!open} >
             <Button 

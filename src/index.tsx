@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import { createMuiTheme, ThemeProvider } from '@material-ui/core';
+import { createMuiTheme, ThemeProvider, ThemeOptions } from '@material-ui/core';
 import { RecoilRoot } from 'recoil'
 import { grey } from '@material-ui/core/colors';
 
 
-const theme = createMuiTheme({
+const theme:ThemeOptions = createMuiTheme({
   palette: {
     primary: {
       main: grey[200],
@@ -43,7 +43,7 @@ const theme = createMuiTheme({
     MuiMenuItem:{
       styleOverrides: {
         root:{
-          minHeight:'1.5rem',
+          minHeight:'2.5rem',
           '&:hover': {
             backgroundColor:'rgba(255,255,255,0.03)',
           }

@@ -33,7 +33,7 @@ const unscale = (n:number, coeff:number)=>{
   return value<10?value.toFixed(1):value.toFixed(0)
 }
 
-export default function Plot ({year, yAxis,  xAxis, coeffX, coeffY, chartWidth}:any) {
+export default function Chart ({year, yAxis,  xAxis, coeffX, coeffY, chartWidth}:any) {
 
   const plotData = useMemo(
     ()=>data
@@ -69,7 +69,8 @@ export default function Plot ({year, yAxis,  xAxis, coeffX, coeffY, chartWidth}:
     display:'block', 
     bottom:'1rem', 
     minWidth: '66vh', 
-    minHeight:'66vh'}}>
+    minHeight:'66vh',
+    maxHeight:'calc( 100vh - 13rem )'}}>
       {/* <Typography variant="caption" style={{ textTransform: "capitalize", transform:'rotate(180deg)', color:'#aaa', position:'absolute', left:'0.4rem', top:"7.5rem", textAnchor:'start', writingMode:"vertical-lr"}}>{yAxis.replaceAll('_',' ')}</Typography>
       <Typography variant="caption" style={{ textTransform: "capitalize", color:'#aaa', position:'absolute', right:'1.2rem', bottom:"0.4rem", textAnchor:'end'}}>{xAxis.replaceAll('_',' ')}</Typography> */}
 
@@ -87,11 +88,11 @@ export default function Plot ({year, yAxis,  xAxis, coeffX, coeffY, chartWidth}:
                   <ChartTooltip
                     placement="top"
                     content={(data:any) => (
-                    <div style={{display:'block', position: "relative", padding:"10px", borderRadius:'5px', borderColor:'#ccc', borderStyle:'solid', borderWidth:'0.5px', backgroundColor: "rgba(255,255,255,0.9)"}}>
-                      <span style={{display:'block', position: "relative", fontWeight:"bold"}}>{data.id}</span>
+                    <div style={{display:'block', position: "relative", padding:"10px", borderRadius:'5px', borderColor:'rgba(255,255,255,0.6)', borderStyle:'solid', borderWidth:'2px', backgroundColor: "rgba(12, 21, 26, 1)"}}>
+                      <Typography style={{display:'block', position: "relative", fontWeight:"bold"}}>{data.id}</Typography>
                       {Object.entries(data.metadata)
                         .filter(([key,value]:any)=>!isNaN(value)&&key!=="year")
-                        .map(([key,value]:any)=><span style={{display:'block', position: "relative", textAlign:'start', textTransform: "capitalize"}}>{key.replaceAll('_',' ')}: {isNaN(value)?value:value.toFixed(2)}</span>)}
+                        .map(([key,value]:any, i)=><Typography key={i} style={{display:'block', position: "relative", textAlign:'start', textTransform: "capitalize"}}>{key.replaceAll('_',' ')}: {isNaN(value)?value:value.toFixed(2)}</Typography>)}
                     </div>
                   )}
                 />

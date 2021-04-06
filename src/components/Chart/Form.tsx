@@ -1,12 +1,13 @@
 import React, { useMemo, useState } from 'react';
-import {TextField, Select, MenuItem, InputLabel, Typography } from '@material-ui/core'
-import { ArrowDropDown } from '@material-ui/icons'
+import {TextField, Select, MenuItem, InputLabel, Typography, Button } from '@material-ui/core'
+import { ArrowDropDown, Close } from '@material-ui/icons'
 
 export default function Form ({year, setYear, yAxis, setYAxis, xAxis, setXAxis, coeffX, setCoeffX, coeffY, setCoeffY, fields}:any){
 
   return <div>
+
     <form noValidate autoComplete="off" style={{ padding:'2rem', paddingRight:'1rem', display:'flex', textTransform: "capitalize", flexDirection:'column', flexWrap:'wrap' }}>
-    <div style={{display:'flex', flexDirection:'row',}}>
+    <div style={{display:'flex', flexDirection:'row', width:'100%', justifyContent:'space-between'}}>
       <div style={{display:'block', textTransform:"capitalize", width:'50%'}}>
           <InputLabel id="Dataset" 
             style={{fontSize:'0.8rem', color:'rgba(255,255,255,0.8)'}} 
@@ -23,7 +24,7 @@ export default function Form ({year, setYear, yAxis, setYAxis, xAxis, setXAxis, 
           >
             {[...Array(12)].map((v,i) => 
               <MenuItem 
-                style={{textTransform:"capitalize", display:'block', minHeight:'1.5rem'}} 
+                style={{textTransform:"capitalize", display:'block', minHeight:'1.5rem',width:'100%'}} 
                 key={i}               
                 value={i+2009}>
                     <Typography variant="body2" component="div" style={{display:'block', paddingLeft:'1rem', marginTop: '0.2rem', textTransform:"capitalize"}}>
@@ -32,7 +33,7 @@ export default function Form ({year, setYear, yAxis, setYAxis, xAxis, setXAxis, 
               </MenuItem>)}
           </Select>
         </div>
-        <div style={{display:'block', textTransform:"capitalize",  marginLeft:'0.5rem', width:'15%'}}>
+        <div style={{display:'block', textTransform:"capitalize", paddingLeft:'0.05rem', width:'15.5%'}}>
           <InputLabel id="Year" 
             style={{fontSize:'0.8rem', color:'rgba(255,255,255,0.8)'}} 
           >Year</InputLabel>
@@ -48,7 +49,7 @@ export default function Form ({year, setYear, yAxis, setYAxis, xAxis, setXAxis, 
           >
             {[...Array(12)].map((v,i) => 
               <MenuItem 
-                style={{textTransform:"capitalize", display:'block', minHeight:'1.5rem'}} 
+                style={{textTransform:"capitalize", display:'block', minHeight:'1.5rem', width:'100%'}} 
                 key={i} 
                 value={i+2009}>
                   <Typography variant="body2" component="div" style={{display:'block', paddingLeft:'1rem', marginTop: '0.2rem', textTransform:"capitalize"}}>
@@ -57,12 +58,12 @@ export default function Form ({year, setYear, yAxis, setYAxis, xAxis, setXAxis, 
               </MenuItem>)}
           </Select>
         </div>
-        <div style={{display:'block', textTransform:"capitalize", marginLeft:'0.5rem'}}>
+        <div style={{display:'block', textTransform:"capitalize", width:'15.5%'}}>
           <InputLabel id="ExponentY" 
             style={{fontSize:'0.8rem', color:'rgba(255,255,255,0.8)'}} 
-          >Exponent Y</InputLabel>
+          >Exp Y</InputLabel>
           <TextField 
-            style={{fontSize:'0.8rem', color:'rgba(255,255,255,0.8)',  maxWidth:'5.5rem', marginTop:'0.75rem'}}
+            style={{fontSize:'0.8rem', color:'rgba(255,255,255,0.8)',  minWidth:'3.5rem', marginTop:'0.75rem'}}
             id="exponentY" 
             value={coeffY}
             size='small'
@@ -71,12 +72,12 @@ export default function Form ({year, setYear, yAxis, setYAxis, xAxis, setXAxis, 
             onChange={(event:any)=>{if(event.target.value && !isNaN(event.target.value)) setCoeffY(event.target.value) }} 
           />
         </div>
-        <div style={{display:'block', textTransform:"capitalize", marginLeft:'0.5rem'}}>
+        <div style={{display:'block', textTransform:"capitalize", width:'15.5%'}}>
           <InputLabel id="ExponentX" 
             style={{fontSize:'0.8rem', color:'rgba(255,255,255,0.8)'}} 
-          >Exponent X</InputLabel>
+          >Exp X</InputLabel>
           <TextField 
-            style={{fontSize:'0.8rem', color:'rgba(255,255,255,0.8)', maxWidth:'5.5rem', marginTop:'0.75rem'}}
+            style={{fontSize:'0.8rem', color:'rgba(255,255,255,0.8)', minWidth:'3.5rem', marginTop:'0.75rem'}}
             id="exponentX" 
             value={coeffX}
             size='small'
@@ -86,7 +87,7 @@ export default function Form ({year, setYear, yAxis, setYAxis, xAxis, setXAxis, 
           />
         </div>
       </div>
-      <div  style={{display:'flex', flexDirection:'row'}}>
+      <div  style={{display:'flex', flexDirection:'row', width:'100%'}}>
         <div style={{display:'block', textTransform:"capitalize", width:'50%'}}>
           <InputLabel id="Y-axis" 
             style={{fontSize:'0.8rem', color:'rgba(255,255,255,0.8)'}} 
@@ -105,7 +106,7 @@ export default function Form ({year, setYear, yAxis, setYAxis, xAxis, setXAxis, 
               <MenuItem 
                 style={{textTransform:"capitalize", display:'block', minHeight:'1.5rem'}} 
                 key={i} value={v}>
-                  <Typography variant="body2" component="div" style={{display:'block', paddingLeft:'1rem', marginTop: '0.2rem', textTransform:"capitalize"}}>
+                  <Typography variant="body2" component="div" style={{width:'100%',display:'block', paddingLeft:'1rem', marginTop: '0.2rem', textTransform:"capitalize"}}>
                     {v.replaceAll('_', ' ')}
                   </Typography>
               </MenuItem>)}
@@ -127,7 +128,7 @@ export default function Form ({year, setYear, yAxis, setYAxis, xAxis, setXAxis, 
           >
             {fields.filter((d:any)=>d!==yAxis).map((v:any,i:number) => 
               <MenuItem 
-                style={{textTransform:"capitalize", display:'block', minHeight:'1.5rem'}} 
+                style={{width:'100%',textTransform:"capitalize", display:'block', minHeight:'1.5rem'}} 
                 key={i} value={v}>
                   <Typography variant="body2" component="div" style={{display:'block', paddingLeft:'1rem', marginTop: '0.2rem', textTransform:"capitalize"}}>
                     {v.replaceAll('_', ' ')}

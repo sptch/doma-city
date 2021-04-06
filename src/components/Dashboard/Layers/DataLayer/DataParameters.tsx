@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { FormControl, Select, MenuItem, Typography } from '@material-ui/core'
 import { useRecoilState } from 'recoil'
 import * as Atoms from 'misc/Atoms'
+import { ArrowDropDown } from '@material-ui/icons'
 
 export default function DataParameters ({ param, years, setParam, fields, setLayers, layerKey }:any) {
 
@@ -23,6 +24,7 @@ export default function DataParameters ({ param, years, setParam, fields, setLay
         id='tax_param'
         value={param}
         onChange={handleChange}
+        IconComponent={()=><ArrowDropDown fontSize='small' style={{color:'white', marginLeft:'-1.3rem', marginTop:'-0.2rem'}}/>}
         SelectDisplayProps={{style:{backgroundColor:'rgba(255,255,255,0.05)', border:'solid 1px rgba(255,255,255,0.2)', marginBottom:'0.5rem'}}}
         style={{width:'220px', textTransform:"capitalize"}}
       >

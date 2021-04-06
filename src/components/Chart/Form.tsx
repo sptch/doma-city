@@ -1,8 +1,57 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useEffect } from 'react';
 import {TextField, Select, MenuItem, InputLabel, Typography, Button } from '@material-ui/core'
 import { ArrowDropDown, Close } from '@material-ui/icons'
+import { SetterOrUpdater, useRecoilState } from 'recoil'
+import { useLazyQuery } from '@apollo/client'
+import * as Atoms from 'misc/Atoms'
+import * as Queries from 'misc/Queries'
+import { FormType, TableType } from 'misc/Types'
 
-export default function Form ({year, setYear, yAxis, setYAxis, xAxis, setXAxis, coeffX, setCoeffX, coeffY, setCoeffY, fields}:any){
+
+export default function Form ({dataset, setDataset, year, setYear, yAxis, setYAxis, xAxis, setXAxis, coeffX, setCoeffX, coeffY, setCoeffY}:FormType){
+
+  const [layers, setLayers] = useRecoilState<object>(Atoms.tileLayers);
+  const [loadKeys, { data:keys }] = useLazyQuery(Queries.getKeys(
+    Object.keys(layers).length===0? [dataset]:
+    Object.keys(layers).map(v=>v.replace('_geom','_data'))
+  ))
+
+  const [datasets, setDatasets] = useRecoilState(Atoms.chartDatasets);
+
+  useEffect(()=>{
+    // console.log(layers)
+    if(!keys && Object.keys(layers).length>0){
+      loadKeys()
+    }
+  },[layers, keys])
+
+  useEffect(()=>{
+    console.log('keys: ', keys)
+    if(keys){
+        const chartDatasets = (Object.entries(keys) as [string, TableType][]).reduce((agg, v, i)=>{
+          let val:any = {...agg}
+          if(v[1]){
+            const fields = v[1].fields.filter(v=>
+              v.name.charAt(0)!=='_' &&
+              v.name.slice(-2)!=='id' &&
+              (
+                v.type.name==="Int" || 
+                v.type.name==="bigint" ||
+                v.type.name==="numeric" ||
+                v.type.name==="float8" ||
+                v.type.name==="Float"
+              )
+            )
+            if(fields.length>1){
+              val[v[0]]={fields}
+            }
+          }
+          return val
+        },{})
+        console.log(chartDatasets)
+        setDatasets(chartDatasets)
+    }
+  },[keys])
 
   return <div>
 
@@ -15,29 +64,32 @@ export default function Form ({year, setYear, yAxis, setYAxis, xAxis, setXAxis, 
           <Select
             labelId="Dataset"
             id="Dataset"
-            value={year}
+            value={dataset}
             style={{width:'100%'}}
             IconComponent={()=><ArrowDropDown fontSize='small' style={{color:'white', marginLeft:'-1.3rem', marginTop:'-0.2rem'}}/>}
             SelectDisplayProps={{style:{backgroundColor:'rgba(255,255,255,0.05)', border:'solid 1px rgba(255,255,255,0.2)', marginBottom:'0.5rem'}}}
-            onChange={(event:any)=>{if(event.target.value && !isNaN(event.target.value)) setYear(event.target.value) }} 
+            onChange={(event:any)=>{if(event.target.value){ setDataset(event.target.value) } }} 
             label="Dataset"
           >
-            {[...Array(12)].map((v,i) => 
+            {Object.keys(datasets).map((v,i) => 
               <MenuItem 
                 style={{textTransform:"capitalize", display:'block', minHeight:'1.5rem',width:'100%'}} 
                 key={i}               
-                value={i+2009}>
+                value={v}>
                     <Typography variant="body2" component="div" style={{display:'block', paddingLeft:'1rem', marginTop: '0.2rem', textTransform:"capitalize"}}>
-                      Numbeo world cities
+                      {v.replace('_geom','').replace('_x_',' ').replaceAll('_',' ')}
                     </Typography>
               </MenuItem>)}
           </Select>
         </div>
         <div style={{display:'block', textTransform:"capitalize", paddingLeft:'0.05rem', width:'15.5%'}}>
           <InputLabel id="Year" 
-            style={{fontSize:'0.8rem', color:'rgba(255,255,255,0.8)'}} 
+            style={{fontSize:'0.8rem', color:
+              !datasets[dataset]?.fields.find(v=>v.name==='year')? 
+              'rgba(122,122,122,0.8)':'rgba(255,255,255,0.8)'}} 
           >Year</InputLabel>
           <Select
+            disabled={!datasets[dataset]?.fields.find(v=>v.name==='year')}
             labelId="Year"
             id="Year"
             value={year}
@@ -102,12 +154,12 @@ export default function Form ({year, setYear, yAxis, setYAxis, xAxis, setXAxis, 
             IconComponent={()=><ArrowDropDown fontSize='small' style={{color:'white', marginLeft:'-1.3rem', marginTop:'-0.2rem'}}/>}
             SelectDisplayProps={{style:{backgroundColor:'rgba(255,255,255,0.05)', border:'solid 1px rgba(255,255,255,0.2)', marginBottom:'0.5rem'}}}
           >
-            {fields.filter((d:any)=>d!==xAxis).map((v:any, i:number) => 
+            {datasets[dataset]?.fields.filter((d)=>d.name!==xAxis&&d.name!=='year').map((v, i:number) => 
               <MenuItem 
                 style={{textTransform:"capitalize", display:'block', minHeight:'1.5rem'}} 
-                key={i} value={v}>
+                key={i} value={v.name}>
                   <Typography variant="body2" component="div" style={{width:'100%',display:'block', paddingLeft:'1rem', marginTop: '0.2rem', textTransform:"capitalize"}}>
-                    {v.replaceAll('_', ' ')}
+                    {v.name.replaceAll('_', ' ')}
                   </Typography>
               </MenuItem>)}
           </Select>
@@ -126,12 +178,12 @@ export default function Form ({year, setYear, yAxis, setYAxis, xAxis, setXAxis, 
             IconComponent={()=><ArrowDropDown fontSize='small' style={{color:'white', marginLeft:'-1.3rem', marginTop:'-0.2rem'}}/>}
             SelectDisplayProps={{style:{backgroundColor:'rgba(255,255,255,0.05)', border:'solid 1px rgba(255,255,255,0.2)', marginBottom:'0.5rem'}}}
           >
-            {fields.filter((d:any)=>d!==yAxis).map((v:any,i:number) => 
+            {datasets[dataset]?.fields.filter((d)=>d.name!==yAxis&&d.name!=='year').map((v,i:number) => 
               <MenuItem 
                 style={{width:'100%',textTransform:"capitalize", display:'block', minHeight:'1.5rem'}} 
-                key={i} value={v}>
+                key={i} value={v.name}>
                   <Typography variant="body2" component="div" style={{display:'block', paddingLeft:'1rem', marginTop: '0.2rem', textTransform:"capitalize"}}>
-                    {v.replaceAll('_', ' ')}
+                    {v.name.replaceAll('_', ' ')}
                   </Typography>
               </MenuItem>)}
           </Select>

@@ -1,42 +1,69 @@
-import React, { useMemo, useState } from 'react';
-import data from './data.json'
+import React, { useMemo, useState, useEffect } from 'react';
+// import data from './data.json'
 import { Button } from '@material-ui/core' 
 import { Close } from '@material-ui/icons'
 import Chart from './Chart'
 import ChartButton from './ChartButton'
 import Form from './Form'
 import { useSpring, animated } from 'react-spring' 
+import { useRecoilState } from 'recoil'
+import * as Atoms from 'misc/Atoms'
+import * as Queries from 'misc/Queries'
+import { useApolloClient, gql } from '@apollo/client'
 
 const scale = (n:number, coeff:number)=>{
   return Math.pow(n, coeff)
 }
 
-export function ChartPanel ( {pos, open, setOpen}:any ) {
+const chartWidth = '35vw'
 
+export function ChartPanel ( {pos, open, setOpen}:any ) {
+  
+  const [datasets, setDatasets] = useRecoilState(Atoms.chartDatasets);
+  const [dataset, setDataset] = useState('proprietary_x_numbeo')
   const [year, setYear] = useState(2020)
   const [yAxis, setYAxis] = useState('price_to_rent_city_center')
   const [xAxis, setXAxis] = useState('price_to_annual_income')
 
   const [coeffX, setCoeffX] = useState(0.001)
   const [coeffY, setCoeffY] = useState(0.001)
+  const [data, setData] = useState<any>([])
+  const client = useApolloClient()
+
+  useEffect(()=>{
+    (async ()=>{
+      if( datasets[dataset]){
+        const fetchedData = await client.query({
+          query: datasets[dataset]?.fields.find(v=>v.name==='year') ?
+            Queries.getYearValues(dataset, datasets[dataset].fields.map(v=>v.name)):
+            Queries.getChartValues(dataset, datasets[dataset].fields.map(v=>v.name)),
+          ...(datasets[dataset]?.fields.find(v=>v.name==='year') ? {variables:{year}} : {})
+        })
+        console.log(fetchedData)
+        setData(fetchedData.data[dataset])
+        setYAxis(datasets[dataset].fields[0].name)
+        setXAxis(datasets[dataset].fields[1].name)
+      }
+    })()
+  },[dataset, datasets, year])
+
+  useEffect(()=>{
+    if(data[dataset] && datasets[dataset]){
+      setYAxis(datasets[dataset].fields[0].name)
+      setXAxis(datasets[dataset].fields[1].name)
+    }
+  },[dataset, datasets, data])
 
   const plotData = useMemo(
     ()=>data
-    .sort((a,b)=>a.city.localeCompare(b.city))
-    .filter(({year:y})=>y===year)
     .map((d:any)=>({
       key: scale(d[xAxis], coeffX),
       data: scale(d[yAxis], coeffY),
-      id: d.city,
+      id: d.id,
       metadata: d
-    })), [year, coeffX, coeffY, xAxis, yAxis]
+    })), [data, year, coeffX, coeffY, xAxis, yAxis]
   )
-
-  const fields = Object.entries(plotData[0].metadata)
-    .filter(([key,value]:any)=>!isNaN(value)&&key!=="year")
-    .map(([key,value])=>key)
-
-  const chartWidth = '35vw'
+  console.log(plotData[0])
 
   return <>
       <Button 
@@ -53,8 +80,8 @@ export function ChartPanel ( {pos, open, setOpen}:any ) {
           position:'absolute'}}>
         <Close fontSize='small' />
       </Button>
-      <Form {...{year, setYear, yAxis, setYAxis, xAxis, setXAxis, coeffX, setCoeffX, coeffY, setCoeffY, fields}}/>
-      <Chart {...{year, yAxis,  xAxis, coeffX, coeffY, chartWidth}} />
+      <Form {...{dataset, setDataset, year, setYear, yAxis, setYAxis, xAxis, setXAxis, coeffX, setCoeffX, coeffY, setCoeffY}}/>
+      <Chart {...{year, yAxis,  xAxis, coeffX, coeffY, chartWidth, plotData}} />
     </>
 }
 
@@ -65,7 +92,6 @@ export default ()=>{
     from:{ translateX: 100 },
     to: open?{ translateX:0 }:{ translateX: 100 },
   })
-  const chartWidth = '35vw'
 
   return (<>
     <animated.div style={{

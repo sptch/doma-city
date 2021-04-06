@@ -1,5 +1,6 @@
 import { atom } from 'recoil';
 import { isNullishCoalesce } from 'typescript';
+import { TableType } from './Types'
 
 export const tilejson = atom({
   key: 'tilejson', 
@@ -34,4 +35,9 @@ export const legendData = atom({
 export const popup = atom({
   key: 'popup', 
   default: null, 
+});
+
+export const chartDatasets = atom({
+  key: 'chartDatasets', 
+  default: {} as {[name:string]:TableType}, 
 });

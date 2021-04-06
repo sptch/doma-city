@@ -116,7 +116,7 @@ function Group ({group, years}:any) {
             {...{
               layerKey: layer.entry[0],
               fields: layer.entry[1]?.fields, 
-              years: years?.vancouver_x_property_tax_parcels_data?.map((v:any)=>v.report_year), 
+              years: years?.vancouver_x_property_tax_parcels_data?.map((v:any)=>v.year), 
               key:i
             }}/>
           }
@@ -133,7 +133,7 @@ export default ({open, setOpen}:any)=>{
   const [dataLayers, setDataLayers] = useRecoilState<any>(Atoms.dataLayers)
 
   const { data:keys } = useQuery(Queries.getKeys(dataLayersNames))
-  const { data:years } = useQuery(Queries.getRange('vancouver_x_property_tax_parcels_data', 'report_year'), {variables:{numeric: false}})
+  const { data:years } = useQuery(Queries.getRange('vancouver_x_property_tax_parcels_data', 'year'), {variables:{numeric: false}})
 
   useEffect(()=>{
     if(keys){

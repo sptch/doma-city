@@ -1,9 +1,9 @@
 import { useQuery, gql } from '@apollo/client'
 
-export const getKeys = (tables:Array<string>)=>gql`
+export const getKeys = (tables:Array<string>)=> gql`
   query GetKeys_${tables.join('_')} {
   ${tables.map((table)=>`
-    ${table}: __type(name:"${table.replace('_geom','')}_data") {
+    ${table}: __type(name:"${table.replace('_geom','_data')}") {
         fields {
           name
           type {
@@ -15,11 +15,19 @@ export const getKeys = (tables:Array<string>)=>gql`
   }
 `
 
-export const getYearValues = (source:string, property:string)=>gql`
+export const getYearValues = (source:string, properties:string[])=>gql`
   query GetYearValues_${source}($year:bigint) {
-    ${source}(where: {report_year: {_eq: $year}}){
+    ${source}(where: {year: {_eq: $year}}){
       id
-      ${property}
+      ${properties.join('\n')}
+    }
+  }`
+
+export const getChartValues = (source:string, properties:string[])=>gql`
+  query GetChartValues_${source} {
+    ${source} {
+      id
+      ${properties.join('\n')}
     }
   }`
 
@@ -55,9 +63,9 @@ export const getNTiles = gql`
     }
   }`
 
-export const getDatum = (source:string, properties:any)=>gql`
+export const getDatum = (source:string, properties:string[])=>gql`
   query GetDatum_${source}($id: bigint, $year: bigint ) {
-    ${source}(where: {id: {_eq: $id}, report_year: {_eq: $year}}) {
+    ${source}(where: {id: {_eq: $id}, year: {_eq: $year}}) {
       ${properties.join('\n')}
     }
   }`

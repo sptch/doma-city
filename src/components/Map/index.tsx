@@ -40,7 +40,7 @@ export default ()=>{
       }).forEach((key, i)=>{
         if(key.includes('public')){
           const filteredProp = Object.keys(d[key].properties)
-            .filter(key => key.charAt(0)!=="_" && key.substr(0,2).toLocaleLowerCase()!=="id" && key.substr(0,2).toLocaleLowerCase()!=="id" && key!=="report_year")
+            .filter(key => key.charAt(0)!=="_" && key.substr(0,2).toLocaleLowerCase()!=="id" && key.substr(0,2).toLocaleLowerCase()!=="id" && key!=="year")
             .reduce((obj:any, k:any) => {
               obj[k] = d[key].properties[k];
               return obj;
@@ -51,7 +51,6 @@ export default ()=>{
       })
       fetchedLayers = otherLayers.reduce((p,v,i)=>({ ...p, [v.id]:false }), fetchedLayers)
       fetchedTilejson = otherLayers.reduce((p,v,i)=>({ ...p, [v.id]:v}), fetchedTilejson)
-      console.log(fetchedTilejson, fetchedLayers)
       setTilejson(fetchedTilejson)
       setLayers(fetchedLayers)
     })

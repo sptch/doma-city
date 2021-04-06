@@ -2,7 +2,7 @@
 CREATE MATERIALIZED VIEW public.blocks_data
 AS
 SELECT 
-	b.id,  t.report_year,
+	b.id,  t.year,
   COALESCE(avg(t.current_land_value), 0) AS current_land_value,
   COALESCE(avg(t.current_improvement_value), 0) AS current_improvement_value,
   COALESCE(avg(t.previous_improvement_value), 0) AS previous_improvement_value,
@@ -16,7 +16,7 @@ FROM (
   SELECT * 
   FROM blocks 
   CROSS JOIN (
-    SELECT report_year from taxes_data group by report_year
+    SELECT year from taxes_data group by year
   ) as bl ) as b
   LEFT JOIN (
     SELECT * 
@@ -24,6 +24,6 @@ FROM (
     RIGHT JOIN taxes_data
       ON taxes_data.id = taxes.id
   ) as t
-  ON b.report_year=t.report_year and ST_Intersects(b.geom, t.geom)
-GROUP BY b.geom, b.id, t.report_year
+  ON b.year=t.year and ST_Intersects(b.geom, t.geom)
+GROUP BY b.geom, b.id, t.year
 WITH DATA;

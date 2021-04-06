@@ -33,19 +33,7 @@ const unscale = (n:number, coeff:number)=>{
   return value<10?value.toFixed(1):value.toFixed(0)
 }
 
-export default function Chart ({year, yAxis,  xAxis, coeffX, coeffY, chartWidth}:any) {
-
-  const plotData = useMemo(
-    ()=>data
-    .sort((a,b)=>a.city.localeCompare(b.city))
-    .filter(({year:y})=>y===year)
-    .map((d:any)=>({
-      key: scale(d[xAxis], coeffX),
-      data: scale(d[yAxis], coeffY),
-      id: d.city,
-      metadata: d
-    })), [year, coeffX, coeffY, xAxis, yAxis]
-  )
+export default function Chart ({year, yAxis,  xAxis, coeffX, coeffY, chartWidth, plotData}:any) {
 
   const domainX=[
     Math.min(...plotData.map((v:any)=>v.data)),
@@ -92,7 +80,7 @@ export default function Chart ({year, yAxis,  xAxis, coeffX, coeffY, chartWidth}
                       <Typography style={{display:'block', position: "relative", fontWeight:"bold"}}>{data.id}</Typography>
                       {Object.entries(data.metadata)
                         .filter(([key,value]:any)=>!isNaN(value)&&key!=="year")
-                        .map(([key,value]:any, i)=><Typography key={i} style={{display:'block', position: "relative", textAlign:'start', textTransform: "capitalize"}}>{key.replaceAll('_',' ')}: {isNaN(value)?value:value.toFixed(2)}</Typography>)}
+                        .map(([key,value]:any, i)=><Typography key={i} style={{display:'block', position: "relative", textAlign:'start', textTransform: "capitalize"}}>{key.replaceAll('_',' ')}: {isNaN(value)?value:value?.toFixed(2)}</Typography>)}
                     </div>
                   )}
                 />

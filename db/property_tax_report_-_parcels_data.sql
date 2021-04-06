@@ -1,6 +1,6 @@
  SELECT taxes_full_data.id,
     taxes_full_data.coord AS _coord,
-    taxes_full_data.report_year,
+    taxes_full_data.year,
     COALESCE(sum(taxes_full_data.current_land_value) / taxes_area.area, 0::double precision) AS land_value,
     COALESCE(sum(taxes_full_data.current_improvement_value) / taxes_area.area, 0::double precision) AS improvement_value,
     COALESCE(sum(taxes_full_data.tax_levy) / taxes_area.area, 0::double precision) AS tax_levy,
@@ -13,4 +13,4 @@
             "property_tax_report_-_parcels".id
            FROM "property_tax_report_-_parcels") taxes_area
   WHERE taxes_full_data.id = taxes_area.id
-  GROUP BY taxes_full_data.id, taxes_full_data.coord, taxes_full_data.report_year, taxes_area.area;
+  GROUP BY taxes_full_data.id, taxes_full_data.coord, taxes_full_data.year, taxes_area.area;

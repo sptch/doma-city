@@ -70,7 +70,6 @@ export default function MapDataLayer ({setCursor, layerKey, property, visible, s
       setHoveredStateId(null);
     }
   };
-  useEffect(()=>{console.log(extrude)},[extrude])
 
   return <>
     <Source 

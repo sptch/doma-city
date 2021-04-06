@@ -29,7 +29,7 @@ export default function DataLayer ({ fields, layerKey, years }:any) {
       }
       label={
       <Typography variant="body2" component="div" style={{display:'inline-block', textTransform:"capitalize"}}>
-        {layerKey.split('_x_')[1].replaceAll("_", " ")}
+        {layerKey.split('_x_')[1].replace('_geom','').replaceAll("_", " ")}
       </Typography>}
       style={{textTransform:"capitalize"}}
     />

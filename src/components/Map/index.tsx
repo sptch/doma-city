@@ -82,8 +82,8 @@ export default ()=>{
       { popup && <Popup {...popup} /> }
       {
         (Object.entries(layers) as Array<keyof typeof layers>)
-        ?.map((layer, i)=><React.Fragment key={i}>
-          { layer[0]!=="vancouver_x_property_tax_parcels" && layer[0]!=="vancouver_x_property_tax_blocks" ?
+        ?.map((layer:any, i)=><React.Fragment key={i}>
+          { (!layer[0].includes("_geom")) ?
             <MapLayer {...{setCursor, layerKey: layer[0], property: layer[1], visible:Boolean(layer[1]), setAxonometric, i}}/>:
             <MapDataLayer {...{setCursor, layerKey: layer[0], property: layer[1], visible:Boolean(layer[1]), setAxonometric, i}}/> }
         </React.Fragment>

@@ -110,8 +110,6 @@ function Group ({group, years}:any) {
           return nameA < nameB ? -1: nameA > nameB? 1:0
         })
         .map((layer:any, i:number)=>{
-          // ( layerKey!=='vancouver_x_property_tax_parcels' && 
-          // layerKey!=='vancouver_x_property_tax_blocks' ) &&
           return layer.type==='layer'?
             <Layer {...{layerKey:layer.entry[0], key:i}}/>:
             <DataLayer 

@@ -3,7 +3,7 @@ import { useQuery, gql } from '@apollo/client'
 export const getKeys = (tables:Array<string>)=>gql`
   query GetKeys_${tables.join('_')} {
   ${tables.map((table)=>`
-    ${table}: __type(name:"${table}_data") {
+    ${table}: __type(name:"${table.replace('_geom','')}_data") {
         fields {
           name
           type {
@@ -56,7 +56,7 @@ export const getNTiles = gql`
   }`
 
 export const getDatum = (source:string, properties:any)=>gql`
-  query GetDatum_${source}($id: ${source==='vancouver_x_property_tax_blocks_data'?'Int':'bigint'}, $year: bigint ) {
+  query GetDatum_${source}($id: bigint, $year: bigint ) {
     ${source}(where: {id: {_eq: $id}, report_year: {_eq: $year}}) {
       ${properties.join('\n')}
     }

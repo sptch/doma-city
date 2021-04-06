@@ -50,6 +50,7 @@ export default function DataParameters ({ param, years, setParam, fields, setLay
         id='tax_year'
         value={year}
         onChange={handleYearChange}
+        IconComponent={()=><ArrowDropDown fontSize='small' style={{color:'white', marginLeft:'-1.3rem', marginTop:'-0.2rem'}}/>}
         SelectDisplayProps={{style:{backgroundColor:'rgba(255,255,255,0.05)', border:'solid 1px rgba(255,255,255,0.2)', marginBottom:'0.5rem'}}}
         style={{width:'220px', textTransform:"capitalize"}}
       >

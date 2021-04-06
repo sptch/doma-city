@@ -25,7 +25,7 @@ export default function MapDataLayer ({setCursor, layerKey, property, visible, s
   },[visible, setAxonometric, extrude])
 
   const [getDatum, { data:popupData, loading, refetch: refetchDatum }] = useLazyQuery(
-    Queries.getDatum(layerKey+"_data", dataLayers[layerKey]?.fields.map((v:any)=>v.name)), {variables: {
+    Queries.getDatum(layerKey.replace('_geom','')+"_data", dataLayers[layerKey]?.fields.map((v:any)=>v.name)), {variables: {
       id: popupBase.id||popupBase.properties.id||0,
       year: Number(year) || 2006
     }})
@@ -49,7 +49,7 @@ export default function MapDataLayer ({setCursor, layerKey, property, visible, s
           longitude: getCentroid(popupBase.geometry).geometry.coordinates[0],
           latitude: getCentroid(popupBase.geometry).geometry.coordinates[1]
         },
-        properties: popupData[layerKey+'_data'][0]
+        properties: popupData[layerKey.replace('_geom','')+'_data'][0]
       })
     }
   },[popupData])
@@ -80,7 +80,7 @@ export default function MapDataLayer ({setCursor, layerKey, property, visible, s
       volatile={true}
       promoteId='id'
     />
-    { Object.keys(extrude).length===0||layerKey==='vancouver_x_property_tax_parcels' ?
+    { Object.keys(extrude).length===0||layerKey==='vancouver_x_property_tax_parcels_geom' ?
       <Layer 
         id={layerKey+'_polygon'}
         type="fill"

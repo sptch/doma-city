@@ -13,8 +13,8 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
   let mode:ColorMode = 'quantile'
   
   const ntiles = 8
-  const [getData, { data, called, loading, refetch }] = useLazyQuery(Queries.getYearValues(source+'_data', dataLayerKey), {variables:{year}, fetchPolicy: "no-cache"})
-  const [getRange, { data:range }] = useLazyQuery(Queries.getRange(source+'_data', dataLayerKey), {variables:{
+  const [getData, { data, called, loading, refetch }] = useLazyQuery(Queries.getYearValues(source.replace('_geom','')+'_data', dataLayerKey), {variables:{year}, fetchPolicy: "no-cache"})
+  const [getRange, { data:range }] = useLazyQuery(Queries.getRange(source.replace('_geom','')+'_data', dataLayerKey), {variables:{
     numeric: 
       dataType==='float8' ||
       dataType==='bigint' ||
@@ -22,7 +22,7 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
   }, fetchPolicy: "no-cache"})
 
   const [getNTiles, { data:tiles }] = useLazyQuery(Queries.getNTiles, {variables:{
-    table_id: source+'_data', 
+    table_id: source.replace('_geom','')+'_data', 
     column_id: dataLayerKey,
     ntiles,
     mode: 'min'
@@ -66,7 +66,7 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
         const {
           min:{[dataLayerKey]:minValue}, 
           max:{[dataLayerKey]:maxValue}
-        } = range[source+'_data_aggregate'].aggregate
+        } = range[source.replace('_geom','')+'_data_aggregate'].aggregate
 
         const lookup:any = {}
         tiles.get_tiles.forEach((tile:any, i:number)=>{
@@ -117,13 +117,13 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
         }
 
         if(mode==='linear'){
-          data[source+'_data'].forEach((row:any)=>{
+          data[source.replace('_geom','')+'_data'].forEach((row:any)=>{
             var value = (row[dataLayerKey] - minValue)/(maxValue-minValue);
             var color = interpolateColor(value);
             matchExpression.push(row.id, color);
           });
         }else{
-          data[source+'_data'].forEach((row:any)=>{
+          data[source.replace('_geom','')+'_data'].forEach((row:any)=>{
             var color = getColor( row[dataLayerKey] )
             var height = getHeight( row[dataLayerKey] )
             matchExpression.push(row.id, color);
@@ -137,7 +137,7 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
         //Here goes categorical
         console.log('plain')
         setExtrude(0)
-        const options = range[source+'_data']?.map((v:any)=>v[dataLayerKey])
+        const options = range[source.replace('_geom','')+'_data']?.map((v:any)=>v[dataLayerKey])
         const lookup:any = {}
         for(let i = 0; i<options.length; i++){
           var value = i/(options.length-1);
@@ -151,7 +151,7 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
           .map((v:any)=>v[0]==='null'?['Other',v[1]]:v)
         }))
 
-        data[source+'_data'].forEach((row:any)=>{
+        data[source.replace('_geom','')+'_data'].forEach((row:any)=>{
           matchExpression.push(row.id, lookup[row[dataLayerKey]]);
         });
       }

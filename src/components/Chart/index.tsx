@@ -39,20 +39,20 @@ export function ChartPanel ( {pos, open, setOpen}:any ) {
   const chartWidth = '35vw'
 
   return <>
-        <Button 
-          size='small'
-          onClick={()=>{
-            console.log('click')
-            setOpen(false)
-          }} 
-          className="Close-chart"
-          style={{
-            right:'1rem',
-            top:'1rem',
-            minWidth:'0.8rem',
-            position:'absolute'}}>
-          <Close fontSize='small' />
-        </Button>
+      <Button 
+        size='small'
+        onClick={()=>{
+          console.log('click')
+          setOpen(false)
+        }} 
+        className="Close-chart"
+        style={{
+          right:'1rem',
+          top:'1rem',
+          minWidth:'0.8rem',
+          position:'absolute'}}>
+        <Close fontSize='small' />
+      </Button>
       <Form {...{year, setYear, yAxis, setYAxis, xAxis, setXAxis, coeffX, setCoeffX, coeffY, setCoeffY, fields}}/>
       <Chart {...{year, yAxis,  xAxis, coeffX, coeffY, chartWidth}} />
     </>

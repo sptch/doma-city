@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import { Popup } from '@urbica/react-map-gl'
 import { useRecoilState } from 'recoil'
-import { Typography, Link, Box } from '@material-ui/core'
+import { Typography, Link, Button } from '@material-ui/core'
+import { Close } from '@material-ui/icons'
 import * as Atoms from 'misc/Atoms'
 import * as d3 from 'd3-format'
 
@@ -12,23 +13,18 @@ export default ()=>{
   const [popup, setPopup] = useRecoilState<any>(Atoms.popup);
 
   return <Popup {...popup.location} maxWidth='fit-content' className="custom-popup" closeButton={false} closeOnClick={false}>
-  <div 
-    style={{
-      position:'absolute',
-      top: '0.5rem',
-      right: '0.5rem',
-      cursor: 'pointer'
-    }}
+  <Button 
+    size='small'
     onClick={()=>setPopup(null)} 
-    onMouseOver={()=>setCrossColor('black')}
-    onMouseLeave={()=>setCrossColor('#999999')}
-  >
-    <svg width={10} height={10} style={{stroke:crossColor, strokeWidth:2}}>
-      <path d={"M0,0L10,10"} />
-      <path d={"M0,10L10,0"} />
-    </svg>
-  </div>
-  <div style={{padding:'0.5rem', textTransform:"capitalize"}}>
+    className="Close-popup"
+    style={{
+      right:'1rem',
+      top:'1rem',
+      minWidth:'0.8rem',
+      position:'absolute'}}>
+    <Close fontSize='small' />
+  </Button>
+  <div style={{padding:'0.5rem', paddingRight:'2rem', textTransform:"capitalize"}}>
     {Object.entries({...popup.properties})
     .map(([key,value]:any)=>[
       key.replaceAll('_',' ').toLowerCase(), 

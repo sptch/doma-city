@@ -8,7 +8,7 @@ import * as Queries from 'misc/Queries'
 import { FormType, TableType } from 'misc/Types'
 
 
-export default function Form ({dataset, setDataset, year, setYear, yAxis, setYAxis, xAxis, setXAxis, coeffX, setCoeffX, coeffY, setCoeffY}:FormType){
+export default function Form ({dataset, setDataset, setDatasetsUnfiltered, year, setYear, yAxis, setYAxis, xAxis, setXAxis, coeffX, setCoeffX, coeffY, setCoeffY}:FormType){
 
   const [layers, setLayers] = useRecoilState<object>(Atoms.tileLayers);
   const [loadKeys, { data:keys }] = useLazyQuery(Queries.getKeys(
@@ -49,6 +49,7 @@ export default function Form ({dataset, setDataset, year, setYear, yAxis, setYAx
           return val
         },{})
         console.log(chartDatasets)
+        setDatasetsUnfiltered(keys)
         setDatasets(chartDatasets)
     }
   },[keys])

@@ -3,6 +3,7 @@ import { SetterOrUpdater } from 'recoil'
 export type FormType = {
   dataset:string, 
   setDataset:SetterOrUpdater<string>, 
+  setDatasetsUnfiltered:SetterOrUpdater<any>, 
   year:number, 
   setYear:SetterOrUpdater<number>, 
   yAxis:string, 

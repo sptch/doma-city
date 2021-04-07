@@ -10,7 +10,6 @@ import {
   LinearXAxis
 } from 'reaviz';
 import { LinearAxisTickLabel } from './LinearAxisTickLabel'
-import data from './data.json'
 import* as d3Colors from 'd3-scale-chromatic'
 import { hsl } from 'd3-color'
 import { Typography } from '@material-ui/core'
@@ -35,15 +34,15 @@ const unscale = (n:number, coeff:number)=>{
 
 export default function Chart ({year, yAxis,  xAxis, coeffX, coeffY, chartWidth, plotData}:any) {
 
-  const domainX=[
+  const domainX=useMemo(()=>[
     Math.min(...plotData.map((v:any)=>v.data)),
     Math.max(...plotData.map((v:any)=>v.data))
-  ]
+  ],[plotData])
 
-  const domainY=[
+  const domainY=useMemo(()=>[
     Math.min(...plotData.map((v:any)=>v.key)),
     Math.max(...plotData.map((v:any)=>v.key))
-  ]
+  ],[plotData])
 
   return <div style={{
     // paddingLeft:'1.5rem', 
@@ -77,15 +76,15 @@ export default function Chart ({year, yAxis,  xAxis, coeffX, coeffY, chartWidth,
                     placement="top"
                     content={(data:any) => (
                     <div style={{display:'block', position: "relative", padding:"10px", borderRadius:'5px', borderColor:'rgba(255,255,255,0.6)', borderStyle:'solid', borderWidth:'2px', backgroundColor: "rgba(12, 21, 26, 1)"}}>
-                      <Typography style={{display:'block', position: "relative", fontWeight:"bold"}}>{data.id}</Typography>
+                      <Typography style={{display:'block', position: "relative", fontWeight:"bold"}}>{data.metadata.name||data.metadata._name||data.id}</Typography>
                       {Object.entries(data.metadata)
-                        .filter(([key,value]:any)=>!isNaN(value)&&key!=="year")
+                        .filter(([key,value]:any)=>(!isNaN(value)||typeof(value)==='string')&&key!=="year")
                         .map(([key,value]:any, i)=><Typography key={i} style={{display:'block', position: "relative", textAlign:'start', textTransform: "capitalize"}}>{key.replaceAll('_',' ')}: {isNaN(value)?value:value?.toFixed(2)}</Typography>)}
                     </div>
                   )}
                 />
                 }
-                size={(v) => 1/v.metadata.affordability_index+2}
+                size={(v:any) =>{return Math.abs((v.key - domainY[0])/(domainY[1]-domainY[0]))*20 + 1 || 1 } }
               />
             }
           />

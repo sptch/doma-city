@@ -12,64 +12,93 @@ import * as Queries from 'misc/Queries'
 import { useApolloClient, gql } from '@apollo/client'
 
 const scale = (n:number, coeff:number)=>{
-  return Math.pow(n, coeff)
+  const val = Math.pow(n, coeff)
+  return isNaN(val)?1:val
 }
 
 const chartWidth = '35vw'
 
+function getRandomSubarray(arr:any[], size:number) {
+  var shuffled = arr.slice(0), i = arr.length, temp, index;
+  while (i--) {
+      index = Math.floor((i + 1) * Math.random());
+      temp = shuffled[index];
+      shuffled[index] = shuffled[i];
+      shuffled[i] = temp;
+  }
+  return shuffled.slice(0, size);
+}
+
 export function ChartPanel ( {pos, open, setOpen}:any ) {
   
   const [datasets, setDatasets] = useRecoilState(Atoms.chartDatasets);
+  const [datasetsUnfiltered, setDatasetsUnfiltered] = useState(datasets)
   const [dataset, setDataset] = useState('proprietary_x_numbeo')
   const [year, setYear] = useState(2020)
   const [yAxis, setYAxis] = useState('price_to_rent_city_center')
   const [xAxis, setXAxis] = useState('price_to_annual_income')
 
-  const [coeffX, setCoeffX] = useState(0.001)
-  const [coeffY, setCoeffY] = useState(0.001)
+  const [coeffX, setCoeffX] = useState(1)
+  const [coeffY, setCoeffY] = useState(1)
   const [data, setData] = useState<any>([])
+  const [plotData, setPlotData] = useState<any>([{ key: 1, data: 1, id: 1, metadata: {}}])
   const client = useApolloClient()
 
   useEffect(()=>{
-    (async ()=>{
-      if( datasets[dataset]){
-        const fetchedData = await client.query({
-          query: datasets[dataset]?.fields.find(v=>v.name==='year') ?
-            Queries.getYearValues(dataset, datasets[dataset].fields.map(v=>v.name)):
-            Queries.getChartValues(dataset, datasets[dataset].fields.map(v=>v.name)),
-          ...(datasets[dataset]?.fields.find(v=>v.name==='year') ? {variables:{year}} : {})
-        })
-        console.log(fetchedData)
-        setData(fetchedData.data[dataset])
-        setYAxis(datasets[dataset].fields[0].name)
-        setXAxis(datasets[dataset].fields[1].name)
-      }
-    })()
-  },[dataset, datasets, year])
+    if( datasets[dataset] ){
+      console.log('query')
+      client.query({
+        query: datasets[dataset]?.fields.find(v=>v.name==='year') ?
+          Queries.getYearValues(
+            dataset, 
+            datasetsUnfiltered[dataset].fields.map(v=>v.name),
+            undefined):
+          Queries.getChartValues(
+            dataset, 
+            datasetsUnfiltered[dataset].fields.map(v=>v.name),
+            undefined),
+        ...(datasets[dataset]?.fields.find(v=>v.name==='year') ? {variables:{year}} : {}),
+        fetchPolicy: 'no-cache'
+      }).then(fetchedData=>{
+        if(fetchedData.loading===false){
+          setData(fetchedData.data[dataset])
+        }
+      })
+    }
+  },[dataset, datasets, datasetsUnfiltered, year])
 
   useEffect(()=>{
-    if(data[dataset] && datasets[dataset]){
+    if( datasets[dataset]){
       setYAxis(datasets[dataset].fields[0].name)
       setXAxis(datasets[dataset].fields[1].name)
     }
-  },[dataset, datasets, data])
+  },[dataset, datasets])
 
-  const plotData = useMemo(
-    ()=>data
-    .map((d:any)=>({
-      key: scale(d[xAxis], coeffX),
-      data: scale(d[yAxis], coeffY),
-      id: d.id,
-      metadata: d
-    })), [data, year, coeffX, coeffY, xAxis, yAxis]
-  )
-  console.log(plotData[0])
+  useEffect(()=>{
+    if(!isNaN(data?.[0]?.[xAxis])&&!isNaN(data?.[0]?.[yAxis])){
+      const pd = data
+      ?.map((d:any)=>({
+        key: scale(d[xAxis], coeffX),
+        data: scale(d[yAxis], coeffY),
+        id: d.id,
+        metadata: d
+      }))
+      
+      if(pd.length>0){ 
+        if(pd.length<1000){
+          console.log('set plot data', pd)
+          setPlotData(pd) 
+        }else{
+          setPlotData(getRandomSubarray(pd,1000)) 
+        }
+      }
+    }
+  }, [data, year, coeffX, coeffY, xAxis, yAxis])
 
   return <>
       <Button 
         size='small'
         onClick={()=>{
-          console.log('click')
           setOpen(false)
         }} 
         className="Close-chart"
@@ -80,8 +109,8 @@ export function ChartPanel ( {pos, open, setOpen}:any ) {
           position:'absolute'}}>
         <Close fontSize='small' />
       </Button>
-      <Form {...{dataset, setDataset, year, setYear, yAxis, setYAxis, xAxis, setXAxis, coeffX, setCoeffX, coeffY, setCoeffY}}/>
-      <Chart {...{year, yAxis,  xAxis, coeffX, coeffY, chartWidth, plotData}} />
+      <Form {...{dataset, setDataset, setDatasetsUnfiltered, year, setYear, yAxis, setYAxis, xAxis, setXAxis, coeffX, setCoeffX, coeffY, setCoeffY}}/>
+      <Chart {...{year, yAxis, xAxis, coeffX, coeffY, chartWidth, plotData}} />
     </>
 }
 

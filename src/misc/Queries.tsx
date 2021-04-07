@@ -15,17 +15,17 @@ export const getKeys = (tables:Array<string>)=> gql`
   }
 `
 
-export const getYearValues = (source:string, properties:string[])=>gql`
+export const getYearValues = (source:string, properties:string[], limit?:number)=>gql`
   query GetYearValues_${source}($year:bigint) {
-    ${source}(where: {year: {_eq: $year}}){
+    ${source}(where: {year: {_eq: $year}}${limit?`, limit: ${limit}`:''}){
       id
       ${properties.join('\n')}
     }
   }`
 
-export const getChartValues = (source:string, properties:string[])=>gql`
+export const getChartValues = (source:string, properties:string[], limit?:number)=>gql`
   query GetChartValues_${source} {
-    ${source} {
+    ${source} ${limit?`(limit: ${limit})`:''} {
       id
       ${properties.join('\n')}
     }

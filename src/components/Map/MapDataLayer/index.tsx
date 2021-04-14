@@ -75,7 +75,7 @@ export default function MapDataLayer ({setCursor, layerKey, property, visible, s
     <Source 
       id={layerKey}
       type="vector"
-      tiles={[`https://spatialtech.herokuapp.com/http://dev.spatialtech.info:3003/${l.schema}.${l.table}/{z}/{x}/{y}.pbf`]}
+      tiles={[`https://vancouver.weee.city/${l.schema}.${l.table}/{z}/{x}/{y}.pbf`]}
       volatile={true}
       promoteId='id'
     />

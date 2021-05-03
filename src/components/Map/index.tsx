@@ -21,7 +21,7 @@ export default ()=>{
   const mapRef:any = useRef()
 
   useEffect(()=>{
-    fetch("https://vancouver.weee.city/index.json")
+    fetch("https://spatialtech.herokuapp.com/http://dev.spatialtech.info:3003/index.json")
     .then(d=>d.json())
     .then(d=>{
       let fetchedTilejson: {[k: string]: any} = {}

@@ -68,7 +68,7 @@ export default function MapLayer ({setCursor, layerKey, property, visible, setAx
           type="vector"
           volatile={true}
           promoteId="id"
-          tiles={[`https://vancouver.weee.city/${l.schema}.${l.table}/{z}/{x}/{y}.pbf`]}
+          tiles={[`https://spatialtech.herokuapp.com/http://dev.spatialtech.info:3003/${l.schema}.${l.table}/{z}/{x}/{y}.pbf`]}
         />
         {
           tilejson[layerKey].properties &&

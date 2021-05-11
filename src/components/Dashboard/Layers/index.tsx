@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react'
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles'
+import { makeStyles, Theme } from '@material-ui/core/styles'
 import { Box, FormLabel, FormControl, Divider, FormGroup, FormControlLabel, FormHelperText, Checkbox, useEventCallback,
   Select, MenuItem, InputLabel, Typography, Button  } from '@material-ui/core'
 import { useRecoilState, useRecoilValue } from 'recoil'
@@ -13,8 +13,7 @@ import otherLayers from 'sources.json'
 
 export { default as LayersButton } from './LayersButton'
 
-const useStyles = makeStyles((theme: Theme) =>
-  createStyles({
+const useStyles = makeStyles((theme: Theme) =>({
     root: {
       display: 'flex',
     },
@@ -33,7 +32,7 @@ const useStyles = makeStyles((theme: Theme) =>
       border: 'solid 2px rgba(255,255,255,0.6)',
       borderTop: 'none'
     }
-  }),
+  })
 )
 
 function Header ({open, setOpen}:any) {

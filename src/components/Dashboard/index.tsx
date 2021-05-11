@@ -5,7 +5,7 @@ import Legend from './Legend'
 
 export default ()=>{
 
-  const [open, setOpen ] = useState(false)
+  const [open, setOpen ] = useState(true)
   const pos:any = useSpring({
     from:{ translateX: 100 },
     to: open?{ translateX:0 }:{ translateX: 100 },

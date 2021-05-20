@@ -6,7 +6,7 @@ import { Close } from '@material-ui/icons'
 import * as Atoms from 'misc/Atoms'
 import * as d3 from 'd3-format'
 
-const format:any = d3.format(".4")
+const format:any = d3.format("~s") //d3.format(".4")
 
 export default ()=>{
   const [crossColor, setCrossColor] = useState('#999999')
@@ -49,7 +49,7 @@ export default ()=>{
         <Link href={value} variant="body2" style={{fontWeight: 'bold'}}>{key}</Link>:
         <>
           <Typography variant="body2" style={{display:'inline-block', fontWeight: 'bold'}}>{key+': '}</Typography>
-          <Typography variant="body2" style={{display:'inline-block', paddingLeft:'1rem'}}>{typeof(value)==="number"&& !key.includes('coord')?format(value):value}</Typography>
+          <Typography variant="body2" style={{display:'inline-block', paddingLeft:'1rem'}}>{(typeof(value)==="number" && !key.includes('coord'))?format(value):value}</Typography>
         </>
       }
     </div>)}

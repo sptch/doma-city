@@ -1,7 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react'
 import { makeStyles } from '@material-ui/styles'
-import { Box, FormLabel, FormControl, Divider, FormGroup, FormControlLabel, FormHelperText, Checkbox, useEventCallback,
-  Select, MenuItem, InputLabel, Typography, Button  } from '@material-ui/core'
+import { Box, FormControl, Divider, FormGroup, Typography, Button  } from '@material-ui/core'
 import { useRecoilState, useRecoilValue } from 'recoil'
 import { Close, Info, Layers as L } from '@material-ui/icons'
 import { atoms, otherLayers, queries } from 'misc'

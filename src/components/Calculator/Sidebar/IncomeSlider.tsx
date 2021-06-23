@@ -1,4 +1,5 @@
-import { Slider, withStyles, Typography } from "@material-ui/core"
+import { Slider, Typography } from "@material-ui/core"
+import { withStyles } from '@material-ui/styles'
 import { useRecoilState } from "recoil"
 import { atoms } from 'misc'
 import { StyledSlider } from "./Slider"

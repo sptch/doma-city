@@ -1,4 +1,5 @@
-import { Typography, Slider, withStyles } from "@material-ui/core";
+import { Typography, Slider } from "@material-ui/core"
+import { withStyles } from "@material-ui/styles"
 import { atoms } from "misc";
 import { useState } from "react";
 import { useSpring, animated as a } from "react-spring";

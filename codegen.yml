@@ -1,0 +1,17 @@
+overwrite: true
+schema: 
+  - "http://176.37.101.31:8083/v1/graphql":
+documents: 
+  - 'src/**/*.graphql'
+generates:
+  src/generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      withHooks: true
+      withMutationFn: true
+      reactApolloVersion: 3
+      skipTypeNameForRoot: true
+      skipTypename: true

@@ -66,9 +66,6 @@ const theme:ThemeOptions = createMuiTheme({
 
 const client = new ApolloClient({
   uri: 'https://spatialtech.herokuapp.com/http://dev.spatialtech.info:8083/v1/graphql',
-  headers: {
-    "x-hasura-admin-secret": "As12345"
-  },
   cache: new InMemoryCache({
     addTypename: false
   })

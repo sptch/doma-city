@@ -1,0 +1,37 @@
+query SyntheticParcels($year:bigint) {
+  synthetic_parcels(where:{year:{_eq:$year}}) {
+    id
+    price
+    rent
+  }
+}
+
+query SyntheticBlocks($year:bigint) {
+  synthetic_blocks(where:{year:{_eq:$year}}) {
+    id
+    price
+    rent
+  }
+}
+
+query RentsHistorical {
+  data:rents_historical(where:{year:{_gte:2005}}) {
+    data:average
+    key:year
+  }
+  incomes {
+    data:average
+    key:year
+  } 
+}
+
+query PricesHistorical {
+  data:prices_historical(where:{year:{_gte:2005}}) {
+    data:average
+    key:year
+  }
+  incomes {
+    data:average 
+    key:year
+  } 
+}

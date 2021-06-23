@@ -1,17 +1,14 @@
-import React from 'react';
-import Map from './Map'
-import Dashboard from './Dashboard'
-import Legend from './Legend'
-import Timeline from './Timeline'
-import Chart from './Chart'
+import { Route, BrowserRouter as Router } from 'react-router-dom'
+import Datasets from './Datasets'
+import Calculator from './Calculator'
 
 export default ()=>{
-  return (
-    <div className="App">
-      <Map/>
-      <Dashboard />
-      <Chart />
-      {/* <Timeline /> */}
-    </div>
-  );
+  return <Router>
+    <Route path='/calculator'>
+      <Calculator/>
+    </Route>
+    <Route path='/' exact>
+      <Datasets/>
+    </Route>
+  </Router>
 }

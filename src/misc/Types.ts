@@ -21,3 +21,8 @@ type Field = {name:string, type:{name:string}}
 export type TableType = {
   fields: {0:Field,1:Field}&[Field] 
 }
+
+export type Entries = {
+  key: string|number
+  data: {key:number, data:number}[]
+}[]

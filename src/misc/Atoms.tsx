@@ -1,6 +1,5 @@
 import { atom } from 'recoil';
-import { isNullishCoalesce } from 'typescript';
-import { TableType } from './Types'
+import { TableType } from './types'
 
 export const tilejson = atom({
   key: 'tilejson', 
@@ -40,4 +39,19 @@ export const popup = atom({
 export const chartDatasets = atom({
   key: 'chartDatasets', 
   default: {} as {[name:string]:TableType}, 
+});
+
+export const mode = atom({
+  key: 'mode', 
+  default: 'rent' as 'rent'|'sale', 
+});
+
+export const year = atom({
+  key: 'year', 
+  default: 2020, 
+});
+
+export const income = atom({
+  key: 'income', 
+  default: 0.5, 
 });

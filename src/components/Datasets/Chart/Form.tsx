@@ -84,11 +84,11 @@ export default function Form ({dataset, setDataset, setDatasetsUnfiltered, year,
         <div style={{display:'block', textTransform:"capitalize", paddingLeft:'0.05rem', width:'15.5%'}}>
           <InputLabel id="Year" 
             style={{fontSize:'0.8rem', color:
-              !datasets[dataset]?.fields.find(v=>v.name==='year')? 
+              !datasets[dataset]?.fields.find((v:any)=>v.name==='year')? 
               'rgba(122,122,122,0.8)':'rgba(255,255,255,0.8)'}} 
           >Year</InputLabel>
           <Select
-            disabled={!datasets[dataset]?.fields.find(v=>v.name==='year')}
+            disabled={!datasets[dataset]?.fields.find((v:any)=>v.name==='year')}
             labelId="Year"
             id="Year"
             value={year}
@@ -153,7 +153,7 @@ export default function Form ({dataset, setDataset, setDatasetsUnfiltered, year,
             IconComponent={()=><ArrowDropDown fontSize='small' style={{color:'white', marginLeft:'-1.3rem', marginTop:'-0.2rem'}}/>}
             SelectDisplayProps={{style:{backgroundColor:'rgba(255,255,255,0.05)', border:'solid 1px rgba(255,255,255,0.2)', marginBottom:'0.5rem'}}}
           >
-            {datasets[dataset]?.fields.filter((d)=>d.name!==xAxis&&d.name!=='year').map((v, i:number) => 
+            {datasets[dataset]?.fields.filter((d:any)=>d.name!==xAxis&&d.name!=='year').map((v:any, i:number) => 
               <MenuItem 
                 style={{textTransform:"capitalize", display:'block', minHeight:'1.5rem'}} 
                 key={i} value={v.name}>
@@ -177,7 +177,7 @@ export default function Form ({dataset, setDataset, setDatasetsUnfiltered, year,
             IconComponent={()=><ArrowDropDown fontSize='small' style={{color:'white', marginLeft:'-1.3rem', marginTop:'-0.2rem'}}/>}
             SelectDisplayProps={{style:{backgroundColor:'rgba(255,255,255,0.05)', border:'solid 1px rgba(255,255,255,0.2)', marginBottom:'0.5rem'}}}
           >
-            {datasets[dataset]?.fields.filter((d)=>d.name!==yAxis&&d.name!=='year').map((v,i:number) => 
+            {datasets[dataset]?.fields.filter((d:any)=>d.name!==yAxis&&d.name!=='year').map((v:any,i:number) => 
               <MenuItem 
                 style={{width:'100%',textTransform:"capitalize", display:'block', minHeight:'1.5rem'}} 
                 key={i} value={v.name}>

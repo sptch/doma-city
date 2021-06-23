@@ -47,7 +47,7 @@ export function ChartPanel ( {pos, open, setOpen}:any ) {
     if( datasets[dataset] ){
       console.log('query')
       client.query({
-        query: datasets[dataset]?.fields.find(v=>v.name==='year') ?
+        query: datasets[dataset]?.fields.find((v:any)=>v.name==='year') ?
           queries.getYearValues(
             dataset, 
             datasetsUnfiltered[dataset].fields.map(v=>v.name),

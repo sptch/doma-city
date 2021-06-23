@@ -1,5 +1,5 @@
 import { atom } from 'recoil';
-import { TableType } from './types'
+import { TableType } from '../types'
 
 export const tilejson = atom({
   key: 'tilejson', 

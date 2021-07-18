@@ -11298,29 +11298,13 @@ export type Synthetic_Blocks_Variance_Order_By = {
 
 /** columns and relationships of "synthetic_parcels" */
 export type Synthetic_Parcels = {
-  id?: Maybe<Scalars['bigint']>;
-  imp?: Maybe<Scalars['float8']>;
-  imp_pm?: Maybe<Scalars['float8']>;
   index: Scalars['bigint'];
-  lnd?: Maybe<Scalars['float8']>;
-  lnd_pm?: Maybe<Scalars['float8']>;
-  lvy?: Maybe<Scalars['float8']>;
-  lvy_pm?: Maybe<Scalars['float8']>;
-  norm?: Maybe<Scalars['float8']>;
+  land_coordinate?: Maybe<Scalars['bigint']>;
   price?: Maybe<Scalars['float8']>;
-  price_average?: Maybe<Scalars['float8']>;
-  price_max?: Maybe<Scalars['float8']>;
-  price_min?: Maybe<Scalars['float8']>;
+  price_pm?: Maybe<Scalars['float8']>;
   rent?: Maybe<Scalars['float8']>;
-  rent_average?: Maybe<Scalars['bigint']>;
-  rent_max?: Maybe<Scalars['float8']>;
-  rent_min?: Maybe<Scalars['float8']>;
-  tot?: Maybe<Scalars['float8']>;
-  tot_max_pm?: Maybe<Scalars['float8']>;
-  tot_min_pm?: Maybe<Scalars['float8']>;
-  tot_pm?: Maybe<Scalars['float8']>;
-  year?: Maybe<Scalars['bigint']>;
-  zone_category?: Maybe<Scalars['String']>;
+  rent_pm?: Maybe<Scalars['float8']>;
+  report_year?: Maybe<Scalars['bigint']>;
 };
 
 /** Boolean expression to filter rows from the table "synthetic_parcels". All fields are combined with a logical 'AND'. */
@@ -11328,56 +11312,24 @@ export type Synthetic_Parcels_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Synthetic_Parcels_Bool_Exp>>>;
   _not?: Maybe<Synthetic_Parcels_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Synthetic_Parcels_Bool_Exp>>>;
-  id?: Maybe<Bigint_Comparison_Exp>;
-  imp?: Maybe<Float8_Comparison_Exp>;
-  imp_pm?: Maybe<Float8_Comparison_Exp>;
   index?: Maybe<Bigint_Comparison_Exp>;
-  lnd?: Maybe<Float8_Comparison_Exp>;
-  lnd_pm?: Maybe<Float8_Comparison_Exp>;
-  lvy?: Maybe<Float8_Comparison_Exp>;
-  lvy_pm?: Maybe<Float8_Comparison_Exp>;
-  norm?: Maybe<Float8_Comparison_Exp>;
+  land_coordinate?: Maybe<Bigint_Comparison_Exp>;
   price?: Maybe<Float8_Comparison_Exp>;
-  price_average?: Maybe<Float8_Comparison_Exp>;
-  price_max?: Maybe<Float8_Comparison_Exp>;
-  price_min?: Maybe<Float8_Comparison_Exp>;
+  price_pm?: Maybe<Float8_Comparison_Exp>;
   rent?: Maybe<Float8_Comparison_Exp>;
-  rent_average?: Maybe<Bigint_Comparison_Exp>;
-  rent_max?: Maybe<Float8_Comparison_Exp>;
-  rent_min?: Maybe<Float8_Comparison_Exp>;
-  tot?: Maybe<Float8_Comparison_Exp>;
-  tot_max_pm?: Maybe<Float8_Comparison_Exp>;
-  tot_min_pm?: Maybe<Float8_Comparison_Exp>;
-  tot_pm?: Maybe<Float8_Comparison_Exp>;
-  year?: Maybe<Bigint_Comparison_Exp>;
-  zone_category?: Maybe<String_Comparison_Exp>;
+  rent_pm?: Maybe<Float8_Comparison_Exp>;
+  report_year?: Maybe<Bigint_Comparison_Exp>;
 };
 
 /** ordering options when selecting data from "synthetic_parcels" */
 export type Synthetic_Parcels_Order_By = {
-  id?: Maybe<Order_By>;
-  imp?: Maybe<Order_By>;
-  imp_pm?: Maybe<Order_By>;
   index?: Maybe<Order_By>;
-  lnd?: Maybe<Order_By>;
-  lnd_pm?: Maybe<Order_By>;
-  lvy?: Maybe<Order_By>;
-  lvy_pm?: Maybe<Order_By>;
-  norm?: Maybe<Order_By>;
+  land_coordinate?: Maybe<Order_By>;
   price?: Maybe<Order_By>;
-  price_average?: Maybe<Order_By>;
-  price_max?: Maybe<Order_By>;
-  price_min?: Maybe<Order_By>;
+  price_pm?: Maybe<Order_By>;
   rent?: Maybe<Order_By>;
-  rent_average?: Maybe<Order_By>;
-  rent_max?: Maybe<Order_By>;
-  rent_min?: Maybe<Order_By>;
-  tot?: Maybe<Order_By>;
-  tot_max_pm?: Maybe<Order_By>;
-  tot_min_pm?: Maybe<Order_By>;
-  tot_pm?: Maybe<Order_By>;
-  year?: Maybe<Order_By>;
-  zone_category?: Maybe<Order_By>;
+  rent_pm?: Maybe<Order_By>;
+  report_year?: Maybe<Order_By>;
 };
 
 /** primary key columns input for table: "synthetic_parcels" */
@@ -11388,51 +11340,19 @@ export type Synthetic_Parcels_Pk_Columns_Input = {
 /** select columns of table "synthetic_parcels" */
 export enum Synthetic_Parcels_Select_Column {
   /** column name */
-  Id = 'id',
-  /** column name */
-  Imp = 'imp',
-  /** column name */
-  ImpPm = 'imp_pm',
-  /** column name */
   Index = 'index',
   /** column name */
-  Lnd = 'lnd',
-  /** column name */
-  LndPm = 'lnd_pm',
-  /** column name */
-  Lvy = 'lvy',
-  /** column name */
-  LvyPm = 'lvy_pm',
-  /** column name */
-  Norm = 'norm',
+  LandCoordinate = 'land_coordinate',
   /** column name */
   Price = 'price',
   /** column name */
-  PriceAverage = 'price_average',
-  /** column name */
-  PriceMax = 'price_max',
-  /** column name */
-  PriceMin = 'price_min',
+  PricePm = 'price_pm',
   /** column name */
   Rent = 'rent',
   /** column name */
-  RentAverage = 'rent_average',
+  RentPm = 'rent_pm',
   /** column name */
-  RentMax = 'rent_max',
-  /** column name */
-  RentMin = 'rent_min',
-  /** column name */
-  Tot = 'tot',
-  /** column name */
-  TotMaxPm = 'tot_max_pm',
-  /** column name */
-  TotMinPm = 'tot_min_pm',
-  /** column name */
-  TotPm = 'tot_pm',
-  /** column name */
-  Year = 'year',
-  /** column name */
-  ZoneCategory = 'zone_category'
+  ReportYear = 'report_year'
 }
 
 /** columns and relationships of "vancouver_x_business_improvement_areas" */
@@ -13169,10 +13089,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data = {
   improvement_value?: Maybe<Scalars['float8']>;
   land_value?: Maybe<Scalars['float8']>;
   legal_type?: Maybe<Scalars['String']>;
-  price_approximate?: Maybe<Scalars['float8']>;
-  rent_approximate?: Maybe<Scalars['float8']>;
   tax_levy?: Maybe<Scalars['float8']>;
-  tax_price_approximate?: Maybe<Scalars['float8']>;
   year?: Maybe<Scalars['bigint']>;
   year_built?: Maybe<Scalars['float8']>;
   zone_category?: Maybe<Scalars['String']>;
@@ -13228,10 +13145,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Avg_Fields = {
   id?: Maybe<Scalars['Float']>;
   improvement_value?: Maybe<Scalars['Float']>;
   land_value?: Maybe<Scalars['Float']>;
-  price_approximate?: Maybe<Scalars['Float']>;
-  rent_approximate?: Maybe<Scalars['Float']>;
   tax_levy?: Maybe<Scalars['Float']>;
-  tax_price_approximate?: Maybe<Scalars['Float']>;
   year?: Maybe<Scalars['Float']>;
   year_built?: Maybe<Scalars['Float']>;
 };
@@ -13243,10 +13157,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Avg_Order_By = {
   id?: Maybe<Order_By>;
   improvement_value?: Maybe<Order_By>;
   land_value?: Maybe<Order_By>;
-  price_approximate?: Maybe<Order_By>;
-  rent_approximate?: Maybe<Order_By>;
   tax_levy?: Maybe<Order_By>;
-  tax_price_approximate?: Maybe<Order_By>;
   year?: Maybe<Order_By>;
   year_built?: Maybe<Order_By>;
 };
@@ -13262,10 +13173,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Bool_Exp = {
   improvement_value?: Maybe<Float8_Comparison_Exp>;
   land_value?: Maybe<Float8_Comparison_Exp>;
   legal_type?: Maybe<String_Comparison_Exp>;
-  price_approximate?: Maybe<Float8_Comparison_Exp>;
-  rent_approximate?: Maybe<Float8_Comparison_Exp>;
   tax_levy?: Maybe<Float8_Comparison_Exp>;
-  tax_price_approximate?: Maybe<Float8_Comparison_Exp>;
   year?: Maybe<Bigint_Comparison_Exp>;
   year_built?: Maybe<Float8_Comparison_Exp>;
   zone_category?: Maybe<String_Comparison_Exp>;
@@ -13279,10 +13187,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Max_Fields = {
   improvement_value?: Maybe<Scalars['float8']>;
   land_value?: Maybe<Scalars['float8']>;
   legal_type?: Maybe<Scalars['String']>;
-  price_approximate?: Maybe<Scalars['float8']>;
-  rent_approximate?: Maybe<Scalars['float8']>;
   tax_levy?: Maybe<Scalars['float8']>;
-  tax_price_approximate?: Maybe<Scalars['float8']>;
   year?: Maybe<Scalars['bigint']>;
   year_built?: Maybe<Scalars['float8']>;
   zone_category?: Maybe<Scalars['String']>;
@@ -13296,10 +13201,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Max_Order_By = {
   improvement_value?: Maybe<Order_By>;
   land_value?: Maybe<Order_By>;
   legal_type?: Maybe<Order_By>;
-  price_approximate?: Maybe<Order_By>;
-  rent_approximate?: Maybe<Order_By>;
   tax_levy?: Maybe<Order_By>;
-  tax_price_approximate?: Maybe<Order_By>;
   year?: Maybe<Order_By>;
   year_built?: Maybe<Order_By>;
   zone_category?: Maybe<Order_By>;
@@ -13313,10 +13215,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Min_Fields = {
   improvement_value?: Maybe<Scalars['float8']>;
   land_value?: Maybe<Scalars['float8']>;
   legal_type?: Maybe<Scalars['String']>;
-  price_approximate?: Maybe<Scalars['float8']>;
-  rent_approximate?: Maybe<Scalars['float8']>;
   tax_levy?: Maybe<Scalars['float8']>;
-  tax_price_approximate?: Maybe<Scalars['float8']>;
   year?: Maybe<Scalars['bigint']>;
   year_built?: Maybe<Scalars['float8']>;
   zone_category?: Maybe<Scalars['String']>;
@@ -13330,10 +13229,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Min_Order_By = {
   improvement_value?: Maybe<Order_By>;
   land_value?: Maybe<Order_By>;
   legal_type?: Maybe<Order_By>;
-  price_approximate?: Maybe<Order_By>;
-  rent_approximate?: Maybe<Order_By>;
   tax_levy?: Maybe<Order_By>;
-  tax_price_approximate?: Maybe<Order_By>;
   year?: Maybe<Order_By>;
   year_built?: Maybe<Order_By>;
   zone_category?: Maybe<Order_By>;
@@ -13347,10 +13243,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Order_By = {
   improvement_value?: Maybe<Order_By>;
   land_value?: Maybe<Order_By>;
   legal_type?: Maybe<Order_By>;
-  price_approximate?: Maybe<Order_By>;
-  rent_approximate?: Maybe<Order_By>;
   tax_levy?: Maybe<Order_By>;
-  tax_price_approximate?: Maybe<Order_By>;
   year?: Maybe<Order_By>;
   year_built?: Maybe<Order_By>;
   zone_category?: Maybe<Order_By>;
@@ -13371,13 +13264,7 @@ export enum Vancouver_X_Property_Tax_Parcels_Data_Select_Column {
   /** column name */
   LegalType = 'legal_type',
   /** column name */
-  PriceApproximate = 'price_approximate',
-  /** column name */
-  RentApproximate = 'rent_approximate',
-  /** column name */
   TaxLevy = 'tax_levy',
-  /** column name */
-  TaxPriceApproximate = 'tax_price_approximate',
   /** column name */
   Year = 'year',
   /** column name */
@@ -13393,10 +13280,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Stddev_Fields = {
   id?: Maybe<Scalars['Float']>;
   improvement_value?: Maybe<Scalars['Float']>;
   land_value?: Maybe<Scalars['Float']>;
-  price_approximate?: Maybe<Scalars['Float']>;
-  rent_approximate?: Maybe<Scalars['Float']>;
   tax_levy?: Maybe<Scalars['Float']>;
-  tax_price_approximate?: Maybe<Scalars['Float']>;
   year?: Maybe<Scalars['Float']>;
   year_built?: Maybe<Scalars['Float']>;
 };
@@ -13408,10 +13292,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Stddev_Order_By = {
   id?: Maybe<Order_By>;
   improvement_value?: Maybe<Order_By>;
   land_value?: Maybe<Order_By>;
-  price_approximate?: Maybe<Order_By>;
-  rent_approximate?: Maybe<Order_By>;
   tax_levy?: Maybe<Order_By>;
-  tax_price_approximate?: Maybe<Order_By>;
   year?: Maybe<Order_By>;
   year_built?: Maybe<Order_By>;
 };
@@ -13423,10 +13304,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Stddev_Pop_Fields = {
   id?: Maybe<Scalars['Float']>;
   improvement_value?: Maybe<Scalars['Float']>;
   land_value?: Maybe<Scalars['Float']>;
-  price_approximate?: Maybe<Scalars['Float']>;
-  rent_approximate?: Maybe<Scalars['Float']>;
   tax_levy?: Maybe<Scalars['Float']>;
-  tax_price_approximate?: Maybe<Scalars['Float']>;
   year?: Maybe<Scalars['Float']>;
   year_built?: Maybe<Scalars['Float']>;
 };
@@ -13438,10 +13316,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Stddev_Pop_Order_By = {
   id?: Maybe<Order_By>;
   improvement_value?: Maybe<Order_By>;
   land_value?: Maybe<Order_By>;
-  price_approximate?: Maybe<Order_By>;
-  rent_approximate?: Maybe<Order_By>;
   tax_levy?: Maybe<Order_By>;
-  tax_price_approximate?: Maybe<Order_By>;
   year?: Maybe<Order_By>;
   year_built?: Maybe<Order_By>;
 };
@@ -13453,10 +13328,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Stddev_Samp_Fields = {
   id?: Maybe<Scalars['Float']>;
   improvement_value?: Maybe<Scalars['Float']>;
   land_value?: Maybe<Scalars['Float']>;
-  price_approximate?: Maybe<Scalars['Float']>;
-  rent_approximate?: Maybe<Scalars['Float']>;
   tax_levy?: Maybe<Scalars['Float']>;
-  tax_price_approximate?: Maybe<Scalars['Float']>;
   year?: Maybe<Scalars['Float']>;
   year_built?: Maybe<Scalars['Float']>;
 };
@@ -13468,10 +13340,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Stddev_Samp_Order_By = {
   id?: Maybe<Order_By>;
   improvement_value?: Maybe<Order_By>;
   land_value?: Maybe<Order_By>;
-  price_approximate?: Maybe<Order_By>;
-  rent_approximate?: Maybe<Order_By>;
   tax_levy?: Maybe<Order_By>;
-  tax_price_approximate?: Maybe<Order_By>;
   year?: Maybe<Order_By>;
   year_built?: Maybe<Order_By>;
 };
@@ -13483,10 +13352,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Sum_Fields = {
   id?: Maybe<Scalars['bigint']>;
   improvement_value?: Maybe<Scalars['float8']>;
   land_value?: Maybe<Scalars['float8']>;
-  price_approximate?: Maybe<Scalars['float8']>;
-  rent_approximate?: Maybe<Scalars['float8']>;
   tax_levy?: Maybe<Scalars['float8']>;
-  tax_price_approximate?: Maybe<Scalars['float8']>;
   year?: Maybe<Scalars['bigint']>;
   year_built?: Maybe<Scalars['float8']>;
 };
@@ -13498,10 +13364,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Sum_Order_By = {
   id?: Maybe<Order_By>;
   improvement_value?: Maybe<Order_By>;
   land_value?: Maybe<Order_By>;
-  price_approximate?: Maybe<Order_By>;
-  rent_approximate?: Maybe<Order_By>;
   tax_levy?: Maybe<Order_By>;
-  tax_price_approximate?: Maybe<Order_By>;
   year?: Maybe<Order_By>;
   year_built?: Maybe<Order_By>;
 };
@@ -13513,10 +13376,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Var_Pop_Fields = {
   id?: Maybe<Scalars['Float']>;
   improvement_value?: Maybe<Scalars['Float']>;
   land_value?: Maybe<Scalars['Float']>;
-  price_approximate?: Maybe<Scalars['Float']>;
-  rent_approximate?: Maybe<Scalars['Float']>;
   tax_levy?: Maybe<Scalars['Float']>;
-  tax_price_approximate?: Maybe<Scalars['Float']>;
   year?: Maybe<Scalars['Float']>;
   year_built?: Maybe<Scalars['Float']>;
 };
@@ -13528,10 +13388,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Var_Pop_Order_By = {
   id?: Maybe<Order_By>;
   improvement_value?: Maybe<Order_By>;
   land_value?: Maybe<Order_By>;
-  price_approximate?: Maybe<Order_By>;
-  rent_approximate?: Maybe<Order_By>;
   tax_levy?: Maybe<Order_By>;
-  tax_price_approximate?: Maybe<Order_By>;
   year?: Maybe<Order_By>;
   year_built?: Maybe<Order_By>;
 };
@@ -13543,10 +13400,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Var_Samp_Fields = {
   id?: Maybe<Scalars['Float']>;
   improvement_value?: Maybe<Scalars['Float']>;
   land_value?: Maybe<Scalars['Float']>;
-  price_approximate?: Maybe<Scalars['Float']>;
-  rent_approximate?: Maybe<Scalars['Float']>;
   tax_levy?: Maybe<Scalars['Float']>;
-  tax_price_approximate?: Maybe<Scalars['Float']>;
   year?: Maybe<Scalars['Float']>;
   year_built?: Maybe<Scalars['Float']>;
 };
@@ -13558,10 +13412,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Var_Samp_Order_By = {
   id?: Maybe<Order_By>;
   improvement_value?: Maybe<Order_By>;
   land_value?: Maybe<Order_By>;
-  price_approximate?: Maybe<Order_By>;
-  rent_approximate?: Maybe<Order_By>;
   tax_levy?: Maybe<Order_By>;
-  tax_price_approximate?: Maybe<Order_By>;
   year?: Maybe<Order_By>;
   year_built?: Maybe<Order_By>;
 };
@@ -13573,10 +13424,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Variance_Fields = {
   id?: Maybe<Scalars['Float']>;
   improvement_value?: Maybe<Scalars['Float']>;
   land_value?: Maybe<Scalars['Float']>;
-  price_approximate?: Maybe<Scalars['Float']>;
-  rent_approximate?: Maybe<Scalars['Float']>;
   tax_levy?: Maybe<Scalars['Float']>;
-  tax_price_approximate?: Maybe<Scalars['Float']>;
   year?: Maybe<Scalars['Float']>;
   year_built?: Maybe<Scalars['Float']>;
 };
@@ -13588,10 +13436,7 @@ export type Vancouver_X_Property_Tax_Parcels_Data_Variance_Order_By = {
   id?: Maybe<Order_By>;
   improvement_value?: Maybe<Order_By>;
   land_value?: Maybe<Order_By>;
-  price_approximate?: Maybe<Order_By>;
-  rent_approximate?: Maybe<Order_By>;
   tax_levy?: Maybe<Order_By>;
-  tax_price_approximate?: Maybe<Order_By>;
   year?: Maybe<Order_By>;
   year_built?: Maybe<Order_By>;
 };
@@ -13998,7 +13843,10 @@ export type SyntheticParcelsQueryVariables = Exact<{
 }>;
 
 
-export type SyntheticParcelsQuery = { synthetic_parcels: Array<Pick<Synthetic_Parcels, 'id' | 'price' | 'rent'>> };
+export type SyntheticParcelsQuery = { synthetic_parcels: Array<(
+    Pick<Synthetic_Parcels, 'price' | 'rent'>
+    & { id: Synthetic_Parcels['index'] }
+  )> };
 
 export type SyntheticBlocksQueryVariables = Exact<{
   year?: Maybe<Scalars['bigint']>;
@@ -14020,10 +13868,10 @@ export type PricesHistoricalQuery = { data: Array<{ data: Prices_Historical['ave
 
 export const SyntheticParcelsDocument = gql`
     query SyntheticParcels($year: bigint) {
-  synthetic_parcels(where: {year: {_eq: $year}}) {
-    id
+  synthetic_parcels(where: {report_year: {_eq: $year}}) {
     price
     rent
+    id: index
   }
 }
     `;

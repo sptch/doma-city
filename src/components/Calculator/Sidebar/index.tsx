@@ -5,7 +5,7 @@ import { useRecoilState } from "recoil";
 import Toggle from "./Toggle";
 import HistorySlider from "./HistorySlider"
 import IncomeSlider from "./IncomeSlider"
-import { RentChart, SaleChart } from "./Charts"
+import { RentChart, PriceChart } from "./Charts"
 import { useComponentSize } from "react-use-size"
 
 export  default function Sidebar(){
@@ -39,7 +39,7 @@ export  default function Sidebar(){
     <div {...{ref}} style={{width:'100%', position:'relative', marginTop: '1.5rem', minHeight:'350px', maxHeight:'450px', border:'solid rgba(255,255,255,0.6) 1px', height: 'calc( 33vw - 4rem)'}}>
       {mode==='rent'?
         <RentChart {...{height, width}}/>:
-        <SaleChart {...{height, width}}/>
+        <PriceChart {...{height, width}}/>
       }
     </div>
     <div style={{width:'100%', marginTop: '1.5rem', padding: '1rem', paddingTop:'1.5rem', boxSizing:'border-box', border:'solid rgba(255,255,255,0.6) 1px', height: '8rem'}}>

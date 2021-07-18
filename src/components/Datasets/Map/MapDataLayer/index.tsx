@@ -10,7 +10,6 @@ export default function MapDataLayer ({setCursor, layerKey, property, visible, s
   const tilejson:{[k: string]: any} = useRecoilValue(atoms.tilejson)
   const [year] = useRecoilState<any>(atoms.taxesYear)
   const l = tilejson[layerKey]
-  const [layers, setLayers] = useRecoilState<any>(atoms.tileLayers)
   const dataLayers = useRecoilValue<any>(atoms.dataLayers)
   const [paintProperty, setPaintProperty] = useState("rgba(247,178,17,0.3)")
   const [hoveredStateId, setHoveredStateId] = useState(null);
@@ -32,6 +31,7 @@ export default function MapDataLayer ({setCursor, layerKey, property, visible, s
   const onClick = (e:any)=>{
     setPopupBase(e.features[0])
     if(!popupData){
+      console.log(layerKey, dataLayers[layerKey])
       getDatum()
     }else{
       refetchDatum && refetchDatum({

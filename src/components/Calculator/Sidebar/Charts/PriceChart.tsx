@@ -3,7 +3,7 @@ import { usePricesHistoricalQuery } from 'generated'
 import { useEffect, useState } from "react";
 import { Entries } from "misc";
 
-export function SaleChart({ height=350, width=350 }){
+export function PriceChart({ height=350, width=350 }){
   const { data:raw } = usePricesHistoricalQuery()
   const [data, setData] = useState<Entries>() 
 

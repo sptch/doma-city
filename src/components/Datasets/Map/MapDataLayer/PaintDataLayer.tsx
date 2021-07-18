@@ -11,6 +11,10 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
   let mode:ColorMode = 'quantile'
   
   const ntiles = 8
+  // console.log('ppp ',
+  //   queries.getYearValues(source.replace('_geom','')+'_data', [dataLayerKey]),
+  //   queries.getRange(source.replace('_geom','')+'_data', dataLayerKey)
+  // )
   const [getData, { data, called, loading, refetch }] = useLazyQuery(queries.getYearValues(source.replace('_geom','')+'_data', [dataLayerKey]), {variables:{year}, fetchPolicy: "no-cache"})
   const [getRange, { data:range }] = useLazyQuery(queries.getRange(source.replace('_geom','')+'_data', dataLayerKey), {variables:{
     numeric: 
@@ -44,6 +48,7 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
         dataType==='float8' ||
         dataType==='bigint' ||
         dataType==='Int'
+      
       getRange(); 
       if(numeric) getNTiles(); 
       getData(); 

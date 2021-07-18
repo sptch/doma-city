@@ -7,8 +7,8 @@ import PaintDataLayer from './PaintDataLayer'
 import getCentroid from '@turf/centroid'
 
 export default function MapDataLayer ({setCursor}:any) {
-  const [year] = useRecoilState<any>(atoms.taxesYear)
-  const [mode] = useRecoilState<any>(atoms.mode)
+  const [year] = useRecoilState(atoms.taxesYear)
+  const [mode] = useRecoilState(atoms.mode)
 
   const [paintProperty, setPaintProperty] = useState("rgba(247,178,17,0.3)")
   const [hoveredStateId, setHoveredStateId] = useState(null);
@@ -29,7 +29,7 @@ export default function MapDataLayer ({setCursor}:any) {
     }else{
       refetchDatum && refetchDatum({
         id: popupBase.id,
-        year 
+        year: Number(year) 
       })
     }
   }
@@ -98,7 +98,7 @@ export default function MapDataLayer ({setCursor}:any) {
           source='synthetic_blocks'
           sourceLayer='public.synthetic_blocks'
           {...{setPaintProperty, extrude, setExtrude}}
-          key={i} visible />
+          key={i} visible={l===mode} />
       )
     }
     {hoveredStateId && <FeatureState id={hoveredStateId||''} source='synthetic_blocks' sourceLayer='public.synthetic_blocks' state={{ hover: true }} />}

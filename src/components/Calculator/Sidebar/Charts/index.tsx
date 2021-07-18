@@ -1,2 +1,2 @@
 export * from './RentChart'
-export * from './SaleChart'
+export * from './PriceChart'

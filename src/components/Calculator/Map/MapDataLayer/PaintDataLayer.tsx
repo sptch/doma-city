@@ -22,7 +22,7 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
     mode: 'min'
   }, fetchPolicy: "no-cache"})
 
-  useEffect(()=>{console.log(data, range, tiles)},[data, range, tiles])
+  // useEffect(()=>{console.log(data, range, tiles)},[data, range, tiles])
 
   useEffect(()=>{
     if(!visible){
@@ -53,6 +53,8 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
       dataType==='float8' ||
       dataType==='bigint' ||
       dataType==='Int'
+
+    console.log(data, visible, range, tiles, numeric)
 
     if(data && visible && range && (tiles || !numeric)){  
       const matchExpression = ['match', ['get', 'id']];
@@ -126,7 +128,6 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
             extrudeExpression.push(row.id, height);
           });
           extrudeExpression.push(300)
-          console.log(extrudeExpression)
           setExtrude(extrudeExpression)
         }
       }else{
@@ -152,6 +153,7 @@ export default function PaintDataLayer ({dataType, dataLayerKey, visible, source
         });
       }
       matchExpression.push('rgba(0, 0, 0, 0)');
+      console.log('paint',dataLayerKey,matchExpression)
       setPaintProperty( matchExpression)
     }
   },[data, range, tiles, visible])

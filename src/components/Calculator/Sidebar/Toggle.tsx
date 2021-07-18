@@ -18,7 +18,7 @@ export default function Toggle(){
       <Typography variant='body2'>
         Rent
       </Typography>
-      <div onPointerOver={()=>setHovered(true)} onPointerLeave={()=>setHovered(false)} onClick={()=>setMode(mode==='rent'?'sale':'rent')} style={{width:'4rem',position:'relative', height:'1.8rem', borderRadius:'0.9rem', border:'solid 1px white'}}>
+      <div onPointerOver={()=>setHovered(true)} onPointerLeave={()=>setHovered(false)} onClick={()=>setMode(mode==='rent'?'price':'rent')} style={{width:'4rem',position:'relative', height:'1.8rem', borderRadius:'0.9rem', border:'solid 1px white'}}>
         <a.div style={{backgroundColor:'rgba(255,255,255,0.2)', opacity, transform: 'translate(-0.5rem, -0.5rem)', position:'absolute', height:'2.4rem', width:'2.4rem', borderRadius:'1.2rem', margin:'0.2rem', left}}/>
         <a.div style={{backgroundColor:'white', position:'absolute', height:'1.4rem', width:'1.4rem', borderRadius:'0.7rem', margin:'0.2rem', left}}/>
       </div>

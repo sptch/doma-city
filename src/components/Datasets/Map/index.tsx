@@ -50,6 +50,7 @@ export default ()=>{
       })
       fetchedLayers = otherLayers.reduce((p,v,i)=>({ ...p, [v.id]:false }), fetchedLayers)
       fetchedTilejson = otherLayers.reduce((p,v,i)=>({ ...p, [v.id]:v}), fetchedTilejson)
+      console.log(fetchedTilejson, fetchedLayers)
       setTilejson(fetchedTilejson)
       setLayers(fetchedLayers)
     })

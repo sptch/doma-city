@@ -1,107 +1,87 @@
-import { useEffect, useState } from 'react'
-import { Source, Layer, FeatureState } from '@urbica/react-map-gl'
-import { useRecoilState, useRecoilValue } from 'recoil'
-import { useLazyQuery } from '@apollo/client'
-import { atoms, queries } from 'misc'
+import { useState } from 'react'
+import { Source, Layer } from '@urbica/react-map-gl'
+import { useRecoilState } from 'recoil'
+import { atoms } from 'misc'
 import PaintDataLayer from './PaintDataLayer'
-import getCentroid from '@turf/centroid'
 
 export default function MapDataLayer ({setCursor}:any) {
-  const [year] = useRecoilState(atoms.taxesYear)
+  const [year] = useRecoilState(atoms.year)
   const [mode] = useRecoilState(atoms.mode)
-
-  const [paintProperty, setPaintProperty] = useState("rgba(247,178,17,0.3)")
-  const [hoveredStateId, setHoveredStateId] = useState(null);
-  const [popup, setPopup] = useRecoilState<any>(atoms.popup);
-  const [popupBase, setPopupBase] = useState<any>({id:0, properties:{id:0}})
-  const [extrude, setExtrude] = useState<any>(300)
-
-  const [getDatum, { data:popupData, loading, refetch: refetchDatum }] = useLazyQuery(
-    queries.getDatum("synthetic_blocks", ['id', 'rent', 'price']), {variables: {
-      id: popupBase.id||popupBase.properties.id||0,
-      year: Number(year) || 2006
-    }})
-
-  const onClick = (e:any)=>{
-    setPopupBase(e.features[0])
-    if(!popupData){
-      getDatum()
-    }else{
-      refetchDatum && refetchDatum({
-        id: popupBase.id,
-        year: Number(year) 
-      })
-    }
-  }
-
-  useEffect(()=>{
-    if(popupData){
-      setPopup({ 
-        location:{
-          longitude: getCentroid(popupBase.geometry).geometry.coordinates[0],
-          latitude: getCentroid(popupBase.geometry).geometry.coordinates[1]
-        },
-        properties: popupData['synthetic_blocks'][0]
-      })
-    }
-  },[popupData])
   
-  const onHover = (event:any) => {
-    setCursor("pointer")
-    if (event.features.length > 0) {
-      const nextHoveredStateId = event.features[0].id;
-      if (hoveredStateId !== nextHoveredStateId) {
-        setHoveredStateId(nextHoveredStateId);
-      }
-    }
-  };
-  
-  const onLeave = () => {
-    setCursor("")
-    if (hoveredStateId) {
-      setHoveredStateId(null);
-    }
-  };
-
   return <>
     <Source 
-      id='synthetic_blocks'
+      id='points'
       type="vector"
-      tiles={[`https://spatialtech.herokuapp.com/http://dev.spatialtech.info:3003/public.vancouver_x_property_tax_blocks_geom/{z}/{x}/{y}.pbf`]}
+      tiles={[`https://spatialtech.herokuapp.com/http://dev.spatialtech.info:3003/calculator.blocks_data_merged/{z}/{x}/{y}.pbf`]}
       volatile={true}
       promoteId='id'
     />
     <Layer 
-      id='synthetic_blocks_extrusion'
-      type="fill-extrusion"
-      source='synthetic_blocks'
-      source-layer='public.vancouver_x_property_tax_blocks_geom'
+      id='heatmap'
+      type="heatmap"
+      source='points'
+      source-layer='calculator.blocks_data_merged'
       paint={{
-        "fill-extrusion-height": extrude,
-        "fill-extrusion-height-transition": {
-          "duration": 300,
-          "delay": 0
-        },
-        "fill-extrusion-color": paintProperty,
-        'fill-extrusion-opacity': 1
+        "heatmap-color": [
+          "interpolate",
+          ["linear"],
+          ["heatmap-density"],
+          ...['rgb(150, 209, 216)', 'rgb(129, 204, 197)', 'rgb(103, 180, 186)', 'rgb(95, 143, 197)', 'rgb(80, 140, 62)', 'rgb(121, 146, 28)', 'rgb(171, 161, 14)', 'rgb(223, 177, 6)', 'rgb(243, 150, 6)', 'rgb(236, 95, 21)', 'rgb(190, 65, 18)', 'rgb(138, 43, 10)', 'rgb(138, 43, 10)']
+            .map((v,i,a)=>[i/(a.length-1)*1, v])
+            .flat()
+        ],
+        'heatmap-radius': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          0, 2,
+          9, 20,
+          12, 40,
+          13, 160,
+          14, 2400,
+          15, 64000
+        ],
+        'heatmap-intensity': [
+          'interpolate',
+          ['linear'],
+          ['zoom'],
+          0,0.01,
+          8, 0.1,
+          9,0.4,
+          10,1.5,
+          11, 4.5,
+          12, 9
+
+        ],
+        'heatmap-weight': [
+          'interpolate',
+          ['linear'],
+          ['get', mode],
+          0, 0,
+          1, 0.04
+        ],
+        'heatmap-opacity': [
+          'interpolate',
+          ['linear'],
+          ["heatmap-density"],
+          0, 1,
+          0.077, 0,
+          1, 0
+        ]
       }}
-      onHover={onHover}
-      onLeave={onLeave}
-      // onClick={onClick}
       before='road-label'
+      filter={['==',['get', 'year'], year]}
     /> 
-    {
+    {/* {
       ['rent', 'price'].map((l:any,i:any)=>
         <PaintDataLayer 
           dataType='bigint'
           dataLayerKey={mode}
           source='synthetic_blocks'
           sourceLayer='public.synthetic_blocks'
-          {...{setPaintProperty, extrude, setExtrude}}
+          {...{setPaintProperty}}
           key={i} visible={l===mode} />
       )
-    }
-    {hoveredStateId && <FeatureState id={hoveredStateId||''} source='synthetic_blocks' sourceLayer='public.synthetic_blocks' state={{ hover: true }} />}
-
+    } */}
   </>
 }

@@ -43,7 +43,7 @@ declare module '@urbica/react-map-gl' {
 
   type AnySource = {id?:string,volatile?:boolean}&(mapboxgl.GeoJSONSourceRaw|mapboxgl.VectorSource|mapboxgl.RasterSource)
 
-  type AnyLayer = (mapboxgl.CircleLayer|mapboxgl.LineLayer|mapboxgl.RasterLayer|mapboxgl.FillLayer|mapboxgl.FillExtrusionLayer|mapboxgl.SymbolLayer)&{before?:string, onClick?:	Function, onEnter?: Function, onLeave?: Function, onHover?: Function}
+  type AnyLayer = (mapboxgl.CircleLayer|mapboxgl.LineLayer|mapboxgl.RasterLayer|mapboxgl.FillLayer|mapboxgl.FillExtrusionLayer|mapboxgl.HeatmapLayer|mapboxgl.SymbolLayer)&{before?:string, onClick?:	Function, onEnter?: Function, onLeave?: Function, onHover?: Function}
 
   type FeatureStateProps = {
     id: string|number

@@ -1,12 +1,10 @@
-import { Typography, Slider } from "@material-ui/core"
-import { withStyles } from '@material-ui/styles'
+import { Typography } from "@material-ui/core"
 import { atoms } from "misc";
 import { useRecoilState } from "recoil";
-import Toggle from "./Toggle";
 import HistorySlider from "./HistorySlider"
 import IncomeSlider from "./IncomeSlider"
-import { RentChart, PriceChart } from "./Charts"
 import { useComponentSize } from "react-use-size"
+import Toggle from "./Toggle";
 
 export  default function Sidebar(){
   const [mode, setMode] = useRecoilState(atoms.mode)
@@ -19,40 +17,46 @@ export  default function Sidebar(){
     bottom: 0,
     minWidth:'350px',
     maxWidth:'450px',
-
     width: '33vw',
-    backgroundColor: '#081217',
+    backgroundColor: 'white',
     borderRight: 'solid rgba(255,255,255,0.3) 1px',
-    boxShadow: '15px 0px 20px rgba(0,0,0,0.5)',
-    padding: '2rem 2rem',
-    overflow:'auto'
+    boxShadow: '15px 0px 30px rgba(0,0,0,0.1)',
+    color:'#999',
+    overflowX:'visible',
+    boxSizing:'border-box'
   }}>
-    <Typography variant='h6'>
-      Housing affordability calculator
-    </Typography>
-    <div style={{marginTop:'1rem', display:'flex', justifyContent:'space-between', alignItems:'center'}}>
-      <Typography variant='body2'>
-        Choose mode:
+    <Toggle/>
+    <div style={{
+      overflowY:'scroll',
+      padding: '2rem 2rem',
+      boxSizing:'border-box',
+      height:'100vh'
+    }}>
+      <Typography variant='h6' style={{color:'black'}}>
+      💸 Annual household income 
       </Typography>
-      <Toggle/>
-    </div>
-    <div {...{ref}} style={{width:'100%', position:'relative', marginTop: '1.5rem', minHeight:'350px', maxHeight:'450px', border:'solid rgba(255,255,255,0.6) 1px', height: 'calc( 33vw - 4rem)'}}>
-      {mode==='rent'?
-        <RentChart {...{height, width}}/>:
-        <PriceChart {...{height, width}}/>
-      }
-    </div>
-    <div style={{width:'100%', marginTop: '1.5rem', padding: '1rem', paddingTop:'1.5rem', boxSizing:'border-box', border:'solid rgba(255,255,255,0.6) 1px', height: '8rem'}}>
-      <Typography variant='body2'>
-        Choose the year:
+      <div style={{width:'100%', margin: '1.5rem 0', padding: '1rem', paddingTop:'1.5rem', boxSizing:'border-box'}}>
+        <IncomeSlider/>
+        <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
+          The map shows affordability of Vancouver areas, 
+          in light of income selected above. 
+          Methodology <a href='#' style={{color:'#999'}}>here</a>.
+        </Typography>
+        <HistorySlider/>
+      </div>
+      <Typography variant='h6' style={{color:'black'}}>
+      🏠 Stance in the city 
       </Typography>
-      <HistorySlider/>
-    </div>
-    <div style={{width:'100%', marginTop: '1.5rem', padding: '1rem', paddingTop:'1.5rem', boxSizing:'border-box', border:'solid rgba(255,255,255,0.6) 1px', height: '8rem'}}>
-      <Typography variant='body2'>
-        Choose the level of monthly income:
+      <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
+          - Average annual rent in Vancouver is $24,000, 
+          which is 77.4% of selected annual household income.
       </Typography>
-      <IncomeSlider/>
+      <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
+          - Finding affordable rental home for a housefold with such income is difficult.
+      </Typography>
+      <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
+          - The maximum mortgage a household with selected annual household income can take is $217,700.
+      </Typography>
     </div>
   </div>
 }

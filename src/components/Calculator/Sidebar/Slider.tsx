@@ -3,17 +3,18 @@ import { withStyles } from '@material-ui/styles'
 
 export const StyledSlider = withStyles({
   root: {
-    color: '#fff',
-    height: 2,
+    color: '#ccc',
+    height: 5,
     padding: '15px 0',
   },
   thumb: {
-    height: '1rem',
-    width: '0.2rem',
-    backgroundColor: '#fff',
-    borderRadius:0,
-    marginTop: '-0.5rem',
-    marginLeft: '-0.1rem',
+    height: '0.8rem',
+    width: '0.8rem',
+    backgroundColor: '#000',
+    borderRadius: '0.4rem',
+    marginTop: '-0.3rem',
+    boxSizing: 'border-box',
+    marginLeft: '-0.4rem',
     // boxShadow: BoxShadowActive,
     '&:focus, &:hover, &$active': {
       // boxShadow: BoxShadowInactive,
@@ -26,10 +27,21 @@ export const StyledSlider = withStyles({
   track: {
     height: 1.5,
   },
+  valueLabel:{
+    backgroundColor: 'none',
+  },
+  valueLabelCircle:{
+    backgroundColor: 'none',
+    opacity: 0,
+    visibility: 'hidden',
+  },
+  valueLabelLabel:{
+    color: 'black',
+  },
   rail: {
-    height: 1.5,
-    opacity: 0.5,
-    backgroundColor: '#bfbfbf',
+    height: 5,
+    opacity: 1,
+    backgroundColor: '#ccc',
   },
   mark: {
     backgroundColor: '#bfbfbf',

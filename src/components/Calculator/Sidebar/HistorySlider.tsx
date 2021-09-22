@@ -6,7 +6,7 @@ import { StyledSlider } from "./Slider"
 
 
 export default function SliderStyled (){
-  const [ marks ] = useState([...new Array(16)].map((v,i)=>({value: 2005+i})))
+  const [ marks ] = useState([...new Array(15)].map((v,i)=>({value: 2006+i})))
   const [ year, setYear ] = useRecoilState(atoms.year)
 
   console.log()
@@ -17,7 +17,7 @@ export default function SliderStyled (){
         marks={marks} 
         valueLabelDisplay="on" 
         max={2020}
-        min={2005}
+        min={2006}
         value={year}
         onChange={(e:any)=>setYear(e?.target.value||2020)}
       />

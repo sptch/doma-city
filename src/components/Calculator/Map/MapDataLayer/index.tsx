@@ -1,13 +1,11 @@
-import { useState } from 'react'
 import { Source, Layer } from '@urbica/react-map-gl'
 import { useRecoilState } from 'recoil'
 import { atoms } from 'misc'
-import PaintDataLayer from './PaintDataLayer'
 
 export default function MapDataLayer ({setCursor}:any) {
   const [year] = useRecoilState(atoms.year)
   const [mode] = useRecoilState(atoms.mode)
-  
+  console.log(mode)
   return <>
     <Source 
       id='points'
@@ -26,7 +24,7 @@ export default function MapDataLayer ({setCursor}:any) {
           "interpolate",
           ["linear"],
           ["heatmap-density"],
-          ...['rgb(150, 209, 216)', 'rgb(129, 204, 197)', 'rgb(103, 180, 186)', 'rgb(95, 143, 197)', 'rgb(80, 140, 62)', 'rgb(121, 146, 28)', 'rgb(171, 161, 14)', 'rgb(223, 177, 6)', 'rgb(243, 150, 6)', 'rgb(236, 95, 21)', 'rgb(190, 65, 18)', 'rgb(138, 43, 10)', 'rgb(138, 43, 10)']
+          ...['rgba(150, 209, 216,0)','rgba(150, 209, 216,0.1)','rgb(150, 209, 216)', 'rgb(129, 204, 197)', 'rgb(103, 180, 186)', 'rgb(95, 143, 197)', 'rgb(80, 140, 62)', 'rgb(121, 146, 28)', 'rgb(171, 161, 14)', 'rgb(223, 177, 6)', 'rgb(243, 150, 6)', 'rgb(236, 95, 21)', 'rgb(190, 65, 18)', 'rgb(138, 43, 10)', 'rgb(138, 43, 10)']
             .map((v,i,a)=>[i/(a.length-1)*1, v])
             .flat()
         ],
@@ -34,12 +32,17 @@ export default function MapDataLayer ({setCursor}:any) {
           'interpolate',
           ['linear'],
           ['zoom'],
-          0, 2,
-          9, 20,
-          12, 40,
-          13, 160,
-          14, 2400,
-          15, 64000
+          0, 1,
+          7, 8,
+          8, 16,
+          9, 18,
+          10, 20,
+          11, 22,
+          12, 28,
+          13, 56,
+          14, 112,
+          15, 224,
+          16, 448
         ],
         'heatmap-intensity': [
           'interpolate',
@@ -56,18 +59,11 @@ export default function MapDataLayer ({setCursor}:any) {
         'heatmap-weight': [
           'interpolate',
           ['linear'],
-          ['get', mode],
+          ['get', mode+'_pm'],
           0, 0,
           1, 0.04
         ],
-        'heatmap-opacity': [
-          'interpolate',
-          ['linear'],
-          ["heatmap-density"],
-          0, 1,
-          0.077, 0,
-          1, 0
-        ]
+        'heatmap-opacity': 0.8
       }}
       before='road-label'
       filter={['==',['get', 'year'], year]}

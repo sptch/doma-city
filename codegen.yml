@@ -1,6 +1,6 @@
 overwrite: true
 schema: 
-  - "http://176.37.101.31:8083/v1/graphql":
+  - "http://dev.spatialtech.info:8083/v1/graphql":
 documents: 
   - 'src/**/*.graphql'
 generates:

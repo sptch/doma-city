@@ -3,7 +3,6 @@ import { useRecoilState } from 'recoil'
 import { atoms } from 'misc'
 import MapGL from '@urbica/react-map-gl'
 import MapDataLayer from './MapDataLayer'
-import Popup from './Popup'
 import { Typography } from '@material-ui/core'
 
 export default ()=>{
@@ -28,6 +27,7 @@ export default ()=>{
         bearing={32}
         onClick={()=>setPopup(null)}
         viewportChangeMethod="flyTo"
+        maxZoom={16}
         {...viewport}
       >
         <MapDataLayer {...{setCursor}}/>

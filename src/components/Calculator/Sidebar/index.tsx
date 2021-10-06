@@ -5,10 +5,22 @@ import HistorySlider from "./HistorySlider"
 import IncomeSlider from "./IncomeSlider"
 import { useComponentSize } from "react-use-size"
 import Toggle from "./Toggle";
+import { usePricingQuery, useSalariesQuery } from "generated";
+import { format } from 'd3-format'
+const formatter = format(",.2r")
+const percentFormatter = format(",.2r")
 
 export  default function Sidebar(){
   const [mode, setMode] = useRecoilState(atoms.mode)
+  const [ year ] = useRecoilState(atoms.year)
+  const [ income, setIncome ] = useRecoilState(atoms.income)
+
   const { ref, height, width } = useComponentSize()
+  const { data:salaries } = useSalariesQuery()
+  const { data:pricing } = usePricingQuery()
+
+  const rentPercentage = (((12*pricing?.rents_historical.find(d=>d.year===year)?.average)/income)*100)
+  const mortgagePercentage = (((12*pricing?.prices_historical.find(d=>d.year===year)?.median)/(income*4))*100)
 
   return <div style={{
     position: 'absolute',
@@ -36,7 +48,7 @@ export  default function Sidebar(){
       💸 Annual household income 
       </Typography>
       <div style={{width:'100%', margin: '1.5rem 0', padding: '1rem', paddingTop:'1.5rem', boxSizing:'border-box'}}>
-        <IncomeSlider/>
+        <IncomeSlider {...{salaries}}/>
         <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
           The map shows affordability of Vancouver areas, 
           in light of income selected above. 
@@ -48,14 +60,23 @@ export  default function Sidebar(){
       🏠 Stance in the city 
       </Typography>
       <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
-          - Average annual rent in Vancouver is $24,000, 
-          which is 77.4% of selected annual household income.
+          - Average annual rent in Vancouver is {'C$'+ formatter(12*pricing?.rents_historical.find(d=>d.year===year)?.average)+' '} 
+          which is {
+            rentPercentage.toFixed(1)
+          }% of selected annual household income.
       </Typography>
       <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
-          - Finding affordable rental home for a housefold with such income is difficult.
+          - Finding affordable rental home for a housefold with such income is {
+          rentPercentage>=30?'difficult':'easy'}.
       </Typography>
       <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
-          - The maximum mortgage a household with selected annual household income can take is $217,700.
+          - The maximum mortgage a household with selected annual household income can take is {'C$'+ formatter(income*4)}.
+      </Typography>
+      <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
+          - Median property unit price in Vancouver is {'C$'+ formatter(12*pricing?.prices_historical.find(d=>d.year===year)?.median)+' '} 
+          which is {
+            percentFormatter(mortgagePercentage)
+          }% of maximum possible mortgage for selected annual household income.
       </Typography>
     </div>
   </div>

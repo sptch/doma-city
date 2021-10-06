@@ -51,7 +51,12 @@ export const year = atom({
   default: 2020, 
 });
 
+export const incomeAspect = atom({
+  key: 'incomeAspect', 
+  default: 0, 
+});
+
 export const income = atom({
   key: 'income', 
-  default: 0.5, 
+  default: 38800, 
 });

@@ -13838,6 +13838,32 @@ export type Vancouver_X_Zoning_Districts_And_Labels_Variance_Order_By = {
   id?: Maybe<Order_By>;
 };
 
+export type DataQueryVariables = Exact<{
+  year?: Maybe<Scalars['bigint']>;
+  rent?: Scalars['Boolean'];
+}>;
+
+
+export type DataQuery = { synthetic_blocks: Array<MakeOptional<Pick<Synthetic_Blocks, 'id' | 'rent' | 'price'>, 'rent' | 'price'>> };
+
+export type DataRangeQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type DataRangeQuery = { synthetic_blocks_aggregate: { aggregate?: Maybe<{ max?: Maybe<Pick<Synthetic_Blocks_Max_Fields, 'rent' | 'price'>>, min?: Maybe<Pick<Synthetic_Blocks_Min_Fields, 'rent' | 'price'>> }> } };
+
+export type PricingQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type PricingQuery = { rents_historical: Array<Pick<Rents_Historical, 'average' | 'year'>>, prices_historical: Array<Pick<Prices_Historical, 'median' | 'year'>> };
+
+export type SalariesQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type SalariesQuery = { incomes: Array<(
+    Pick<Incomes, 'year'>
+    & { income: Incomes['median'] }
+  )> };
+
 export type SyntheticParcelsQueryVariables = Exact<{
   year?: Maybe<Scalars['bigint']>;
 }>;
@@ -13866,6 +13892,161 @@ export type PricesHistoricalQueryVariables = Exact<{ [key: string]: never; }>;
 export type PricesHistoricalQuery = { data: Array<{ data: Prices_Historical['average'], key: Prices_Historical['year'] }>, incomes: Array<{ data: Incomes['average'], key: Incomes['year'] }> };
 
 
+export const DataDocument = gql`
+    query Data($year: bigint = 2020, $rent: Boolean! = false) {
+  synthetic_blocks(where: {year: {_eq: $year}}) {
+    id
+    rent @include(if: $rent)
+    price @skip(if: $rent)
+  }
+}
+    `;
+
+/**
+ * __useDataQuery__
+ *
+ * To run a query within a React component, call `useDataQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDataQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDataQuery({
+ *   variables: {
+ *      year: // value for 'year'
+ *      rent: // value for 'rent'
+ *   },
+ * });
+ */
+export function useDataQuery(baseOptions?: Apollo.QueryHookOptions<DataQuery, DataQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DataQuery, DataQueryVariables>(DataDocument, options);
+      }
+export function useDataLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DataQuery, DataQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DataQuery, DataQueryVariables>(DataDocument, options);
+        }
+export type DataQueryHookResult = ReturnType<typeof useDataQuery>;
+export type DataLazyQueryHookResult = ReturnType<typeof useDataLazyQuery>;
+export type DataQueryResult = Apollo.QueryResult<DataQuery, DataQueryVariables>;
+export const DataRangeDocument = gql`
+    query DataRange {
+  synthetic_blocks_aggregate {
+    aggregate {
+      max {
+        rent
+        price
+      }
+      min {
+        rent
+        price
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useDataRangeQuery__
+ *
+ * To run a query within a React component, call `useDataRangeQuery` and pass it any options that fit your needs.
+ * When your component renders, `useDataRangeQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useDataRangeQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useDataRangeQuery(baseOptions?: Apollo.QueryHookOptions<DataRangeQuery, DataRangeQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<DataRangeQuery, DataRangeQueryVariables>(DataRangeDocument, options);
+      }
+export function useDataRangeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<DataRangeQuery, DataRangeQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<DataRangeQuery, DataRangeQueryVariables>(DataRangeDocument, options);
+        }
+export type DataRangeQueryHookResult = ReturnType<typeof useDataRangeQuery>;
+export type DataRangeLazyQueryHookResult = ReturnType<typeof useDataRangeLazyQuery>;
+export type DataRangeQueryResult = Apollo.QueryResult<DataRangeQuery, DataRangeQueryVariables>;
+export const PricingDocument = gql`
+    query Pricing {
+  rents_historical {
+    average
+    year
+  }
+  prices_historical {
+    median
+    year
+  }
+}
+    `;
+
+/**
+ * __usePricingQuery__
+ *
+ * To run a query within a React component, call `usePricingQuery` and pass it any options that fit your needs.
+ * When your component renders, `usePricingQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = usePricingQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function usePricingQuery(baseOptions?: Apollo.QueryHookOptions<PricingQuery, PricingQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<PricingQuery, PricingQueryVariables>(PricingDocument, options);
+      }
+export function usePricingLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<PricingQuery, PricingQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<PricingQuery, PricingQueryVariables>(PricingDocument, options);
+        }
+export type PricingQueryHookResult = ReturnType<typeof usePricingQuery>;
+export type PricingLazyQueryHookResult = ReturnType<typeof usePricingLazyQuery>;
+export type PricingQueryResult = Apollo.QueryResult<PricingQuery, PricingQueryVariables>;
+export const SalariesDocument = gql`
+    query Salaries {
+  incomes {
+    year
+    income: median
+  }
+}
+    `;
+
+/**
+ * __useSalariesQuery__
+ *
+ * To run a query within a React component, call `useSalariesQuery` and pass it any options that fit your needs.
+ * When your component renders, `useSalariesQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useSalariesQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useSalariesQuery(baseOptions?: Apollo.QueryHookOptions<SalariesQuery, SalariesQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<SalariesQuery, SalariesQueryVariables>(SalariesDocument, options);
+      }
+export function useSalariesLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<SalariesQuery, SalariesQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<SalariesQuery, SalariesQueryVariables>(SalariesDocument, options);
+        }
+export type SalariesQueryHookResult = ReturnType<typeof useSalariesQuery>;
+export type SalariesLazyQueryHookResult = ReturnType<typeof useSalariesLazyQuery>;
+export type SalariesQueryResult = Apollo.QueryResult<SalariesQuery, SalariesQueryVariables>;
 export const SyntheticParcelsDocument = gql`
     query SyntheticParcels($year: bigint) {
   synthetic_parcels(where: {report_year: {_eq: $year}}) {

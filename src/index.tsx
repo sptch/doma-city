@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import { createMuiTheme, ThemeProvider, ThemeOptions } from '@material-ui/core';
+import { createTheme, ThemeProvider, ThemeOptions } from '@material-ui/core';
 import { RecoilRoot } from 'recoil'
 import { grey } from '@material-ui/core/colors';
 import mapboxgl from 'mapbox-gl'
@@ -12,7 +12,7 @@ import mapboxgl from 'mapbox-gl'
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
-const theme:ThemeOptions = createMuiTheme({
+const theme:ThemeOptions = createTheme({
   palette: {
     primary: {
       main: grey[200],

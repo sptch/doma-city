@@ -3,6 +3,9 @@ schema:
   - "http://dev.spatialtech.info:8083/v1/graphql":
 documents: 
   - 'src/**/*.graphql'
+  - 'src/**/**/*.graphql'
+  - 'src/**/**/**/*.graphql'
+  - 'src/**/**/**/**/*.graphql'
 generates:
   src/generated/graphql.tsx:
     plugins:

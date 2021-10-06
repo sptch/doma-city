@@ -70,7 +70,7 @@ export  default function Sidebar(){
           rentPercentage>=30?'difficult':'easy'}.
       </Typography>
       <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
-          - The maximum mortgage a household with selected annual household income can take is {'C$'+ formatter(income*4)}.
+          - The maximum mortgage (income x 4) a household with selected annual household income can take is {'C$'+ formatter(income*4)}.
       </Typography>
       <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
           - Median property unit price in Vancouver is {'C$'+ formatter(12*pricing?.prices_historical.find(d=>d.year===year)?.median)+' '} 

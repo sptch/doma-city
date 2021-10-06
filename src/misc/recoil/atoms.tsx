@@ -43,7 +43,7 @@ export const chartDatasets = atom({
 
 export const mode = atom({
   key: 'mode', 
-  default: 'price' as 'rent'|'price', 
+  default: 'rent' as 'rent'|'price', 
 });
 
 export const year = atom({

@@ -28,7 +28,7 @@ export default function SliderStyled ({salaries:data}:{salaries: SalariesQuery |
       <StyledSlider 
         aria-label="Income Slider" 
         valueLabelDisplay="on" 
-        valueLabelFormat={(v)=>`${formatter(income)}`}
+        valueLabelFormat={(v)=>`$${formatter(income)}`}
         max={1}
         min={-1}
         step={0.00000001}

@@ -10,26 +10,24 @@ export default function Toggle(){
   const [hovered, setHovered] = useState(false)
   const [mode, setMode] = useRecoilState(atoms.mode)
 
-  const { left } = useSpring({left: mode==='rent'?'calc( 0% - 0rem )':'calc( 100% - 1.3rem )'})
+  const { left } = useSpring({left: mode==='price'?'calc( 0% - 0rem )':'calc( 100% - 1.3rem )'})
   const { opacity } = useSpring({opacity: hovered?'1':'0'})
 
   return (
     <div style={{
       display:'flex', 
       cursor:'pointer', 
-      position:'absolute', 
-      top:'2rem',
-      right: '-2rem',
-      transform: 'translate(100%,0)',
+      position:'relative', 
       flexDirection:'row', 
       flexBasis:'9rem', 
       justifyContent:'space-between', 
       alignItems:'center',
       maxWidth:'8rem'
     }}>
-      <Typography variant='body2' style={{color: mode==='rent'?'black':undefined}}>
-        Rent
+      <Typography variant='body2' style={{color: mode==='price'?'black':undefined}}>
+        Buy
       </Typography>
+
       <div onPointerOver={()=>setHovered(true)} onPointerLeave={()=>setHovered(false)} onClick={()=>setMode(mode==='rent'?'price':'rent')} 
         style={{
           margin: '0 0.5rem',
@@ -38,9 +36,9 @@ export default function Toggle(){
           height:'1.4rem', 
           borderRadius:'0.7rem', 
           border:'solid 0.1px rgba(0,0,0,0.1)',
-          boxShadow: 'rgba(0,0,0,0.3) 0px 0px 20px',
+          boxShadow: 'rgba(0,0,0,0.1) 0px 0px 20px',
           boxSizing:'border-box',
-          backgroundColor:'white'
+          backgroundColor:'#aaa'
         }}>
         <a.div style={{
           backgroundColor:'rgba(1,1,1,0.2)', 
@@ -63,8 +61,9 @@ export default function Toggle(){
           left
         }}/>
       </div>
-      <Typography variant='body2' style={{color: mode==='price'?'black':undefined}}>
-        Buy
+
+      <Typography variant='body2' style={{color: mode==='rent'?'black':undefined}}>
+        Rent
       </Typography>
     </div>
   )

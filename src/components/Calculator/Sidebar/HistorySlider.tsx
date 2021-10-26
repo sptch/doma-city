@@ -2,7 +2,7 @@ import { Typography } from "@material-ui/core"
 import { useState } from "react"
 import { useRecoilState } from "recoil"
 import { atoms } from 'misc'
-import { StyledSlider } from "./Slider"
+import { StyledSlider, StyledSliderReverse } from "./Slider"
 
 
 export default function SliderStyled (){
@@ -12,7 +12,7 @@ export default function SliderStyled (){
   console.log()
   return (<div>
     <div >
-      <StyledSlider 
+      <StyledSliderReverse 
         aria-label="History Slider" 
         marks={marks} 
         valueLabelDisplay="on" 

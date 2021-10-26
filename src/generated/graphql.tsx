@@ -13851,6 +13851,22 @@ export type DataRangeQueryVariables = Exact<{ [key: string]: never; }>;
 
 export type DataRangeQuery = { synthetic_blocks_aggregate: { aggregate?: Maybe<{ max?: Maybe<Pick<Synthetic_Blocks_Max_Fields, 'rent' | 'price'>>, min?: Maybe<Pick<Synthetic_Blocks_Min_Fields, 'rent' | 'price'>> }> } };
 
+export type AffordablePriceQueryVariables = Exact<{
+  year: Scalars['bigint'];
+  mortgage: Scalars['float8'];
+}>;
+
+
+export type AffordablePriceQuery = { total: { aggregate?: Maybe<Pick<Synthetic_Blocks_Aggregate_Fields, 'count'>> }, sample: { aggregate?: Maybe<Pick<Synthetic_Blocks_Aggregate_Fields, 'count'>> } };
+
+export type AffordableRentQueryVariables = Exact<{
+  year: Scalars['bigint'];
+  thirty_percent_of_income: Scalars['float8'];
+}>;
+
+
+export type AffordableRentQuery = { total: { aggregate?: Maybe<Pick<Synthetic_Blocks_Aggregate_Fields, 'count'>> }, sample: { aggregate?: Maybe<Pick<Synthetic_Blocks_Aggregate_Fields, 'count'>> } };
+
 export type PricingQueryVariables = Exact<{ [key: string]: never; }>;
 
 
@@ -13973,6 +13989,96 @@ export function useDataRangeLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<
 export type DataRangeQueryHookResult = ReturnType<typeof useDataRangeQuery>;
 export type DataRangeLazyQueryHookResult = ReturnType<typeof useDataRangeLazyQuery>;
 export type DataRangeQueryResult = Apollo.QueryResult<DataRangeQuery, DataRangeQueryVariables>;
+export const AffordablePriceDocument = gql`
+    query AffordablePrice($year: bigint!, $mortgage: float8!) {
+  total: synthetic_blocks_aggregate(where: {year: {_eq: $year}}) {
+    aggregate {
+      count
+    }
+  }
+  sample: synthetic_blocks_aggregate(
+    where: {_and: [{year: {_eq: $year}}, {price: {_lte: $mortgage}}]}
+  ) {
+    aggregate {
+      count
+    }
+  }
+}
+    `;
+
+/**
+ * __useAffordablePriceQuery__
+ *
+ * To run a query within a React component, call `useAffordablePriceQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAffordablePriceQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAffordablePriceQuery({
+ *   variables: {
+ *      year: // value for 'year'
+ *      mortgage: // value for 'mortgage'
+ *   },
+ * });
+ */
+export function useAffordablePriceQuery(baseOptions: Apollo.QueryHookOptions<AffordablePriceQuery, AffordablePriceQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AffordablePriceQuery, AffordablePriceQueryVariables>(AffordablePriceDocument, options);
+      }
+export function useAffordablePriceLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AffordablePriceQuery, AffordablePriceQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AffordablePriceQuery, AffordablePriceQueryVariables>(AffordablePriceDocument, options);
+        }
+export type AffordablePriceQueryHookResult = ReturnType<typeof useAffordablePriceQuery>;
+export type AffordablePriceLazyQueryHookResult = ReturnType<typeof useAffordablePriceLazyQuery>;
+export type AffordablePriceQueryResult = Apollo.QueryResult<AffordablePriceQuery, AffordablePriceQueryVariables>;
+export const AffordableRentDocument = gql`
+    query AffordableRent($year: bigint!, $thirty_percent_of_income: float8!) {
+  total: synthetic_blocks_aggregate(where: {year: {_eq: $year}}) {
+    aggregate {
+      count
+    }
+  }
+  sample: synthetic_blocks_aggregate(
+    where: {_and: [{year: {_eq: $year}}, {rent: {_lte: $thirty_percent_of_income}}]}
+  ) {
+    aggregate {
+      count
+    }
+  }
+}
+    `;
+
+/**
+ * __useAffordableRentQuery__
+ *
+ * To run a query within a React component, call `useAffordableRentQuery` and pass it any options that fit your needs.
+ * When your component renders, `useAffordableRentQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useAffordableRentQuery({
+ *   variables: {
+ *      year: // value for 'year'
+ *      thirty_percent_of_income: // value for 'thirty_percent_of_income'
+ *   },
+ * });
+ */
+export function useAffordableRentQuery(baseOptions: Apollo.QueryHookOptions<AffordableRentQuery, AffordableRentQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<AffordableRentQuery, AffordableRentQueryVariables>(AffordableRentDocument, options);
+      }
+export function useAffordableRentLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<AffordableRentQuery, AffordableRentQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<AffordableRentQuery, AffordableRentQueryVariables>(AffordableRentDocument, options);
+        }
+export type AffordableRentQueryHookResult = ReturnType<typeof useAffordableRentQuery>;
+export type AffordableRentLazyQueryHookResult = ReturnType<typeof useAffordableRentLazyQuery>;
+export type AffordableRentQueryResult = Apollo.QueryResult<AffordableRentQuery, AffordableRentQueryVariables>;
 export const PricingDocument = gql`
     query Pricing {
   rents_historical {

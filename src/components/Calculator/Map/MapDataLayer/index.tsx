@@ -28,7 +28,7 @@ export default function MapDataLayer ({map}:{map:Map}) {
             source: 'points', 
             sourceLayer: 'calculator.blocks_centroids',
             id
-          }, {value})
+          }, { value: value })
         })
       }
     }

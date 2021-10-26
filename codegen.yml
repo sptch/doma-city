@@ -1,6 +1,7 @@
 overwrite: true
 schema: 
-  - "http://dev.spatialtech.info:8083/v1/graphql":
+  - "https://spatialtech.herokuapp.com/http://dev.spatialtech.info:8083/v1/graphql":
+      headers: {origin: "http://localhost:3000"}
 documents: 
   - 'src/**/*.graphql'
   - 'src/**/**/*.graphql'

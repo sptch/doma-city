@@ -23,8 +23,8 @@ export default ()=>{
         onLoad={()=>{setLoaded(true)}}
         cursorStyle={cursor}
         ref={mapRef}
-        pitch={60}
-        bearing={32}
+        // pitch={60}
+        // bearing={32}
         onClick={()=>setPopup(null)}
         viewportChangeMethod="flyTo"
         maxZoom={16}
@@ -32,21 +32,6 @@ export default ()=>{
       >
         <MapContext.Consumer>{(map:Map)=><MapDataLayer {...{map}}/>}</MapContext.Consumer>
       </MapGL>
-      <div style={{
-        display:'flex',
-        justifyContent:'space-between',
-        width:'8rem',
-        height:'1rem',
-        position:'absolute',
-        top:'2rem',
-        right:'1rem',
-        borderRadius:'0.5rem',
-        padding: '0 0.5rem',
-        boxSizing:'border-box',
-        background: 'linear-gradient(to right,rgb(150, 209, 216), rgb(129, 204, 197), rgb(103, 180, 186), rgb(95, 143, 197), rgb(80, 140, 62), rgb(121, 146, 28), rgb(171, 161, 14), rgb(223, 177, 6), rgb(243, 150, 6), rgb(236, 95, 21), rgb(190, 65, 18), rgb(138, 43, 10), rgb(138, 43, 10))'
-      }}>
-        {[0,5,10].map((v,key)=><Typography {...{key}} variant='body2' style={{color:'white', fontSize:'0.8rem'}}>{v}</Typography>)}
-      </div>
     </div>
   );
 }

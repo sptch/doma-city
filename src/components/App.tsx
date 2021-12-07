@@ -1,14 +1,8 @@
-import { Route, BrowserRouter as Router } from 'react-router-dom'
+import { Route, HashRouter as Router } from 'react-router-dom'
 import Datasets from './Datasets'
 import Calculator from './Calculator'
+import Doma from './Doma'
 
 export default ()=>{
-  return <Router>
-    <Route path='/calculator'>
-      <Calculator/>
-    </Route>
-    <Route path='/' exact>
-      <Datasets/>
-    </Route>
-  </Router>
+  return <Doma/>
 }

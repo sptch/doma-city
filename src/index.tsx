@@ -3,66 +3,13 @@ import ReactDOM from 'react-dom';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
-import { createTheme, ThemeProvider, ThemeOptions } from '@material-ui/core';
 import { RecoilRoot } from 'recoil'
-import { grey } from '@material-ui/core/colors';
 import mapboxgl from 'mapbox-gl'
-
+import { ThemeProvider } from 'styled-components'
+import GlobalStyle from './globalStyle'
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
-
-const theme:ThemeOptions = createTheme({
-  palette: {
-    primary: {
-      main: grey[200],
-    },
-    secondary: {
-      main: grey[400],
-    },
-  },
-  components: {
-    MuiTypography: {
-      styleOverrides: {
-        root: {
-          color:'#bbb'
-        }
-      }
-    },
-    MuiSelect:{
-      styleOverrides: {
-        root:{
-          backgroundColor:'#081217',
-        }
-      }
-    },
-    MuiPaper:{
-      styleOverrides: {
-        root:{
-          backgroundColor:'#081217',
-          boxShadow: "-15px 15px 15px rgba(0,0,0,0.2)",
-        }
-      }
-    },
-    MuiMenuItem:{
-      styleOverrides: {
-        root:{
-          minHeight:'2.5rem',
-          '&:hover': {
-            backgroundColor:'rgba(255,255,255,0.03)',
-          }
-        },
-      }
-    },
-    MuiButton: {
-      styleOverrides: {
-        root:{
-          borderRadius: '0.5rem',
-        }
-      },
-    }
-  }
-});
 
 const client = new ApolloClient({
   uri: 'https://spatialtech.herokuapp.com/http://dev.spatialtech.info:8083/v1/graphql',
@@ -71,11 +18,14 @@ const client = new ApolloClient({
   })
 });
 
+const theme = {}
+
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
       <ApolloProvider client={client}>
         <ThemeProvider theme={theme}>
+          <GlobalStyle/>
           <App />
         </ThemeProvider>
       </ApolloProvider>

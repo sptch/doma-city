@@ -1,3 +1,6 @@
+declare module '*.woff2'
+declare module '*.mp4'
+
 declare module '@urbica/react-map-gl' {
 
   export default class MapGL extends React.Component<MapGLProps, any> {}

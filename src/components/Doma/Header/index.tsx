@@ -22,7 +22,7 @@ export default function HeaderComponent(){
           </li>
           <li>
             <a href="#affordability-map">
-              About
+              Map
             </a>
           </li>
           

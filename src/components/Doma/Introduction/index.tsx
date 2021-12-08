@@ -10,7 +10,7 @@ export default function Introduction(){
   const [open, setOpen] = useState(false);
   return (
     <Section bg={bg1} id='introduction'>
-      {open?
+      {open &&
         <>
           <Close onClick={()=>setOpen(false)}/>
           <YouTube
@@ -22,9 +22,9 @@ export default function Introduction(){
             onEnd={()=>setOpen(false)}
             onError={()=>setOpen(false)} 
           />
-        </>:
+        </>}
         <>
-          <div className="video-container">
+          <div>
             <Video
               id="introduction-video"
               {...{width, height}}
@@ -32,12 +32,12 @@ export default function Introduction(){
               <source src={video2} />
             </Video>
           </div>
-          <Player>
+          {!open && <Player>
             <div>
                 <img src={play} onClick={()=>setOpen(true)} />
             </div>
-          </Player>
-        </>}
+          </Player>}
+        </>
     </Section>
   )
 }

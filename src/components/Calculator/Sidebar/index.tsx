@@ -58,7 +58,8 @@ export  default function Sidebar(){
     boxShadow: '15px 0px 30px rgba(0,0,0,0.1)',
     color:'#999',
     overflowX:'visible',
-    boxSizing:'border-box'
+    boxSizing:'border-box',
+    fontFamily: 'Post Grotesk Light',
   }}>
     <div style={{
       overflowY:'scroll',
@@ -67,13 +68,14 @@ export  default function Sidebar(){
       height:'100vh',
       display: 'flex',
       flexDirection: 'column',
+      fontFamily: 'Post Grotesk Light',
     }}>
-      <Typography variant='h6' style={{color:'black'}}>
+      <Typography variant='h6' style={{color:'black', fontFamily: 'Post Grotesk Light',}}>
       Select income and year
       </Typography>
       <div style={{width:'100%', margin: '1.5rem 0', paddingTop:'2.5rem', boxSizing:'border-box'}}>
         <IncomeSlider {...{salaries}}/>
-        <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
+        <Typography variant='body2' style={{margin:'1rem 0', fontFamily: 'Post Grotesk Light', color:'#999'}}>
           The map shows a personalised view towards Vancouver's real estate market,
           depending on selected houshold income and year. 
         </Typography>
@@ -82,7 +84,7 @@ export  default function Sidebar(){
       <Toggle/>
 
       <br/>
-      <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
+      <Typography variant='body2' style={{margin:'1rem 0',fontFamily: 'Post Grotesk Light', color:'#999'}}>
           - Selected income is {
               incomeRatio===1?
               <><span style={{color:'#aa624f'}}>equal</span> to the </>:
@@ -93,34 +95,34 @@ export  default function Sidebar(){
       </Typography>
       {mode==='rent'?
        <>
-        <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
+        <Typography variant='body2' style={{margin:'1rem 0',fontFamily: 'Post Grotesk Light', color:'#999'}}>
           - Average annual rent in Vancouver is {formatter(12*pricing?.rents_historical.find(d=>d.year===year)?.average)+' CAD '} 
           which is <span style={{color:'#aa624f'}}>{
             rentPercentage.toFixed(1)
           }%</span> of selected annual household income.
         </Typography>
-        <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
+        <Typography variant='body2' style={{margin:'1rem 0',fontFamily: 'Post Grotesk Light', color:'#999'}}>
           - <span style={{color:'#aa624f'}}>{
             percentFormatter(percentAffordableRent)
           }%</span> of rental homes are considered affordable for selected income.
         </Typography>
-        <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
+        <Typography variant='body2' style={{margin:'1rem 0',fontFamily: 'Post Grotesk Light', color:'#999'}}>
             - Finding affordable rental home for a housefold with such income is {
             rentPercentage>=30?'hard':'easy'}.
         </Typography>
       </>:
       <>
-        <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
+        <Typography variant='body2' style={{margin:'1rem 0',fontFamily: 'Post Grotesk Light', color:'#999'}}>
             - Median property price in Vancouver is {formatter(pricing?.prices_historical.find(d=>d.year===year)?.median)+' CAD '} 
             which is x{
               ((pricing?.prices_historical.find(d=>d.year===year)?.median)/income).toFixed(0)
             } the selected annual income.
         </Typography>
-        <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
+        <Typography variant='body2' style={{margin:'1rem 0',fontFamily: 'Post Grotesk Light', color:'#999'}}>
             - The maximum mortgage amount this household can qualify for is 
             {' '+formatter(income*4)+' CAD'}. This can cover {percentFormatter(percentAffordablePrice)}% of homes in Vancouver.
         </Typography>
-        <Typography variant='body2' style={{margin:'1rem 0', color:'#999'}}>
+        <Typography variant='body2' style={{margin:'1rem 0',fontFamily: 'Post Grotesk Light', color:'#999'}}>
             - Finding affordable property for a housefold with such income is {percentAffordablePrice>0?'easy':'hard'}.
         </Typography>
       </>}

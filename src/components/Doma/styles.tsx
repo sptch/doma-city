@@ -102,8 +102,10 @@ Player = styled.div`
   z-index: 2;
   position: relative;
   display: flex;
-  transform: translateX(-50%);
-  margin: 50%;
+  height: 0;
+  width: 0;
+  /* transform: translateX(-50%); */
+  margin: 50vh 50vw;
   >div{
     >a{
       >img{

@@ -103,7 +103,7 @@ export  default function Sidebar(){
               {' '+formatter(income*4)+' CAD'}. This can cover {percentFormatter(percentAffordablePrice)}% of homes in Vancouver.
           </p>
           <p>
-              - Finding affordable property for a housefold with such income is {percentAffordablePrice>0?'easy':'hard'}.
+              - Finding affordable property for a housefold with such income is {percentAffordablePrice>20?'easy':'hard'}.
           </p>
         </>}
         </div>

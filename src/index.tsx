@@ -7,6 +7,7 @@ import { RecoilRoot } from 'recoil'
 import mapboxgl from 'mapbox-gl'
 import { ThemeProvider } from 'styled-components'
 import GlobalStyle from './globalStyle'
+import { useLayout } from 'misc';
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
@@ -18,16 +19,13 @@ const client = new ApolloClient({
   })
 });
 
-const theme = {}
 
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
       <ApolloProvider client={client}>
-        <ThemeProvider theme={theme}>
           <GlobalStyle/>
           <App />
-        </ThemeProvider>
       </ApolloProvider>
     </RecoilRoot>
   </React.StrictMode>,

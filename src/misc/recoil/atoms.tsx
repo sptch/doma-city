@@ -58,5 +58,5 @@ export const incomeAspect = atom({
 
 export const income = atom({
   key: 'income', 
-  default: 38800, 
+  default: 91750, 
 });

@@ -2,12 +2,17 @@ import bg2 from 'assets/images/b2.png';
 import video1 from 'assets/videos/1.mp4';
 import { useWindowSize } from 'react-use-size';
 import { Section, TextLeft, Video } from '../styles';
+import { Waypoint } from 'react-waypoint';
 
 export default function SmartContract(){
   const {width,height} = useWindowSize()
 
   return (
     <Section bg={bg2} id='smart-contract'>
+      <Waypoint
+        onEnter={()=>console.log('smart enter')}
+        onLeave={()=>console.log('smart leave')}
+      />
       <div>
         <Video
           id="smart-contract-video"

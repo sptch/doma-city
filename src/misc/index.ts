@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { useWindowSize } from 'react-use-size';
 
 export * as atoms from './recoil/atoms'
 export * as queries from './generativeQueries'
@@ -7,15 +8,8 @@ export { default as otherLayers } from './sources.json'
 export * from './types'
 
 
-// React hook to get window width
-export function useWindowWidth() {
-  const [width, setWidth] = useState(window.innerWidth)
 
-  useEffect(() => {
-    const handleResize = () => setWidth(window.innerWidth)
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
-
-  return width
+export function useLayout(){
+  const { width, height } = useWindowSize()
+  return (width<960)? 'mobile': 'desktop'
 }

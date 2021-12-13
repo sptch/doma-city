@@ -95,7 +95,7 @@ export  default function Sidebar(){
           <p>
               - Median property price in Vancouver is {formatter(pricing?.prices_historical.find(d=>d.year===year)?.median)+' CAD '} 
               which is x{
-                ((pricing?.prices_historical.find(d=>d.year===year)?.median)/income).toFixed(0)
+                ((pricing?.prices_historical.find(d=>d.year===year)?.median)/income).toFixed(1)
               } the selected annual income.
           </p>
           <p>

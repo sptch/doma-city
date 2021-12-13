@@ -99,7 +99,7 @@ export const StyledSliderReverse = withStyles({
     background: 'linear-gradient(to right, rgb(80, 140, 62), rgb(121, 146, 28), rgb(171, 161, 14), rgb(223, 177, 6), rgb(243, 150, 6), rgb(236, 95, 21), rgb(190, 65, 18), rgb(138, 43, 10), rgb(138, 43, 10))',
   },
   mark: {
-    backgroundColor: '#ff0000',
+    backgroundColor: '#bfbfbf',
     height: 0,
     width: 0,
     marginTop: 0,

@@ -3,7 +3,6 @@ import { useState } from "react"
 import { useRecoilState } from "recoil"
 import { atoms } from 'misc'
 import { StyledSlider, StyledSliderReverse } from "./Slider"
-import { SliderWrapper } from "./styles"
 
 
 export default function SliderStyled (){
@@ -12,7 +11,7 @@ export default function SliderStyled (){
 
   console.log()
   return (<div>
-    <SliderWrapper>
+    <div >
       <StyledSliderReverse 
         aria-label="History Slider" 
         marks={marks} 
@@ -22,6 +21,6 @@ export default function SliderStyled (){
         value={year}
         onChange={(e:any)=>setYear(e?.target.value||2020)}
       />
-    </SliderWrapper>
+    </div>
   </div>)
 }

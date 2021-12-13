@@ -1,0 +1,10 @@
+query Pricing {
+  rents_historical {
+    average
+    year
+  }
+  prices_historical {
+    median
+    year
+  }
+}

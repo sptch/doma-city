@@ -5,9 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { RecoilRoot } from 'recoil'
 import mapboxgl from 'mapbox-gl'
-import { ThemeProvider } from 'styled-components'
 import GlobalStyle from './globalStyle'
-import { useLayout } from 'misc';
 // @ts-ignore
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;

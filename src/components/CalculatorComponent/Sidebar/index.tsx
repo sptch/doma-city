@@ -2,7 +2,7 @@ import { atoms } from "misc";
 import { useRecoilState } from "recoil";
 import HistorySlider from "./HistorySlider"
 import IncomeSlider from "./IncomeSlider"
-import Toggle from "./Toggle/";
+import Toggle from "./Toggle";
 import { usePricingQuery, useSalariesQuery, useAffordableRentQuery, useAffordablePriceQuery } from "generated";
 import { format } from 'd3-format'
 import { useEffect, useState } from "react";
@@ -49,7 +49,6 @@ export  default function Sidebar(){
 
   return <Wrapper>
     <Container>
-      <Text>
       <div>
         <h2>Select income and year</h2>      
         
@@ -107,7 +106,6 @@ export  default function Sidebar(){
           </p>
         </>}
         </div>
-      </Text>
     </Container>
   </Wrapper>
 }

@@ -4,7 +4,6 @@ import { StyledSlider } from "./Slider"
 import { format } from 'd3-format'
 import { SalariesQuery, useSalariesQuery } from "generated"
 import { useEffect } from "react"
-import { SliderWrapper } from "./styles"
 
 const formatter = format(".3~s")
 
@@ -25,7 +24,7 @@ export default function SliderStyled ({salaries:data}:{salaries: SalariesQuery |
 
   return (
   <div>
-    <SliderWrapper>
+    <div >
       <StyledSlider 
         aria-label="Income Slider" 
         valueLabelDisplay="on" 
@@ -36,7 +35,7 @@ export default function SliderStyled ({salaries:data}:{salaries: SalariesQuery |
         value={incomeAspect}
         onChange={(e:any)=>setIncomeAspect(e?.target.value||0)}
       />
-    </SliderWrapper>
+    </div>
   </div>)
 }
 

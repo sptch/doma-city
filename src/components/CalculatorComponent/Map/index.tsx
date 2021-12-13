@@ -7,7 +7,7 @@ import { Typography } from '@material-ui/core'
 import { Map } from 'mapbox-gl'
 
 export default ()=>{
-  const [viewport, setViewport] = useState({ latitude: 49.248, longitude:  -123.1663, zoom:11.69 });
+  const [viewport, setViewport] = useState({ latitude: 49.2827, longitude:  -123.1207, zoom:11 });
   const [loaded, setLoaded] = useState(false)
   const [cursor, setCursor] = useState("")
   const [popup, setPopup] = useRecoilState<any>(atoms.popup);
@@ -25,7 +25,6 @@ export default ()=>{
         ref={mapRef}
         // pitch={60}
         // bearing={32}
-        // hash
         onClick={()=>setPopup(null)}
         viewportChangeMethod="flyTo"
         maxZoom={16}

@@ -12,6 +12,8 @@ Wrapper = styled.div`
   justify-content: space-between; 
   align-items: center;
   max-width: 12rem;
+  color: black !important;
+
 `,
 
 ToggleComponent = styled.div`
@@ -24,6 +26,8 @@ ToggleComponent = styled.div`
   box-shadow:rgba(0,0,0,0.1) 0px 0px 20px;
   box-sizing: border-box;
   background-color: #aaa;
+  color: black !important;
+
 `,
 
 HandleOutline = styled(animated.div)`
@@ -34,6 +38,8 @@ HandleOutline = styled(animated.div)`
   width: 20px; 
   border-radius: 10px; 
   margin: 0.25rem; 
+  color: black !important;
+
 `,
 
 Handle = styled(animated.div)`
@@ -43,4 +49,6 @@ Handle = styled(animated.div)`
   width: 14px; 
   border-radius: 7px; 
   margin: 0.25rem; 
+  color: black !important;
+
 `

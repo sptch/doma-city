@@ -9,20 +9,24 @@ Wrapper = styled.div`
   min-width: 450px;
   max-width: 500px;
   width: 33vw;
-  background-color: rgba(100,101,101,0.8);
+  background-color: white;
   border-right: solid 1px rgba(255,255,255,0.3);
   box-shadow: 15px 0px 30px rgba(0,0,0,0.1);
   overflow-x: visible;
   box-sizing: border-box;
   height: 100vh;
   overflow: scroll;
-
+  color: black !important;
 `,
 
 Container = styled.div`
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
+  color: black !important;
+  div> div> h2,h3,p{
+    color: black !important;
+  }
 `,
 
 SlidersBlock = styled.div`
@@ -30,10 +34,12 @@ SlidersBlock = styled.div`
   margin: 1.5rem 0; 
   padding-top: 2.5rem; 
   box-sizing: border-box;
+  color: black !important;
+
 `,
 
 Number = styled.span`
-  color: #ffacac;
+  color: #aa624f;
   font-weight: 600;
 `,
 

@@ -90,6 +90,7 @@ export  default function Sidebar(){
               - Finding affordable rental home for a housefold with such income is {
               rentPercentage>=30?'hard':'easy'}.
           </p>
+
         </>:
         <>
           <p>
@@ -106,6 +107,9 @@ export  default function Sidebar(){
               - Finding affordable property for a housefold with such income is {percentAffordablePrice>=20?'easy':'hard'}.
           </p>
         </>}
+        <br/>
+        <a style={{ color: 'black', textDecoration: 'underline' }} href="https://spatialtech.notion.site/Methodology-75e4b010047d429e936b1d3ab6193ccf">Read more on our methodology</a>
+
         </div>
       </Text>
     </Container>

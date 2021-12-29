@@ -9,11 +9,13 @@ import SmartContract from './SmartContract'
 import { Content } from './styles'
 import Vancouver from './Vancouver'
 import Calculator from './Calculator'
+import { useWindowSize } from 'react-use-size'
+import Methodology from './Methodology'
 
 export default function Doma() {
   const theme = {}
   const layout =  useLayout()
-
+  const {width, height} = useWindowSize()
   return <>
     <ThemeProvider {...{theme:{...theme, layout}}} >
       <Router>
@@ -33,6 +35,9 @@ export default function Doma() {
               <Calculator/>
               {/* <Contact/> */}
             </Content>
+          </Route>
+          <Route path='/vancouver/methodology' exact>
+            <Methodology/>
           </Route>
         </Switch>
       </Router>

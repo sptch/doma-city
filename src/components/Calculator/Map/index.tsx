@@ -1,10 +1,10 @@
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { useRecoilState } from 'recoil'
 import { atoms } from 'misc'
 import MapGL, { MapContext } from '@urbica/react-map-gl'
 import MapDataLayer from './MapDataLayer'
-import { Typography } from '@material-ui/core'
 import { Map } from 'mapbox-gl'
+import { useWindowSize } from 'react-use-size'
 
 export default ()=>{
   const [viewport, setViewport] = useState({ latitude: 49.248, longitude:  -123.1663, zoom:11.69 });
@@ -23,16 +23,46 @@ export default ()=>{
         onLoad={()=>{setLoaded(true)}}
         cursorStyle={cursor}
         ref={mapRef}
-        // pitch={60}
-        // bearing={32}
-        // hash
         onClick={()=>setPopup(null)}
         viewportChangeMethod="flyTo"
         maxZoom={16}
+        dragPan={false}
+        dragRotate={false}
+        scrollZoom={false}
+        doubleClickZoom={false}
+        boxZoom={false}
+        bounds={[
+          [-123.25021, 49.2848],
+          [-123.0189, 49.1988]
+        ]}
+        // trackResize={true}
         {...viewport}
       >
         <MapContext.Consumer>{(map:Map)=><MapDataLayer {...{map}}/>}</MapContext.Consumer>
+        <MapContext.Consumer>{(map:Map)=><FitVancouver {...{map}}/>}</MapContext.Consumer>
       </MapGL>
     </div>
   );
+}
+
+function FitVancouver ({map}:{map:Map}) {
+  const {width,height} = useWindowSize()
+
+  useEffect(()=>{
+    if(map){
+      map.fitBounds([
+        [-123.25021, 49.2848],
+        [-123.0189, 49.1988]
+      ], {
+        padding: {
+          top: 50,
+          bottom: 50,
+          left: 50,
+          right: 50
+        }
+      })
+    }
+  },[map, width, height])
+  
+  return null
 }

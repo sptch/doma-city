@@ -76,7 +76,7 @@ export  default function Sidebar(){
         {mode==='rent'?
         <>
           <p>
-            - Average annual rent in Vancouver is {formatter(12*pricing?.rents_historical.find(d=>d.year===year)?.average)+' CAD '} 
+            - Average annual rent in Vancouver is <Number>{formatter(12*pricing?.rents_historical.find(d=>d.year===year)?.average)+' CAD '} </Number>
             which is <Number>{
               rentPercentage.toFixed(1)
             }%</Number> of selected annual household income.
@@ -87,24 +87,24 @@ export  default function Sidebar(){
             }%</Number> of rental homes are considered affordable for selected income.
           </p>
           <p>
-              - Finding affordable rental home for a housefold with such income is {
+              - Finding affordable rental home for a household with such income is {
               rentPercentage>=30?'hard':'easy'}.
           </p>
 
         </>:
         <>
           <p>
-              - Median property price in Vancouver is {formatter(pricing?.prices_historical.find(d=>d.year===year)?.median)+' CAD '} 
-              which is x{
+              - Median property price in Vancouver is <Number>{formatter(pricing?.prices_historical.find(d=>d.year===year)?.median)+' CAD '} </Number>
+              which is <Number>x{
                 ((pricing?.prices_historical.find(d=>d.year===year)?.median)/income).toFixed(1)
-              } the selected annual income.
+              }</Number> the selected annual income.
           </p>
           <p>
               - The maximum mortgage amount this household can qualify for is 
-              {' '+formatter(income*4)+' CAD'}. This can cover {percentFormatter(percentAffordablePrice)}% of homes in Vancouver.
+              <Number>{' '+formatter(income*4)+' CAD'}</Number>. This can cover <Number>{percentFormatter(percentAffordablePrice)}%</Number> of homes in Vancouver.
           </p>
           <p>
-              - Finding affordable property for a housefold with such income is {percentAffordablePrice>=20?'easy':'hard'}.
+              - Finding affordable property for a household with such income is {percentAffordablePrice>=20?'easy':'hard'}.
           </p>
         </>}
         <br/>

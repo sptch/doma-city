@@ -2,10 +2,8 @@ import styled, { css } from 'styled-components/macro';
 
 export const
 Wrapper = styled.div`
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  bottom: 0px;
+  position: relative;
+  width: 450px;
   min-width: 450px;
   max-width: 500px;
   width: 33vw;

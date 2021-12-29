@@ -1,4 +1,4 @@
-import styled, { css } from 'styled-components';
+import styled, { css } from 'styled-components/macro';
 import YouTubeComponent from "react-youtube";
 
 export const
@@ -21,6 +21,19 @@ Section = styled.section<{bg:string}>`
   background-image: url(${p=>p.bg});
   min-height: 100vh;
   width: 100%;
+`,
+
+CalculatorWrapper = styled.div`
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+`,
+
+MapWrapper = styled.div`
+  position: relative;
+  min-height: 100vh;
+  flex: 1 1 auto;
 `,
 
 Video = styled.video.attrs<{width:number, height:number}>({

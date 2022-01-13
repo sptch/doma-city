@@ -1,4 +1,4 @@
-import { atoms } from "misc";
+import { atoms, useLayout } from "misc";
 import { useRecoilState } from "recoil";
 import HistorySlider from "./HistorySlider"
 import IncomeSlider from "./IncomeSlider"
@@ -6,8 +6,9 @@ import Toggle from "./Toggle/";
 import { usePricingQuery, useSalariesQuery, useAffordableRentQuery, useAffordablePriceQuery } from "generated";
 import { format } from 'd3-format'
 import { useEffect, useState } from "react";
-import { Wrapper, Container, SlidersBlock, Number } from "./styles";
+import { Wrapper, Container, SlidersBlock, Number, LogoContainer, Footer } from "./styles";
 import { Section, Text } from "components/styles";
+import {ReactComponent as Logo} from 'assets/icons/logo.svg'
 
 const formatter = format(",.2r")
 const percentFormatter = format(",.2r")
@@ -45,22 +46,15 @@ export  default function Sidebar(){
     }
   },[ affordablePrice ])
 
-  console.log(
-    incomeRatio<1?
-    percentFormatter((1-incomeRatio)*100):
-    percentFormatter((incomeRatio-1)*100),
-    incomeRatio,
-    salaries,
-    pricing
-
-  )
+  const layout = useLayout()
 
   return <Wrapper>
     <Container>
       <Text>
       <div>
-        <h2>Select income and year</h2>      
-        
+  
+        <h2>Select income and year</h2>   
+
         <SlidersBlock>
           <IncomeSlider {...{salaries}}/>
           <p>
@@ -115,8 +109,13 @@ export  default function Sidebar(){
               - Finding affordable property for a household with such income is {percentAffordablePrice>=20?'easy':'hard'}.
           </p>
         </>}
-        <br/>
-        <a style={{ color: 'black', textDecoration: 'underline' }} href="https://spatialtech.notion.site/Methodology-75e4b010047d429e936b1d3ab6193ccf">Read more on our methodology</a>
+        <Footer>
+          {layout==='desktop' && <LogoContainer href="http://doma.city/" rel="home">
+            <Logo color='black'/>
+          </LogoContainer>}
+          <a style={{ color: 'black', textDecoration: 'underline' }} href="https://spatialtech.notion.site/Methodology-75e4b010047d429e936b1d3ab6193ccf">Read more on our methodology</a>
+
+        </Footer> 
 
         </div>
       </Text>

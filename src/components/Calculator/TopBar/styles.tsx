@@ -3,17 +3,13 @@ import styled, { css } from 'styled-components/macro';
 export const
 Wrapper = styled.div`
   position: relative;
-  min-width: 350px;
-  max-width: 50%;
-  width: 450px;
+  width: 100%;
   background-color: white;
-  border-right: solid 1px rgba(255,255,255,0.3);
-  box-shadow: 15px 0px 30px rgba(0,0,0,0.1);
-  overflow-x: visible;
+  box-shadow: 0px 3px 3px rgba(0,0,0,0.1);
   box-sizing: border-box;
-  height: 100vh;
-  overflow: scroll;
+  height: 120px;
   color: black !important;
+  z-index: 2;
 `,
 
 Container = styled.div`
@@ -27,31 +23,10 @@ Container = styled.div`
 `,
 
 SlidersBlock = styled.div`
-  width: 100%; 
-  margin: 1.5rem 0; 
-  padding-top: 1.5rem; 
+  /* width: 100%;  */
+  margin: 1.5rem 1rem 1rem 4.5rem; 
   box-sizing: border-box;
   color: black !important;
-
-`,
-
-LogoContainer = styled.a`
-    width: 80px;
-    height: 45px;
-
-  >svg{
-    width: 105px;
-    height: 60px;
-    display: inline;
-    fill-opacity: 100%;
-  }
-`,
-
-Footer = styled.div`
-  display: flex;
-  color: black;
-  align-items: center;
-  margin-top: 0.5rem;
 `,
 
 Number = styled.span`
@@ -60,6 +35,14 @@ Number = styled.span`
 `,
 
 SliderWrapper = styled.div`
+  display: flex;
+  align-items: center;
+  >h4{
+    margin: 0 0 0 15px;
+    width: 55px;
+    padding: 0;
+    text-align: center;
+  }
   >span{
     >span.MuiSlider-mark{
       visibility: hidden!important;

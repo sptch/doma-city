@@ -4,7 +4,7 @@ export const
 Header = styled.header`
 	width: 100%;
 	height: auto;
-	padding: 50px 50px;
+	padding: 40px 40px 10px 40px;
   position: fixed;
   z-index: 1;
   >div{
@@ -32,7 +32,7 @@ Header = styled.header`
             text-decoration: none;
             color: #fff;
             font-family: 'Post Grotesk Light', Helvetica, sans-serif;
-            font-size: 21px;
+            font-size: 18px;
             font-weight: lighter;
             &:hover{
               text-decoration: underline;

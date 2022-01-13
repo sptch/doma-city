@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { useRecoilState } from 'recoil'
-import { atoms } from 'misc'
+import { atoms, useLayout } from 'misc'
 import MapGL, { MapContext } from '@urbica/react-map-gl'
 import MapDataLayer from './MapDataLayer'
 import { Map } from 'mapbox-gl'
@@ -47,7 +47,8 @@ export default ()=>{
 
 function FitVancouver ({map}:{map:Map}) {
   const {width,height} = useWindowSize()
-
+  const layout = useLayout()
+  const offset = layout==='desktop'? 50: 0
   useEffect(()=>{
     if(map){
       map.fitBounds([
@@ -55,10 +56,10 @@ function FitVancouver ({map}:{map:Map}) {
         [-123.0189, 49.1988]
       ], {
         padding: {
-          top: 50,
-          bottom: 50,
-          left: 50,
-          right: 50
+          top: offset,
+          bottom: offset,
+          left: offset,
+          right: offset
         }
       })
     }

@@ -25,6 +25,8 @@ Section = styled.section<{bg:string}>`
 
 CalculatorWrapper = styled.div`
   display: flex;
+  flex-direction: ${p=>p.theme.layout==='desktop'? 'row':'column'};
+  max-height: ${p=>p.theme.layout==='mobile'? '100vh':'unset'};
   width: 100%;
   min-height: 100vh;
   position: relative;
@@ -32,7 +34,7 @@ CalculatorWrapper = styled.div`
 
 MapWrapper = styled.div`
   position: relative;
-  min-height: 100vh;
+  ${p=>p.theme.layout==='desktop' && css`min-height: 100vh;`}
   flex: 1 1 auto;
 `,
 
@@ -50,10 +52,10 @@ TextStyle = css<{}>`
   color: #fff;
   position: relative;
   width: 100%;
-  min-height: 100vh;
+  min-height: ${p=>p.theme.layout==='desktop'?'100vh': 'calc(100vh)'};
   display: flex;
-  align-items: center;
-  padding: 50px;
+  align-items: ${p=>p.theme.layout==='desktop'?'center': 'center'};
+  padding: ${p=>p.theme.layout==='desktop'?'50px': '50px'};
   >div{
     ${p=>p.theme.layout==='desktop' && css`width: 42%;`}
     z-index: 1;
@@ -61,18 +63,22 @@ TextStyle = css<{}>`
     flex-direction: column;
     h2{
       margin: 0 0 15px;
-      font-size: 32px;
+      font-size: 28px;
       font-weight: normal;
       font-family: 'Post Grotesk Medium';
     }
     p{
       font-family: 'Post Grotesk Light', Helvetica, sans-serif;
-      font-size: 21px;
+      font-size: ${p=>p.theme.layout==='desktop'?'18px': '16px'};
       font-weight: lighter;
+      ${p=>p.theme.layout==='mobile' ? css`margin: 0.6rem 0;`: css`margin: 1rem 0;`}
+
     }
   }
   a{
     text-decoration: underline;
+    font-size: ${p=>p.theme.layout==='desktop'?'18px': '16px'};
+
   }
   input {
     margin-right: 10px;
@@ -105,6 +111,10 @@ TextStyle = css<{}>`
 
 Text = styled.div`
   ${TextStyle}
+  ${p=>p.theme.layout==='mobile'&&css`pointer-events: none;`}
+  a{
+    pointer-events: all;
+  }
   >div{
     width: 100%;
   }
@@ -176,6 +186,7 @@ BurgerWrapper = styled.div`
   top: 24px;
   left: 12px;
   z-index: 3;
+  padding: 2px 2px 0 2px;
 `,
 
 Menu = styled.div<{open:boolean}>`

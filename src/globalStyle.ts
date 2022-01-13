@@ -35,7 +35,7 @@ export default createGlobalStyle`
     text-decoration: none;
     color: #fff;
     font-family: 'Post Grotesk Light', Helvetica, sans-serif;
-    font-size: 21px;
+    font-size: 18px;
     font-weight: lighter;
     &:hover{
       text-decoration: underline;

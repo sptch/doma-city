@@ -6,14 +6,22 @@ export const
 Wrapper = styled.div`
   display: flex; 
   cursor: pointer; 
-  position: relative; 
+  position: absolute; 
+  bottom: -1rem;
+  transform: translateY(100%);
+  right: 1rem;
   flex-direction: row; 
   flex-basis: 2rem; 
   justify-content: space-between; 
   align-items: center;
-  max-width: 10rem;
+  max-width: 12rem;
   color: black !important;
-  height: 1.8rem;
+  background-color: #fff;
+  padding: 0.8rem;
+  height: 2.5rem;
+  border-radius: 3px;
+  box-shadow: rgba(0,0,0,0.1) 3px 3px 3px;
+  z-index: 0;
 `,
 
 ToggleComponent = styled.div`

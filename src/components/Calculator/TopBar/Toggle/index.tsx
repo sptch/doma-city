@@ -6,17 +6,17 @@ import { Handle, HandleOutline, ToggleComponent, Wrapper } from "./styles";
 
 
 export default function Toggle(){
-  const [ hovered, setHovered ] = useState(false)
-  const [ mode, setMode ] = useRecoilState(atoms.mode)
+  const [hovered, setHovered] = useState(false)
+  const [mode, setMode] = useRecoilState(atoms.mode)
 
   const { left } = useSpring({left: mode==='price'?'calc( 0% - 0rem )':'calc( 100% - 1.3rem )'})
   const { opacity } = useSpring({opacity: hovered?'1':'0'})
 
   return (
     <Wrapper>
-      <h1>
+      <h4>
         Buy
-      </h1>
+      </h4>
 
       <ToggleComponent onPointerOver={()=>setHovered(true)} onPointerLeave={()=>setHovered(false)} onClick={()=>setMode(mode==='rent'?'price':'rent')}>
         <HandleOutline style={{
@@ -28,9 +28,9 @@ export default function Toggle(){
         }}/>
       </ToggleComponent>
 
-      <h1>
+      <h4>
         Rent
-      </h1>
+      </h4>
     </Wrapper>
   )
 }

@@ -7,15 +7,15 @@ import { Header, LogoContainer } from './styles'
 export default function HeaderComponent({vancouver=false}){
   const layout = useLayout()
   const pos = useWindowPosition()
-  return <Header>
+  return layout!=='mobile' ? <Header>
     <div>
       <div>
-        {!vancouver && layout!=='mobile' && <LogoContainer opaque={pos<10} href="http://doma.city/" rel="home">
+        {!vancouver && <LogoContainer opaque={pos<10} href="http://doma.city/" rel="home">
           <Logo/>
         </LogoContainer>}
       </div>
 
-      {layout==='desktop' && <>{vancouver?
+      {vancouver?
         <nav>
           <ul className="menu">
             <li>
@@ -56,7 +56,7 @@ export default function HeaderComponent({vancouver=false}){
             </li>
           </ul>
         </nav>
-      }</>}
+      }
     </div>
-  </Header>
+  </Header>: null
 }

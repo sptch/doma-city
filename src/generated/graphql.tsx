@@ -949,78 +949,9 @@ export type Get_Tiles_Args = {
 
 /** columns and relationships of "incomes" */
 export type Incomes = {
-  aggregate?: Maybe<Scalars['bigint']>;
-  average?: Maybe<Scalars['bigint']>;
   index?: Maybe<Scalars['bigint']>;
   median?: Maybe<Scalars['bigint']>;
-  population?: Maybe<Scalars['bigint']>;
-  population_wi?: Maybe<Scalars['bigint']>;
   year?: Maybe<Scalars['bigint']>;
-};
-
-/** aggregated selection of "incomes" */
-export type Incomes_Aggregate = {
-  aggregate?: Maybe<Incomes_Aggregate_Fields>;
-  nodes: Array<Incomes>;
-};
-
-/** aggregate fields of "incomes" */
-export type Incomes_Aggregate_Fields = {
-  avg?: Maybe<Incomes_Avg_Fields>;
-  count?: Maybe<Scalars['Int']>;
-  max?: Maybe<Incomes_Max_Fields>;
-  min?: Maybe<Incomes_Min_Fields>;
-  stddev?: Maybe<Incomes_Stddev_Fields>;
-  stddev_pop?: Maybe<Incomes_Stddev_Pop_Fields>;
-  stddev_samp?: Maybe<Incomes_Stddev_Samp_Fields>;
-  sum?: Maybe<Incomes_Sum_Fields>;
-  var_pop?: Maybe<Incomes_Var_Pop_Fields>;
-  var_samp?: Maybe<Incomes_Var_Samp_Fields>;
-  variance?: Maybe<Incomes_Variance_Fields>;
-};
-
-
-/** aggregate fields of "incomes" */
-export type Incomes_Aggregate_FieldsCountArgs = {
-  columns?: Maybe<Array<Incomes_Select_Column>>;
-  distinct?: Maybe<Scalars['Boolean']>;
-};
-
-/** order by aggregate values of table "incomes" */
-export type Incomes_Aggregate_Order_By = {
-  avg?: Maybe<Incomes_Avg_Order_By>;
-  count?: Maybe<Order_By>;
-  max?: Maybe<Incomes_Max_Order_By>;
-  min?: Maybe<Incomes_Min_Order_By>;
-  stddev?: Maybe<Incomes_Stddev_Order_By>;
-  stddev_pop?: Maybe<Incomes_Stddev_Pop_Order_By>;
-  stddev_samp?: Maybe<Incomes_Stddev_Samp_Order_By>;
-  sum?: Maybe<Incomes_Sum_Order_By>;
-  var_pop?: Maybe<Incomes_Var_Pop_Order_By>;
-  var_samp?: Maybe<Incomes_Var_Samp_Order_By>;
-  variance?: Maybe<Incomes_Variance_Order_By>;
-};
-
-/** aggregate avg on columns */
-export type Incomes_Avg_Fields = {
-  aggregate?: Maybe<Scalars['Float']>;
-  average?: Maybe<Scalars['Float']>;
-  index?: Maybe<Scalars['Float']>;
-  median?: Maybe<Scalars['Float']>;
-  population?: Maybe<Scalars['Float']>;
-  population_wi?: Maybe<Scalars['Float']>;
-  year?: Maybe<Scalars['Float']>;
-};
-
-/** order by avg() on columns of table "incomes" */
-export type Incomes_Avg_Order_By = {
-  aggregate?: Maybe<Order_By>;
-  average?: Maybe<Order_By>;
-  index?: Maybe<Order_By>;
-  median?: Maybe<Order_By>;
-  population?: Maybe<Order_By>;
-  population_wi?: Maybe<Order_By>;
-  year?: Maybe<Order_By>;
 };
 
 /** Boolean expression to filter rows from the table "incomes". All fields are combined with a logical 'AND'. */
@@ -1028,241 +959,27 @@ export type Incomes_Bool_Exp = {
   _and?: Maybe<Array<Maybe<Incomes_Bool_Exp>>>;
   _not?: Maybe<Incomes_Bool_Exp>;
   _or?: Maybe<Array<Maybe<Incomes_Bool_Exp>>>;
-  aggregate?: Maybe<Bigint_Comparison_Exp>;
-  average?: Maybe<Bigint_Comparison_Exp>;
   index?: Maybe<Bigint_Comparison_Exp>;
   median?: Maybe<Bigint_Comparison_Exp>;
-  population?: Maybe<Bigint_Comparison_Exp>;
-  population_wi?: Maybe<Bigint_Comparison_Exp>;
   year?: Maybe<Bigint_Comparison_Exp>;
-};
-
-/** aggregate max on columns */
-export type Incomes_Max_Fields = {
-  aggregate?: Maybe<Scalars['bigint']>;
-  average?: Maybe<Scalars['bigint']>;
-  index?: Maybe<Scalars['bigint']>;
-  median?: Maybe<Scalars['bigint']>;
-  population?: Maybe<Scalars['bigint']>;
-  population_wi?: Maybe<Scalars['bigint']>;
-  year?: Maybe<Scalars['bigint']>;
-};
-
-/** order by max() on columns of table "incomes" */
-export type Incomes_Max_Order_By = {
-  aggregate?: Maybe<Order_By>;
-  average?: Maybe<Order_By>;
-  index?: Maybe<Order_By>;
-  median?: Maybe<Order_By>;
-  population?: Maybe<Order_By>;
-  population_wi?: Maybe<Order_By>;
-  year?: Maybe<Order_By>;
-};
-
-/** aggregate min on columns */
-export type Incomes_Min_Fields = {
-  aggregate?: Maybe<Scalars['bigint']>;
-  average?: Maybe<Scalars['bigint']>;
-  index?: Maybe<Scalars['bigint']>;
-  median?: Maybe<Scalars['bigint']>;
-  population?: Maybe<Scalars['bigint']>;
-  population_wi?: Maybe<Scalars['bigint']>;
-  year?: Maybe<Scalars['bigint']>;
-};
-
-/** order by min() on columns of table "incomes" */
-export type Incomes_Min_Order_By = {
-  aggregate?: Maybe<Order_By>;
-  average?: Maybe<Order_By>;
-  index?: Maybe<Order_By>;
-  median?: Maybe<Order_By>;
-  population?: Maybe<Order_By>;
-  population_wi?: Maybe<Order_By>;
-  year?: Maybe<Order_By>;
 };
 
 /** ordering options when selecting data from "incomes" */
 export type Incomes_Order_By = {
-  aggregate?: Maybe<Order_By>;
-  average?: Maybe<Order_By>;
   index?: Maybe<Order_By>;
   median?: Maybe<Order_By>;
-  population?: Maybe<Order_By>;
-  population_wi?: Maybe<Order_By>;
   year?: Maybe<Order_By>;
 };
 
 /** select columns of table "incomes" */
 export enum Incomes_Select_Column {
   /** column name */
-  Aggregate = 'aggregate',
-  /** column name */
-  Average = 'average',
-  /** column name */
   Index = 'index',
   /** column name */
   Median = 'median',
   /** column name */
-  Population = 'population',
-  /** column name */
-  PopulationWi = 'population_wi',
-  /** column name */
   Year = 'year'
 }
-
-/** aggregate stddev on columns */
-export type Incomes_Stddev_Fields = {
-  aggregate?: Maybe<Scalars['Float']>;
-  average?: Maybe<Scalars['Float']>;
-  index?: Maybe<Scalars['Float']>;
-  median?: Maybe<Scalars['Float']>;
-  population?: Maybe<Scalars['Float']>;
-  population_wi?: Maybe<Scalars['Float']>;
-  year?: Maybe<Scalars['Float']>;
-};
-
-/** order by stddev() on columns of table "incomes" */
-export type Incomes_Stddev_Order_By = {
-  aggregate?: Maybe<Order_By>;
-  average?: Maybe<Order_By>;
-  index?: Maybe<Order_By>;
-  median?: Maybe<Order_By>;
-  population?: Maybe<Order_By>;
-  population_wi?: Maybe<Order_By>;
-  year?: Maybe<Order_By>;
-};
-
-/** aggregate stddev_pop on columns */
-export type Incomes_Stddev_Pop_Fields = {
-  aggregate?: Maybe<Scalars['Float']>;
-  average?: Maybe<Scalars['Float']>;
-  index?: Maybe<Scalars['Float']>;
-  median?: Maybe<Scalars['Float']>;
-  population?: Maybe<Scalars['Float']>;
-  population_wi?: Maybe<Scalars['Float']>;
-  year?: Maybe<Scalars['Float']>;
-};
-
-/** order by stddev_pop() on columns of table "incomes" */
-export type Incomes_Stddev_Pop_Order_By = {
-  aggregate?: Maybe<Order_By>;
-  average?: Maybe<Order_By>;
-  index?: Maybe<Order_By>;
-  median?: Maybe<Order_By>;
-  population?: Maybe<Order_By>;
-  population_wi?: Maybe<Order_By>;
-  year?: Maybe<Order_By>;
-};
-
-/** aggregate stddev_samp on columns */
-export type Incomes_Stddev_Samp_Fields = {
-  aggregate?: Maybe<Scalars['Float']>;
-  average?: Maybe<Scalars['Float']>;
-  index?: Maybe<Scalars['Float']>;
-  median?: Maybe<Scalars['Float']>;
-  population?: Maybe<Scalars['Float']>;
-  population_wi?: Maybe<Scalars['Float']>;
-  year?: Maybe<Scalars['Float']>;
-};
-
-/** order by stddev_samp() on columns of table "incomes" */
-export type Incomes_Stddev_Samp_Order_By = {
-  aggregate?: Maybe<Order_By>;
-  average?: Maybe<Order_By>;
-  index?: Maybe<Order_By>;
-  median?: Maybe<Order_By>;
-  population?: Maybe<Order_By>;
-  population_wi?: Maybe<Order_By>;
-  year?: Maybe<Order_By>;
-};
-
-/** aggregate sum on columns */
-export type Incomes_Sum_Fields = {
-  aggregate?: Maybe<Scalars['bigint']>;
-  average?: Maybe<Scalars['bigint']>;
-  index?: Maybe<Scalars['bigint']>;
-  median?: Maybe<Scalars['bigint']>;
-  population?: Maybe<Scalars['bigint']>;
-  population_wi?: Maybe<Scalars['bigint']>;
-  year?: Maybe<Scalars['bigint']>;
-};
-
-/** order by sum() on columns of table "incomes" */
-export type Incomes_Sum_Order_By = {
-  aggregate?: Maybe<Order_By>;
-  average?: Maybe<Order_By>;
-  index?: Maybe<Order_By>;
-  median?: Maybe<Order_By>;
-  population?: Maybe<Order_By>;
-  population_wi?: Maybe<Order_By>;
-  year?: Maybe<Order_By>;
-};
-
-/** aggregate var_pop on columns */
-export type Incomes_Var_Pop_Fields = {
-  aggregate?: Maybe<Scalars['Float']>;
-  average?: Maybe<Scalars['Float']>;
-  index?: Maybe<Scalars['Float']>;
-  median?: Maybe<Scalars['Float']>;
-  population?: Maybe<Scalars['Float']>;
-  population_wi?: Maybe<Scalars['Float']>;
-  year?: Maybe<Scalars['Float']>;
-};
-
-/** order by var_pop() on columns of table "incomes" */
-export type Incomes_Var_Pop_Order_By = {
-  aggregate?: Maybe<Order_By>;
-  average?: Maybe<Order_By>;
-  index?: Maybe<Order_By>;
-  median?: Maybe<Order_By>;
-  population?: Maybe<Order_By>;
-  population_wi?: Maybe<Order_By>;
-  year?: Maybe<Order_By>;
-};
-
-/** aggregate var_samp on columns */
-export type Incomes_Var_Samp_Fields = {
-  aggregate?: Maybe<Scalars['Float']>;
-  average?: Maybe<Scalars['Float']>;
-  index?: Maybe<Scalars['Float']>;
-  median?: Maybe<Scalars['Float']>;
-  population?: Maybe<Scalars['Float']>;
-  population_wi?: Maybe<Scalars['Float']>;
-  year?: Maybe<Scalars['Float']>;
-};
-
-/** order by var_samp() on columns of table "incomes" */
-export type Incomes_Var_Samp_Order_By = {
-  aggregate?: Maybe<Order_By>;
-  average?: Maybe<Order_By>;
-  index?: Maybe<Order_By>;
-  median?: Maybe<Order_By>;
-  population?: Maybe<Order_By>;
-  population_wi?: Maybe<Order_By>;
-  year?: Maybe<Order_By>;
-};
-
-/** aggregate variance on columns */
-export type Incomes_Variance_Fields = {
-  aggregate?: Maybe<Scalars['Float']>;
-  average?: Maybe<Scalars['Float']>;
-  index?: Maybe<Scalars['Float']>;
-  median?: Maybe<Scalars['Float']>;
-  population?: Maybe<Scalars['Float']>;
-  population_wi?: Maybe<Scalars['Float']>;
-  year?: Maybe<Scalars['Float']>;
-};
-
-/** order by variance() on columns of table "incomes" */
-export type Incomes_Variance_Order_By = {
-  aggregate?: Maybe<Order_By>;
-  average?: Maybe<Order_By>;
-  index?: Maybe<Order_By>;
-  median?: Maybe<Order_By>;
-  population?: Maybe<Order_By>;
-  population_wi?: Maybe<Order_By>;
-  year?: Maybe<Order_By>;
-};
 
 /** columns and relationships of "new_york_x_pumas_data" */
 export type New_York_X_Pumas_Data = {
@@ -5994,8 +5711,6 @@ export type Query_Root = {
   get_tiles_aggregate: Development_Tiles_Aggregate;
   /** fetch data from the table: "incomes" */
   incomes: Array<Incomes>;
-  /** fetch aggregated fields from the table: "incomes" */
-  incomes_aggregate: Incomes_Aggregate;
   /** fetch data from the table: "new_york_x_pumas_data" */
   new_york_x_pumas_data: Array<New_York_X_Pumas_Data>;
   /** fetch aggregated fields from the table: "new_york_x_pumas_data" */
@@ -6289,16 +6004,6 @@ export type Query_RootGet_Tiles_AggregateArgs = {
 
 /** query root */
 export type Query_RootIncomesArgs = {
-  distinct_on?: Maybe<Array<Incomes_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Incomes_Order_By>>;
-  where?: Maybe<Incomes_Bool_Exp>;
-};
-
-
-/** query root */
-export type Query_RootIncomes_AggregateArgs = {
   distinct_on?: Maybe<Array<Incomes_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
@@ -9210,8 +8915,6 @@ export type Subscription_Root = {
   get_tiles_aggregate: Development_Tiles_Aggregate;
   /** fetch data from the table: "incomes" */
   incomes: Array<Incomes>;
-  /** fetch aggregated fields from the table: "incomes" */
-  incomes_aggregate: Incomes_Aggregate;
   /** fetch data from the table: "new_york_x_pumas_data" */
   new_york_x_pumas_data: Array<New_York_X_Pumas_Data>;
   /** fetch aggregated fields from the table: "new_york_x_pumas_data" */
@@ -9505,16 +9208,6 @@ export type Subscription_RootGet_Tiles_AggregateArgs = {
 
 /** subscription root */
 export type Subscription_RootIncomesArgs = {
-  distinct_on?: Maybe<Array<Incomes_Select_Column>>;
-  limit?: Maybe<Scalars['Int']>;
-  offset?: Maybe<Scalars['Int']>;
-  order_by?: Maybe<Array<Incomes_Order_By>>;
-  where?: Maybe<Incomes_Bool_Exp>;
-};
-
-
-/** subscription root */
-export type Subscription_RootIncomes_AggregateArgs = {
   distinct_on?: Maybe<Array<Incomes_Select_Column>>;
   limit?: Maybe<Scalars['Int']>;
   offset?: Maybe<Scalars['Int']>;
@@ -13875,10 +13568,7 @@ export type PricingQuery = { rents_historical: Array<Pick<Rents_Historical, 'ave
 export type SalariesQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type SalariesQuery = { incomes: Array<(
-    Pick<Incomes, 'year'>
-    & { income: Incomes['median'] }
-  )> };
+export type SalariesQuery = { incomes: Array<Pick<Incomes, 'year' | 'median'>> };
 
 export type SyntheticParcelsQueryVariables = Exact<{
   year?: Maybe<Scalars['bigint']>;
@@ -13900,12 +13590,12 @@ export type SyntheticBlocksQuery = { synthetic_blocks: Array<Pick<Synthetic_Bloc
 export type RentsHistoricalQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type RentsHistoricalQuery = { data: Array<{ data: Rents_Historical['average'], key: Rents_Historical['year'] }>, incomes: Array<{ data: Incomes['average'], key: Incomes['year'] }> };
+export type RentsHistoricalQuery = { data: Array<{ data: Rents_Historical['average'], key: Rents_Historical['year'] }>, incomes: Array<{ data: Incomes['median'], key: Incomes['year'] }> };
 
 export type PricesHistoricalQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type PricesHistoricalQuery = { data: Array<{ data: Prices_Historical['average'], key: Prices_Historical['year'] }>, incomes: Array<{ data: Incomes['average'], key: Incomes['year'] }> };
+export type PricesHistoricalQuery = { data: Array<{ data: Prices_Historical['average'], key: Prices_Historical['year'] }>, incomes: Array<{ data: Incomes['median'], key: Incomes['year'] }> };
 
 
 export const DataDocument = gql`
@@ -14122,7 +13812,7 @@ export const SalariesDocument = gql`
     query Salaries {
   incomes {
     year
-    income: median
+    median
   }
 }
     `;
@@ -14234,7 +13924,7 @@ export const RentsHistoricalDocument = gql`
     key: year
   }
   incomes {
-    data: average
+    data: median
     key: year
   }
 }
@@ -14273,7 +13963,7 @@ export const PricesHistoricalDocument = gql`
     key: year
   }
   incomes {
-    data: average
+    data: median
     key: year
   }
 }

@@ -1,6 +1,6 @@
 query Salaries{
   incomes {
     year
-    income:median
+    median
   }
 }

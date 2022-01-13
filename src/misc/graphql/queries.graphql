@@ -20,7 +20,7 @@ query RentsHistorical {
     key:year
   }
   incomes {
-    data:average
+    data:median
     key:year
   } 
 }
@@ -31,7 +31,7 @@ query PricesHistorical {
     key:year
   }
   incomes {
-    data:average 
+    data:median
     key:year
   } 
 }

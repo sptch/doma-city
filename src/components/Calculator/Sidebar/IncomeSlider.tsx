@@ -17,8 +17,8 @@ export default function SliderStyled ({salaries:data}:{salaries: SalariesQuery |
     if(data && data.incomes.length>0){
       const v = incomeAspect
       setIncome(v<0?
-        data?.incomes.find(d=>d.year===year)?.income/Math.abs(v-1):
-        data?.incomes.find(d=>d.year===year)?.income*Math.pow(Math.abs(-v-1),3)
+        data?.incomes.find(d=>d.year===year)?.median/Math.abs(v-1):
+        data?.incomes.find(d=>d.year===year)?.median*Math.pow(Math.abs(-v-1),3)
       )
     }
   },[incomeAspect, year, setIncome])

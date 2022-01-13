@@ -19,3 +19,6 @@ generates:
       reactApolloVersion: 3
       skipTypeNameForRoot: true
       skipTypename: true
+  src/generated/graphql.schema.json:
+    plugins:
+      - 'introspection'

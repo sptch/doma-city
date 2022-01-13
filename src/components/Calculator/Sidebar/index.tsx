@@ -8,7 +8,6 @@ import { format } from 'd3-format'
 import { useEffect, useState } from "react";
 import { Wrapper, Container, SlidersBlock, Number } from "./styles";
 import { Section, Text } from "components/styles";
-import bg2 from 'assets/images/b2.png';
 
 const formatter = format(",.2r")
 const percentFormatter = format(",.2r")
@@ -22,7 +21,7 @@ export  default function Sidebar(){
   const { data:pricing } = usePricingQuery()
 
   const rentPercentage = (((12*pricing?.rents_historical.find(d=>d.year===year)?.average)/income)*100)
-  const incomeRatio = income/salaries?.incomes?.find(d=>d.year===year)?.income
+  const incomeRatio = income/salaries?.incomes?.find(d=>d.year===year)?.median
   
   const [ percentAffordableRent, setPercentAffordableRent ] = useState(0)
   const { data:affordableRent } = useAffordableRentQuery({skip:mode!=='rent', variables:{thirty_percent_of_income:income/12*0.3,year}})
@@ -46,6 +45,15 @@ export  default function Sidebar(){
     }
   },[ affordablePrice ])
 
+  console.log(
+    incomeRatio<1?
+    percentFormatter((1-incomeRatio)*100):
+    percentFormatter((incomeRatio-1)*100),
+    incomeRatio,
+    salaries,
+    pricing
+
+  )
 
   return <Wrapper>
     <Container>

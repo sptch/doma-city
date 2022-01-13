@@ -193,7 +193,7 @@ Menu = styled.div<{open:boolean}>`
   position: fixed;
   top: 0px;
   left: 0px;
-  z-index: 2;
+  z-index: 4;
   width: 75vw;
   max-width: 350px;
   height: 100vh;

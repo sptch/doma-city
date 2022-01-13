@@ -38,14 +38,15 @@ MapWrapper = styled.div`
   flex: 1 1 auto;
 `,
 
-Video = styled.video.attrs<{width:number, height:number}>({
-  autoPlay: true,
-  autoplay: true,
+Video = styled.video.attrs<{width:number, height:number}>(p=>({
+  autoPlay: p.theme.layout!=='mobile',
+  autoplay: p.theme.layout!=='mobile',
   muted: true,
   playsinline: true,
+  webkitPlaysinline: true,
   loop: true,
   preload: "metadata"
-})`
+}))`
   position: absolute;
   object-fit: cover;
   height: 100%;

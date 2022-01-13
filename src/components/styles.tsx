@@ -40,8 +40,11 @@ MapWrapper = styled.div`
 
 Video = styled.video.attrs<{width:number, height:number}>({
   autoPlay: true,
+  autoplay: true,
   muted: true,
-  loop: true
+  playsinline: true,
+  loop: true,
+  preload: "metadata"
 })`
   position: absolute;
   object-fit: cover;

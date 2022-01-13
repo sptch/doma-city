@@ -1,6 +1,7 @@
-import { Route, BrowserRouter as Router, Switch } from 'react-router-dom'
+import { Route, BrowserRouter as Router, Switch, Link } from 'react-router-dom'
 import { ThemeProvider } from 'styled-components'
 import { useLayout } from 'misc'
+import { slide as Menu } from 'react-burger-menu'
 
 import Contact from './Contact'
 import Header from './Header'
@@ -32,15 +33,21 @@ export default function Doma() {
             <Header vancouver/>
             <Content>
               <Vancouver/>
+            </Content>
+          </Route>
+          <Route path='/vancouver/dashboard' exact>
+            <Header vancouver/>
+            <Content>
               <Calculator/>
-              {/* <Contact/> */}
             </Content>
           </Route>
           <Route path='/vancouver/methodology' exact>
             <Methodology/>
           </Route>
         </Switch>
+
       </Router>
+
     </ThemeProvider>
 
   </>

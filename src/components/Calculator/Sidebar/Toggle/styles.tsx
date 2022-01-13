@@ -8,7 +8,7 @@ Wrapper = styled.div`
   cursor: pointer; 
   position: relative; 
   flex-direction: row; 
-  flex-basis: 12rem; 
+  flex-basis: 2rem; 
   justify-content: space-between; 
   align-items: center;
   max-width: 12rem;

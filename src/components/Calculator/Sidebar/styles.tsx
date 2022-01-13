@@ -3,10 +3,9 @@ import styled, { css } from 'styled-components/macro';
 export const
 Wrapper = styled.div`
   position: relative;
+  min-width: 350px;
+  max-width: 50%;
   width: 450px;
-  min-width: 450px;
-  max-width: 500px;
-  width: 33vw;
   background-color: white;
   border-right: solid 1px rgba(255,255,255,0.3);
   box-shadow: 15px 0px 30px rgba(0,0,0,0.1);

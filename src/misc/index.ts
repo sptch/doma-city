@@ -11,7 +11,7 @@ export * from './types'
 
 export function useLayout(){
   const { width, height } = useWindowSize()
-  return (width<960)? 'mobile': 'desktop'
+  return (width<768)? 'mobile': 'desktop'
 }
 
 export default function useWindowPosition() {

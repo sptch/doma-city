@@ -1,5 +1,6 @@
 import bg2 from 'assets/images/b2.png';
 import vancouver from 'assets/videos/vancouver.mp4';
+import { Link } from 'react-router-dom';
 import { useWindowSize } from 'react-use-size';
 import { Section, TextLeft, Video } from '../styles';
 
@@ -26,7 +27,10 @@ export default function Vancouver(){
           <p>
             CST with the support of 221a developed a prototype for a dashboard, that helps see how it feels to live in a city amidst housing crises, using the city of Vancouver as a case study.
           </p>
-
+          <br/>
+          <Link to="/vancouver/dashboard" id='explore'>
+            <button>Explore dashboard</button>
+          </Link>
         </div>
       </TextLeft>
     </Section>

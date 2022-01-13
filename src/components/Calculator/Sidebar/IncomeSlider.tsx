@@ -2,7 +2,7 @@ import { useRecoilState } from "recoil"
 import { atoms } from 'misc'
 import { StyledSlider } from "./Slider"
 import { format } from 'd3-format'
-import { SalariesQuery, useSalariesQuery } from "generated"
+import { SalariesQuery } from "generated"
 import { useEffect } from "react"
 import { SliderWrapper } from "./styles"
 

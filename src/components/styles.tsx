@@ -51,13 +51,14 @@ TextStyle = css<{}>`
   position: relative;
   width: 100%;
   min-height: 100vh;
-  min-width: 600px;
   display: flex;
   align-items: center;
   padding: 50px;
   >div{
-    width: 42%;
+    ${p=>p.theme.layout==='desktop' && css`width: 42%;`}
     z-index: 1;
+    display: flex;
+    flex-direction: column;
     h2{
       margin: 0 0 15px;
       font-size: 32px;
@@ -70,24 +71,6 @@ TextStyle = css<{}>`
       font-weight: lighter;
     }
   }
-`,
-
-Text = styled.div`
-  ${TextStyle}
-  >div{
-    width: calc(100% - 10rem);
-  }
-`,
-
-TextLeft = styled.div`
-  justify-content: start;
-  ${TextStyle}
-`,
-
-TextRight = styled.div`
-  justify-content: end;
-  text-align: center;
-  ${TextStyle}
   a{
     text-decoration: underline;
   }
@@ -113,7 +96,37 @@ TextRight = styled.div`
     padding: 10px;
     outline: none !important;
     border-radius: 5px;
+    &:hover{
+      background-color: rgba(0, 0, 0, 0.4);
+    }
+    transition: background-color 0.2s ease-in-out;
   }
+`,
+
+Text = styled.div`
+  ${TextStyle}
+  >div{
+    width: 100%;
+  }
+`,
+
+TextLeft = styled.div`
+  justify-content: start;
+  ${TextStyle}
+  #explore{
+    justify-self: center;
+    width: 100%;
+    button{
+      width: 100%;
+      font-family: 'Post Grotesk Medium';
+    }
+  }
+`,
+
+TextRight = styled.div`
+  justify-content: end;
+  text-align: center;
+  ${TextStyle}
 `,
 
 Player = styled.div`

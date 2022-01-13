@@ -1,21 +1,21 @@
 import {ReactComponent as Logo} from 'assets/icons/logo.svg'
-import useWindowPosition from 'misc'
+import useWindowPosition, { useLayout } from 'misc'
 import { Link } from 'react-router-dom'
 import { Header, LogoContainer } from './styles'
 
 
 export default function HeaderComponent({vancouver=false}){
-
+  const layout = useLayout()
   const pos = useWindowPosition()
   return <Header>
     <div>
       <div>
-        <LogoContainer opaque={pos<10} href="http://doma.city/" rel="home">
+        {!vancouver && layout!=='mobile' && <LogoContainer opaque={pos<10} href="http://doma.city/" rel="home">
           <Logo/>
-        </LogoContainer>
+        </LogoContainer>}
       </div>
 
-      {vancouver?
+      {layout==='desktop' && <>{vancouver?
         <nav>
           <ul className="menu">
             <li>
@@ -56,7 +56,7 @@ export default function HeaderComponent({vancouver=false}){
             </li>
           </ul>
         </nav>
-      }
+      }</>}
     </div>
   </Header>
 }

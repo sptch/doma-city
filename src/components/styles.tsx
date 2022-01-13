@@ -169,4 +169,50 @@ Close = styled.div.attrs({
   font-weight: bold;
   color: #fff;
   cursor: pointer;
+`,
+
+BurgerWrapper = styled.div`
+  position: fixed;
+  top: 24px;
+  left: 12px;
+  z-index: 3;
+`,
+
+Menu = styled.div<{open:boolean}>`
+  position: fixed;
+  top: 0px;
+  left: 0px;
+  z-index: 2;
+  width: 75vw;
+  max-width: 350px;
+  height: 100vh;
+  background-color: rgba(59, 59, 59, 0.712); 
+  padding: 8.5rem 1rem;
+  box-sizing: border-box;
+  transition: transform 0.2s ease-in-out;
+  ${p=>p.open ?
+    css`transform: translateX(0);`:
+    css`transform: translateX(-100%);`}
+  /* color: #333; */
+  display: flex;
+  flex-direction: column;
+  justify-content: start;
+
+  >nav {
+    height: 12rem;
+    >ul {
+      list-style-type: none;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: space-between;
+      >li {
+        margin: 0.5rem 0;
+        >a{ 
+          /* color: #333;  */
+        }
+      }
+    }
+  }
 `

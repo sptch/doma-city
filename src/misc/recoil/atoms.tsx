@@ -60,3 +60,8 @@ export const income = atom({
   key: 'income', 
   default: 91750, 
 });
+
+export const menu = atom({
+  key: 'menu', 
+  default: false, 
+});

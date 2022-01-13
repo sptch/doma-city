@@ -1,4 +1,4 @@
-import bg2 from 'assets/images/b2.png';
+import bg2 from 'assets/images/4.png';
 import vancouver from 'assets/videos/vancouver.mp4';
 import { Link } from 'react-router-dom';
 import { useWindowSize } from 'react-use-size';

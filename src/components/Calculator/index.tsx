@@ -1,4 +1,4 @@
-import bg2 from 'assets/images/b2.png';
+import bg2 from 'assets/images/4.png';
 import { useLayout } from 'misc';
 import { CalculatorWrapper, MapWrapper, Section } from '../styles';
 import BottomBar from './BottomBar';

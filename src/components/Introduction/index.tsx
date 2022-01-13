@@ -1,5 +1,5 @@
 import { Close, Player, Section, Video, YouTube } from "../styles";
-import bg1 from 'assets/images/b1.png';
+import bg1 from 'assets/images/1.png';
 import play from 'assets/images/play.png';
 import video2 from 'assets/videos/2.mp4';
 import { useWindowSize } from "react-use-size";

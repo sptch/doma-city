@@ -1,4 +1,4 @@
-import bg2 from 'assets/images/b2.png';
+import bg2 from 'assets/images/2.png';
 import video1 from 'assets/videos/1.mp4';
 import { useWindowSize } from 'react-use-size';
 import { Section, TextLeft, Video } from '../styles';

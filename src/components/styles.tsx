@@ -46,6 +46,7 @@ Video = styled.video.attrs<{width:number, height:number}>({
   position: absolute;
   object-fit: cover;
   height: 100%;
+  pointer-events: none;
 `,
 
 TextStyle = css<{}>`
@@ -185,7 +186,7 @@ BurgerWrapper = styled.div`
   position: fixed;
   top: 24px;
   left: 12px;
-  z-index: 3;
+  z-index: 5;
   padding: 2px 2px 0 2px;
 `,
 

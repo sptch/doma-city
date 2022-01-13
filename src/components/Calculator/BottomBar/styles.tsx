@@ -9,7 +9,8 @@ Wrapper = styled.div`
   height: 100vh;
   box-sizing: border-box;
   color: black !important;
-  z-index: 3;
+  z-index: 2;
+  pointer-events: none;
 `,
 
 Handle = styled.div`
@@ -40,6 +41,7 @@ BottomBarPlaceholder = styled.div`
 `,
 
 Container = styled.div`
+pointer-events: all;
   box-sizing: border-box;
   position: absolute;
   display: flex;

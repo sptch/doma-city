@@ -11,7 +11,7 @@ import { useWindowSize } from "react-use-size";
 const formatter = format(",.2r")
 const percentFormatter = format(",.2r")
 
-export  default function Sidebar(){
+export  default function BottomBar(){
   const [ mode ] = useRecoilState(atoms.mode)
   const [ year ] = useRecoilState(atoms.year)
   const [ income ] = useRecoilState(atoms.income)

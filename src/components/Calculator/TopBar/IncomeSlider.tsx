@@ -21,7 +21,7 @@ export default function SliderStyled ({medianIncomes:data}:{medianIncomes: Incom
       const v = incomeAspect
       setIncome(v<0?
         (data.find(d=>d.year===year)?.median_income||0)/Math.abs(v-1):
-        (data.find(d=>d.year===year)?.median_income||0)*Math.pow(Math.abs(-v-1),3)
+        (data.find(d=>d.year===year)?.median_income||0)*Math.pow(Math.abs(-v-1),4)
       )
     }
   },[incomeAspect, year, setIncome])

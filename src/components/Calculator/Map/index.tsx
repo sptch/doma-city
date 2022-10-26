@@ -1,16 +1,12 @@
 import { useState, useRef, useEffect } from 'react'
-import { useRecoilState } from 'recoil'
-import { atoms, useLayout } from 'misc'
+import { useLayout } from 'misc'
 import MapGL, { MapContext } from '@urbica/react-map-gl'
 import MapDataLayer from './MapDataLayer'
 import { Map } from 'mapbox-gl'
 import { useWindowSize } from 'react-use-size'
 
-export default ()=>{
+export default function MapComponent (){
   const [viewport, setViewport] = useState({ latitude: 49.248, longitude:  -123.1663, zoom:11.69 });
-  const [loaded, setLoaded] = useState(false)
-  const [cursor, setCursor] = useState("")
-  const [popup, setPopup] = useRecoilState<any>(atoms.popup);
   const mapRef:any = useRef()
 
   return (<div>
@@ -20,10 +16,7 @@ export default ()=>{
         mapStyle="mapbox://styles/switch9/ckqvo76kj208918qpd45p0l85"
         accessToken={'pk.eyJ1Ijoic3dpdGNoOSIsImEiOiJjamozeGV2bnkxajV2M3FvNnpod3h4ODlpIn0.CTt2IXV8II6finbTlxEddg'}
         onViewportChange={setViewport}
-        onLoad={()=>{setLoaded(true)}}
-        cursorStyle={cursor}
         ref={mapRef}
-        onClick={()=>setPopup(null)}
         viewportChangeMethod="flyTo"
         maxZoom={16}
         dragPan={false}

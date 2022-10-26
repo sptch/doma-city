@@ -89,7 +89,7 @@ export  default function BottomBar(){
               - Average annual rent in Vancouver is <Number>{formatter(12* (rentsHistorical.find(d=>d.year===year)?.rent_median||0))+' CAD '} </Number>
               which is <Number>{
                 rentPercentage.toFixed(1)
-              }%</Number> of selected annual household income.
+              }%</Number> of selected annual income of individual.
             </p>
             <p>
               - <Number>{
@@ -97,7 +97,7 @@ export  default function BottomBar(){
               }%</Number> of rental homes are considered affordable for selected income.
             </p>
             <p>
-                - Finding affordable rental home for a household with such income is {
+                - Finding affordable rental home for a individual with such income is {
                 rentPercentage>=30?'hard':'easy'}.
             </p>
 
@@ -110,11 +110,11 @@ export  default function BottomBar(){
                 }</Number> the selected annual income.
             </p>
             <p>
-                - The maximum mortgage amount this household can qualify for is 
+                - The maximum mortgage amount this individual can qualify for is 
                 <Number>{' '+formatter(income*4)+' CAD'}</Number>. This can cover <Number>{percentFormatter(percentAffordablePrice)}%</Number> of homes in Vancouver.
             </p>
             <p>
-                - Finding affordable property for a household with such income is {percentAffordablePrice>=20?'easy':'hard'}.
+                - Finding affordable property for an individual with such income is {percentAffordablePrice>=20?'easy':'hard'}.
             </p>
           </>}
           <br/>

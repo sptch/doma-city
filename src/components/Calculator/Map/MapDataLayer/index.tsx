@@ -72,8 +72,8 @@ export default function MapDataLayer ({map}:{map:Map}) {
             0.7, 'rgb(223, 177, 6)', 
             0.8, 'rgb(243, 150, 6)', 
             0.85, 'rgb(236, 95, 21)', 
-            0.9, 'rgb(190, 65, 18)', 
-            0.95, 'rgb(138, 43, 10)', 
+            0.99, 'rgb(190, 65, 18)', 
+            0.995, 'rgb(138, 43, 10)', 
             1, 'rgb(138, 43, 10)'
         ],
         'heatmap-radius': [
@@ -82,6 +82,7 @@ export default function MapDataLayer ({map}:{map:Map}) {
           ['zoom'],
           7,0.5,
           10,6.2,
+          12,28,
           // 13.4,16,
           // 14.5,35,
           13,50,

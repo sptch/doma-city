@@ -1,15 +1,13 @@
-import React, { useState } from 'react'
 import { Popup } from '@urbica/react-map-gl'
 import { useRecoilState } from 'recoil'
 import { Typography, Link, Button } from '@material-ui/core'
-import { Close } from '@material-ui/icons'
+import Close from '@material-ui/icons/Close'
 import { atoms } from 'misc'
 import * as d3 from 'd3-format'
 
 const format:any = d3.format("~s") //d3.format(".4")
 
-export default ()=>{
-  const [crossColor, setCrossColor] = useState('#999999')
+export default function PopUp(){
   const [popup, setPopup] = useRecoilState<any>(atoms.popup);
 
   return <Popup {...popup.location} maxWidth='fit-content' className="custom-popup" closeButton={false} closeOnClick={false}>

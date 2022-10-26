@@ -17,10 +17,10 @@ export default function SliderStyled (){
         aria-label="History Slider" 
         marks={marks} 
         valueLabelDisplay="on" 
-        max={2020}
+        max={2022}
         min={2006}
         value={year}
-        onChange={(e:any)=>setYear(e?.target.value||2020)}
+        onChange={(e:any)=>setYear(e?.target.value||2022)}
       />
     </SliderWrapper>
   </div>)

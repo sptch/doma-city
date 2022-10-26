@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
-import { ApolloClient, InMemoryCache, ApolloProvider } from '@apollo/client';
 import { RecoilRoot } from 'recoil'
 import mapboxgl from 'mapbox-gl'
 import GlobalStyle from './globalStyle'
@@ -10,21 +9,11 @@ import GlobalStyle from './globalStyle'
 // eslint-disable-next-line import/no-webpack-loader-syntax
 mapboxgl.workerClass = require("worker-loader!mapbox-gl/dist/mapbox-gl-csp-worker").default;
 
-const client = new ApolloClient({
-  uri: 'https://spatialtech.herokuapp.com/http://dev.spatialtech.info:8083/v1/graphql',
-  cache: new InMemoryCache({
-    addTypename: false
-  })
-});
-
-
 ReactDOM.render(
   <React.StrictMode>
     <RecoilRoot>
-      <ApolloProvider client={client}>
-          <GlobalStyle/>
-          <App />
-      </ApolloProvider>
+        <GlobalStyle/>
+        <App />
     </RecoilRoot>
   </React.StrictMode>,
   document.getElementById('root')

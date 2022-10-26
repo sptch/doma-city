@@ -2,23 +2,26 @@ import { useRecoilState } from "recoil"
 import { atoms } from 'misc'
 import { StyledSlider } from "./Slider"
 import { format } from 'd3-format'
-import { SalariesQuery } from "generated"
 import { useEffect } from "react"
 import { SliderWrapper } from "./styles"
 
 const formatter = format(".3~s")
+type Incomes = {
+  year: number;
+  median_income: number;
+}[]
 
-export default function SliderStyled ({salaries:data}:{salaries: SalariesQuery | undefined}){
+export default function SliderStyled ({medianIncomes:data}:{medianIncomes: Incomes}){
   const [ incomeAspect, setIncomeAspect ] = useRecoilState(atoms.incomeAspect)
   const [ income, setIncome ] = useRecoilState(atoms.income)
   const [ year ] = useRecoilState(atoms.year)
 
   useEffect(()=>{
-    if(data && data.incomes.length>0){
+    if(data && data.length>0){
       const v = incomeAspect
       setIncome(v<0?
-        data?.incomes.find(d=>d.year===year)?.median/Math.abs(v-1):
-        data?.incomes.find(d=>d.year===year)?.median*Math.pow(Math.abs(-v-1),3)
+        (data.find(d=>d.year===year)?.median_income||0)/Math.abs(v-1):
+        (data.find(d=>d.year===year)?.median_income||0)*Math.pow(Math.abs(-v-1),3)
       )
     }
   },[incomeAspect, year, setIncome])

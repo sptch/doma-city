@@ -3,7 +3,13 @@ import { useRecoilState } from 'recoil'
 import { atoms } from 'misc'
 import { useEffect, useState } from 'react'
 import { Map } from 'mapbox-gl'
-import { useDataQuery, useDataRangeQuery } from 'generated'
+import blocks from 'data/blocks.json'
+import blocksData from 'data/blocks_data.json'
+const values =  Object.values(blocksData).flat()
+const minPrice = Math.min(...values.map(v=>v.price))
+const maxPrice = Math.max(...values.map(v=>v.price))
+const minRent = Math.min(...values.map(v=>v.rent))
+const maxRent = Math.max(...values.map(v=>v.rent))
 
 export default function MapDataLayer ({map}:{map:Map}) {
   const [year] = useRecoilState(atoms.year)
@@ -11,41 +17,37 @@ export default function MapDataLayer ({map}:{map:Map}) {
   const [incomeAspect] = useRecoilState(atoms.incomeAspect)
 
   const [frame, setFrame] = useState([0,1])
-  const {data:range} = useDataRangeQuery()
-  const {data, refetch} = useDataQuery()
 
   useEffect(()=>{
-    if(data && range?.synthetic_blocks_aggregate.aggregate){
-      const { min, max } = range.synthetic_blocks_aggregate.aggregate
-      if(min && max && data.synthetic_blocks.length>0){
-        console.log('features states')
-        data.synthetic_blocks.forEach((v)=>{
-          let {id, ...vals} = v;
-          let [key, value] = Object.entries(vals)[0] as ['price'|'rent',number] 
-          setFrame([min[key],max[key]])
-          // value = (value - min[key])/(max[key]-min[key])
-          map.setFeatureState({
-            source: 'points', 
-            sourceLayer: 'calculator.blocks_centroids',
-            id
-          }, { value: value })
-        })
+    const relevant = blocksData
+      ?.[(year||2022) as unknown as keyof typeof blocksData] as {
+        id: number;
+        price: number;
+        rent: number;
+      }[];
+    
+    relevant.forEach((v)=>{
+      if(mode==='rent'){
+        setFrame([minRent,maxRent])
+      }else{
+        setFrame([minPrice,maxPrice])
       }
-    }
-  },[data, range, map])
 
-  useEffect(()=>{
-    if(refetch){
-      console.log(year, mode)
-      refetch({year, rent: mode==='rent'})
-    }
-  },[year, mode, refetch])
+      // value = (value - min[key])/(max[key]-min[key])
+      map.setFeatureState({
+        source: 'points', 
+        id: v.id
+      }, { value: v[mode] })
+    })
+    
+  },[map, year, mode])
+
 
   return <>
     <Source 
       id='points'
-      type="vector"
-      tiles={[`https://spatialtech.herokuapp.com/http://dev.spatialtech.info:3003/calculator.blocks_centroids/{z}/{x}/{y}.pbf`]}
+      type="geojson"
+      data={blocks as GeoJSON.FeatureCollection}
       // volatile={true}
       promoteId='id'
     />
@@ -53,7 +55,6 @@ export default function MapDataLayer ({map}:{map:Map}) {
       id='heatmap'
       type="heatmap"
       source='points'
-      source-layer='calculator.blocks_centroids'
       paint={{
         "heatmap-color": [
           "interpolate",

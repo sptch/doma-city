@@ -3,12 +3,15 @@ import { useRecoilState } from "recoil";
 import HistorySlider from "./HistorySlider"
 import IncomeSlider from "./IncomeSlider"
 import Toggle from "./Toggle/";
-import { usePricingQuery, useSalariesQuery, useAffordableRentQuery, useAffordablePriceQuery } from "generated";
 import { format } from 'd3-format'
 import { useEffect, useState } from "react";
 import { Wrapper, Container, SlidersBlock, Number, LogoContainer, Footer } from "./styles";
-import { Section, Text } from "components/styles";
+import { Text } from "components/styles";
 import {ReactComponent as Logo} from 'assets/icons/logo.svg'
+import medianIncomes from 'data/median_incomes.json'
+import pricesHistorical from 'data/prices_historical.json'
+import rentsHistorical from 'data/rents_historical.json'
+import blocksData from 'data/blocks_data.json'
 
 const formatter = format(",.2r")
 const percentFormatter = format(",.2r")
@@ -18,35 +21,40 @@ export  default function Sidebar(){
   const [ year ] = useRecoilState(atoms.year)
   const [ income ] = useRecoilState(atoms.income)
 
-  const { data:salaries } = useSalariesQuery()
-  const { data:pricing } = usePricingQuery()
-
-  const rentPercentage = (((12*pricing?.rents_historical.find(d=>d.year===year)?.average)/income)*100)
-  const incomeRatio = income/salaries?.incomes?.find(d=>d.year===year)?.median
+  const rentPercentage = (((12*(rentsHistorical.find(d=>d.year===year)?.rent_median||0))/income)*100)
+  const incomeRatio = income/(medianIncomes.find(d=>d.year===year)?.median_income||0)
   
   const [ percentAffordableRent, setPercentAffordableRent ] = useState(0)
-  const { data:affordableRent } = useAffordableRentQuery({skip:mode!=='rent', variables:{thirty_percent_of_income:income/12*0.3,year}})
-  
-  useEffect(()=>{
-    if(affordableRent?.sample?.aggregate && affordableRent.total.aggregate?.count){
-      const percent = (affordableRent.sample.aggregate?.count||0)/
-        (affordableRent.total.aggregate.count)*100
-        setPercentAffordableRent(percent)
-    }
-  },[ affordableRent ])
+  const rentAffordabilityThreshold = income/12*0.3;
+
+  const affordableMortgage = income*4.5
 
   const [ percentAffordablePrice, setPercentAffordablePrice ] = useState(0)
-  const { data:affordablePrice } = useAffordablePriceQuery({skip:mode!=='price', variables:{mortgage:income*4.5,year}})
-  
-  useEffect(()=>{
-    if(affordablePrice?.sample?.aggregate && affordablePrice.total.aggregate?.count){
-      const percent = (affordablePrice.sample.aggregate?.count||0)/
-        (affordablePrice.total.aggregate.count)*100
-        setPercentAffordablePrice(percent)
-    }
-  },[ affordablePrice ])
-
   const layout = useLayout()
+
+  useEffect(()=>{
+    const relevant = blocksData
+      ?.[(year||2022) as unknown as keyof typeof blocksData] as {
+        id: number;
+        price: number;
+        rent: number;
+    }[];
+
+    const percent = (relevant.filter(v=>v.rent<rentAffordabilityThreshold).length||0)/(relevant.length||0)*100
+    setPercentAffordableRent(percent)
+  },[year, rentAffordabilityThreshold])
+
+  useEffect(()=>{
+    const relevant = blocksData
+      ?.[(year||2022) as unknown as keyof typeof blocksData] as {
+        id: number;
+        price: number;
+        rent: number;
+    }[];
+    const percent = (relevant.filter(v=>v.price<affordableMortgage).length||0)/
+      (relevant.length)*100
+    setPercentAffordablePrice(percent)
+  },[year, affordableMortgage])
 
   return <Wrapper>
     <Container>
@@ -56,7 +64,7 @@ export  default function Sidebar(){
         <h2>Select income and year</h2>   
 
         <SlidersBlock>
-          <IncomeSlider {...{salaries}}/>
+          <IncomeSlider {...{medianIncomes}}/>
           <p>
             The map shows a personalised view towards Vancouver's real estate market,
             depending on selected houshold income and year. 
@@ -78,7 +86,7 @@ export  default function Sidebar(){
         {mode==='rent'?
         <>
           <p>
-            - Average annual rent in Vancouver is <Number>{formatter(12*pricing?.rents_historical.find(d=>d.year===year)?.average)+' CAD '} </Number>
+            - Average annual rent in Vancouver is <Number>{formatter(12* (rentsHistorical.find(d=>d.year===year)?.rent_median||0))+' CAD '} </Number>
             which is <Number>{
               rentPercentage.toFixed(1)
             }%</Number> of selected annual household income.
@@ -96,9 +104,9 @@ export  default function Sidebar(){
         </>:
         <>
           <p>
-              - Median property price in Vancouver is <Number>{formatter(pricing?.prices_historical.find(d=>d.year===year)?.median)+' CAD '} </Number>
+              - Median property price in Vancouver is <Number>{formatter(pricesHistorical.find(d=>d.year===year)?.price_median||0)+' CAD '} </Number>
               which is <Number>x{
-                ((pricing?.prices_historical.find(d=>d.year===year)?.median)/income).toFixed(1)
+                ((pricesHistorical.find(d=>d.year===year)?.price_median||0)/income).toFixed(1)
               }</Number> the selected annual income.
           </p>
           <p>

@@ -48,7 +48,7 @@ export const mode = atom({
 
 export const year = atom({
   key: 'year', 
-  default: 2020, 
+  default: 2022, 
 });
 
 export const incomeAspect = atom({

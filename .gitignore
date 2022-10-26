@@ -24,5 +24,6 @@ setup.sql
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-data/
 pandas/.env
+.env
+.ipynb_checkpoints

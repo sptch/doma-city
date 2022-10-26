@@ -9,7 +9,7 @@ import { Content } from './styles'
 import Vancouver from './Vancouver'
 import Methodology from './Methodology'
 import BurgerMenu from './BurgerMenu'
-import { lazy } from 'react'
+import { lazy, Suspense } from 'react'
 
 const Calculator = lazy(()=>import('./Calculator'))
 
@@ -38,7 +38,9 @@ export default function Doma() {
           <Route path='/vancouver/dashboard' exact>
             <Header vancouver/>
             <Content>
-              <Calculator/>
+              <Suspense fallback={<>Loading...</>}>
+                <Calculator/>
+              </Suspense>
             </Content>
           </Route>
           <Route path='/vancouver/methodology' exact>

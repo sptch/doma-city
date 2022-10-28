@@ -9,6 +9,7 @@ import { Wrapper, Container, SlidersBlock, Number, LogoContainer, Footer } from 
 import { Text } from "components/styles";
 import {ReactComponent as Logo} from 'assets/icons/logo.svg'
 import medianIncomes from 'data/median_incomes.json'
+import medianHouseholdIncomes from 'data/median_household_incomes.json'
 import pricesHistorical from 'data/prices_historical.json'
 import rentsHistorical from 'data/rents_historical.json'
 import blocksData from 'data/blocks_data.json'
@@ -23,7 +24,8 @@ export  default function Sidebar(){
 
   const rentPercentage = (((12*(rentsHistorical.find(d=>d.year===year)?.rent_median||0))/income)*100)
   const incomeRatio = income/(medianIncomes.find(d=>d.year===year)?.median_income||0)
-  
+  const incomeHouseholdRatio = income/(medianHouseholdIncomes.find(d=>d.year===year)?.household_income_median||0)
+
   const [ percentAffordableRent, setPercentAffordableRent ] = useState(0)
   const rentAffordabilityThreshold = income/12*0.3;
 
@@ -67,7 +69,7 @@ export  default function Sidebar(){
           <IncomeSlider {...{medianIncomes}}/>
           <p>
             The map shows a personalised view towards Vancouver's real estate market,
-            depending on selected houshold income and year. 
+            depending on selected total income and year. 
           </p>
           <HistorySlider/>
         </SlidersBlock>
@@ -75,13 +77,20 @@ export  default function Sidebar(){
 
         <br/>
         <p>
-            - Selected income is {
+            - This income is {
                 incomeRatio===1?
-                <><Number>equal</Number> to the </>:
+                <><Number>equal</Number> to </>:
                 incomeRatio<1?
                 <><Number>{percentFormatter((1-incomeRatio)*100)}%</Number> lower then </>:
                 <><Number>{percentFormatter((incomeRatio-1)*100)}%</Number> higher then </>} 
-                Vancouver's median.
+                the median individual income and {' '}
+                {
+                incomeHouseholdRatio===1?
+                <><Number>equal</Number> to </>:
+                incomeHouseholdRatio<1?
+                <><Number>{percentFormatter((1-incomeHouseholdRatio)*100)}%</Number> lower then </>:
+                <><Number>{percentFormatter((incomeHouseholdRatio-1)*100)}%</Number> higher then </>} 
+                the median household income in Vancouver.
         </p>
         {mode==='rent'?
         <>
@@ -89,7 +98,7 @@ export  default function Sidebar(){
             - Average annual rent in Vancouver is <Number>{formatter(12* (rentsHistorical.find(d=>d.year===year)?.rent_median||0))+' CAD '} </Number>
             which is <Number>{
               rentPercentage.toFixed(1)
-            }%</Number> of selected annual income of individual.
+            }%</Number> of selected annual income.
           </p>
           <p>
             - <Number>{
@@ -97,7 +106,7 @@ export  default function Sidebar(){
             }%</Number> of rental homes are considered affordable for selected income.
           </p>
           <p>
-              - Finding affordable rental home for an individual with such income is {
+              - Finding affordable rental home for this income is {
               rentPercentage>=30?'hard':'easy'}.
           </p>
 
@@ -110,11 +119,11 @@ export  default function Sidebar(){
               }</Number> the selected annual income.
           </p>
           <p>
-              - The maximum mortgage amount this individual can qualify for is 
-              <Number>{' '+formatter(income*4)+' CAD'}</Number>. This can cover <Number>{percentFormatter(percentAffordablePrice)}%</Number> of homes in Vancouver.
+              - With a typical 20% down payment, the approximate home price you'd be able to afford is <Number>{' '+formatter(income*4)+' CAD'}</Number>
+              , which is <Number>{percentFormatter(percentAffordablePrice)}%</Number> homes in Vancouver.
           </p>
           <p>
-              - Finding affordable property for an individual with such income is {percentAffordablePrice>=20?'easy':'hard'}.
+              - Finding affordable property with such income is {percentAffordablePrice>=20?'easy':'hard'}.
           </p>
         </>}
         <Footer>
@@ -125,7 +134,7 @@ export  default function Sidebar(){
 
         </Footer> 
 
-        </div>
+        </div> 
       </Text>
     </Container>
   </Wrapper>

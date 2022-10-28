@@ -26,7 +26,6 @@ export  default function BottomBar(){
 
   const [ percentAffordableRent, setPercentAffordableRent ] = useState(0)
   const rentAffordabilityThreshold = income/12*0.3;
-
   const affordableMortgage = income*4.5
 
   const [ percentAffordablePrice, setPercentAffordablePrice ] = useState(0)
